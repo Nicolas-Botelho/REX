@@ -1,17 +1,28 @@
 # To Do List
 
-## 1. Criar Conversores
-- [X] Criar conversores para casos de teste e para histórias de usuário.
+## Versão Atual: v0
 
-## 2. Ajustar Agentes
-- [ ] Seguir a [lógica descrita na pasta dos conversores](./backend/conversion/_.md): Ou seja, agentes criam e retornam novos objetos, nunca alteram objetos existentes.
+## Tarefas
 
-## 3. Criar Novos Agentes
-- [ ] Criar agentes especializados para a criação de casos de teste e para criação de histórias de usuário.
+### 1. Criar Modelos
+- [X] Criar os modelos de classes no django
+- [ ] Criar os modelos de caso de uso no django
+- [ ] Criar os modelos de classes no pydantic
+- [ ] Criar os modelos de caso de uso no pydantic
 
-## 4. Frontend
-- [ ] Criar um frontend que usa as rotas da API do backend.
+### 2. Criar Conversores
+- [ ] Criar os conversores para os modelos de classes
+- [ ] Criar os conversores para os modelos de caso de uso
 
-## 5. Adições
-- [ ] Adicionar, no backend e no frontend, os mecanismos para a criação de casos de uso e diagramas de classe.
-- [ ] Adicionar a opção de gerar um documento LaTeX com base nos objetos criados.
+### 3. Criar Agentes
+- [ ] Criar a lógica de execução dos agentes
+- [ ] Criar os agentes de caso de uso
+- [ ] Criar os agentes de classes
+
+### 4. Frontend
+- [ ] Criar um frontend que usa as rotas da API do backend
+
+### 5. Adições (Futuro)
+- [ ] Adicionar a geração de TONTO com base nos modelos
+- [ ] Adicionar a geração de documentos LaTeX com base nos modelos
+- [ ] Criar uma rota de passar café
