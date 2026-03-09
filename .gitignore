@@ -4,6 +4,9 @@
 # sqlite database
 db.sqlite3
 
+# migrations
+migrations
+
 # cache files
 __pycache__
 

@@ -1,1 +1,2 @@
-from .requirements_view import *
+from .class_view import *
+from .usecase_view import *

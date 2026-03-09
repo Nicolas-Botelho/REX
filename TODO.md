@@ -6,9 +6,14 @@
 
 ### 1. Criar Modelos
 - [X] Criar os modelos de classes no django
-- [ ] Criar os modelos de caso de uso no django
+- [X] Criar os modelos de caso de uso no django
 - [ ] Criar os modelos de classes no pydantic
 - [ ] Criar os modelos de caso de uso no pydantic
+
+### 1.Django. Criar Estrutura
+- [X] Criar Serializers
+- [X] Criar Views
+- [X] Criar Paths
 
 ### 2. Criar Conversores
 - [ ] Criar os conversores para os modelos de classes
