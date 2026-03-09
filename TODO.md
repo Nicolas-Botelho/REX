@@ -1,33 +1,45 @@
-# To Do List
+# To-Do List
 
-## Versão Atual: v0
+## Current Version: v0
 
-## Tarefas
+## Tasks
 
-### 1. Criar Modelos
-- [X] Criar os modelos de classes no django
-- [X] Criar os modelos de caso de uso no django
-- [ ] Criar os modelos de classes no pydantic
-- [ ] Criar os modelos de caso de uso no pydantic
+### 1. Create Models
+- [X] Create Django class models
+- [X] Create Django use case models
+- [X] Create Pydantic class models
+- [X] Create Pydantic use case models
 
-### 1.Django. Criar Estrutura
-- [X] Criar Serializers
-- [X] Criar Views
-- [X] Criar Paths
+#### A. Django: Create Structure
+- [X] Create Serializers
+- [X] Create Views
+- [X] Create Paths
 
-### 2. Criar Conversores
-- [ ] Criar os conversores para os modelos de classes
-- [ ] Criar os conversores para os modelos de caso de uso
+#### B. Pydantic: Create Structure
+- [X] Create Response Models
 
-### 3. Criar Agentes
-- [ ] Criar a lógica de execução dos agentes
-- [ ] Criar os agentes de caso de uso
-- [ ] Criar os agentes de classes
+### 2. Create Converters
+- [ ] Create converters for class models
+- [ ] Create converters for use case models
 
-### 4. Frontend
-- [ ] Criar um frontend que usa as rotas da API do backend
+#### A. To Convert From Django
+- [ ] Gets also need to retrieve the related fields
 
-### 5. Adições (Futuro)
-- [ ] Adicionar a geração de TONTO com base nos modelos
-- [ ] Adicionar a geração de documentos LaTeX com base nos modelos
-- [ ] Criar uma rota de passar café
+### 3. Create Agents
+- [ ] Create agent execution logic
+- [ ] Create use case agents
+- [ ] Create class agents
+
+### 4. Create AI Gen route
+- [ ] Model class graph invoke view
+- [ ] Create class graph invoke view path
+- [ ] Model use case graph invoke view
+- [ ] Create use case gralh invoke view path
+
+### 5. Frontend
+- [ ] Create a frontend that consumes the backend API routes
+
+### 6. Additions (Future)
+- [ ] Add TONTO generation based on models
+- [ ] Add LaTeX document generation based on models
+- [ ] Create a "make coffee" route
