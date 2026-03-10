@@ -1,37 +1,65 @@
 from typing import List
 
-from ai_gen.models.usecase import Actor as actor_pyd, Event as event_pyd, Step as step_pyd, Usecase as uc_pyd
+from ai_gen.models.usecase import Actor as Actor_pyd, Event as Event_pyd, Step as Step_pyd, Usecase as UC_pyd
 from ai_gen.models.response_model.usecase_response import UsecaseOutput
 
-from rex.models.usecase import Actor as actor_dj, Event as event_dj, Step as step_dj, Usecase as uc_dj
+from rex.models.usecase import Actor as Actor_dj, Event as Event_dj, Step as Step_dj, Usecase as UC_dj
 
 class UsecaseConverter():
   def save(self, usecases: UsecaseOutput):
     for uc in usecases.usecases:
-      uc_dj.objects.create(
+      UC_dj.objects.create(
         id = uc.iD,
         name = uc.name
       )
     for actor in usecases.actors:
-      actor_dj.objects.create(
+      Actor_dj.objects.create(
         id = actor.iD,
         name = actor.name,
         description = actor.description
       )
     for event in usecases.usecase_events:
-      event_dj.objects.create(
+      Event_dj.objects.create(
         id = event.iD,
         name = event.name,
         actor = event.actor,
         usecase = event.usecase
       )
     for step in usecases.events_steps:
-      step_dj.objects.create(
+      Step_dj.objects.create(
         id = step.iD,
         system = step.system,
         description = step.description,
         event = step.event
       )
 
-  def load():
-    pass
+  def load(self):
+    output = UsecaseOutput()
+
+    for uc in UC_dj.objects.all():
+      uc_pyd = UC_pyd()
+      uc_pyd.iD = uc.id
+      uc_pyd.name = uc.name
+
+      output.usecases.append(uc_pyd)
+      for event in uc.usecase_events.all():
+        event_pyd = Event_pyd()
+        event_pyd.iD = event.id
+        event_pyd.name = event.name
+        event_pyd.usecase = event.usecase
+        event_pyd.actor = event.actor.id
+
+        output.usecase_events.append(event_pyd)
+
+        actor_pyd = Actor_pyd()
+        actor_pyd.iD = event.actor.id
+        actor_pyd.name = event.actor.name
+        actor_pyd.description = event.actor.description
+
+        output.actors.append(actor_pyd)
+        for step in event.event_steps.all():
+          step_pyd = Step_pyd()
+          step_pyd.iD = step.id
+          step_pyd.system = step.system
+          step_pyd.description = step.description
+          step_pyd.event = step.event

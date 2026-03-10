@@ -20,10 +20,10 @@
 
 ### 2. Create Converters
 - [X] Create converters for class models
-- [ ] Create converters for use case models
+- [X] Create converters for use case models
 
 #### A. To Convert From Django
-- [ ] Gets also need to retrieve the related fields
+- [X] Gets also need to retrieve the related fields
 
 ### 3. Create Agents
 - [ ] Create agent execution logic
