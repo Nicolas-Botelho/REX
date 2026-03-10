@@ -19,7 +19,7 @@
 - [X] Create Response Models
 
 ### 2. Create Converters
-- [ ] Create converters for class models
+- [X] Create converters for class models
 - [ ] Create converters for use case models
 
 #### A. To Convert From Django

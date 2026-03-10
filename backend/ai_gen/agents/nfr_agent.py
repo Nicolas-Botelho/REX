@@ -1,6 +1,6 @@
-from backend.ai_gen.state import State
-from backend.ai_gen.llm import llm
-from backend.ai_gen.response_model.requirement_response import NFROutput
+from ai_gen.state import State
+from ai_gen.llm import llm
+from ai_gen.response_model.requirement_response import NFROutput
 
 from langchain_core.messages import BaseMessage, AIMessage, HumanMessage, SystemMessage
 
@@ -37,16 +37,6 @@ def call_llm(state: State):
   - Answer in the same language the given text in writen.
   '''
 
-  # current_fr = state.get('OldFunctionalRequirements')
-  # current_fr_text = ''
-  # if current_fr:
-  #   current_fr_text = f'''
-  # ## Current Functional Requirements
-  # Also, use the following FRs. Consider that this given requirements are 100% correct, so do not exclude or modify them. If a new requirement contradict one of this requirements, change the new requirement.
-
-  # ### Functional Requirements
-  # {current_fr.__str__()}
-  # '''
   current_nfr = state.get('OldNonFunctionalRequirements')
   current_nfr_text = ''
   if current_nfr:
