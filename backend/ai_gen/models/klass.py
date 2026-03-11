@@ -29,7 +29,7 @@ class ClassAttributeEnum(BaseModel):
 class RelationClassReference(BaseModel):
   iD : int
   minim : int
-  maxim : int
+  maxim : int | None
   ref_class : int
 
 class Relation(BaseModel):

@@ -26,15 +26,15 @@
 - [X] Gets also need to retrieve the related fields
 
 ### 3. Create Agents
-- [ ] Create agent execution logic
-- [ ] Create use case agents
-- [ ] Create class agents
+- [X] Create agent execution logic
+- [X] Create use case agents
+- [X] Create class agents
 
 ### 4. Create AI Gen route
-- [ ] Model class graph invoke view
-- [ ] Create class graph invoke view path
-- [ ] Model use case graph invoke view
-- [ ] Create use case gralh invoke view path
+- [X] Model class graph invoke view
+- [X] Create class graph invoke view path
+- [X] Model use case graph invoke view
+- [X] Create use case gralh invoke view path
 
 ### 5. Frontend
 - [ ] Create a frontend that consumes the backend API routes
