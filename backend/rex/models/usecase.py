@@ -8,7 +8,7 @@ class Usecase(PolymorphicModel):
 class Actor(PolymorphicModel):
   id = models.PositiveIntegerField(unique=True, primary_key=True, blank=False)
   name = models.CharField(blank=False)
-  description = models.TextField(max_length=256, blank=True)
+  description = models.TextField(max_length=256, blank=True, null=True)
 
 class Event(PolymorphicModel):
   id = models.PositiveIntegerField(unique=True, primary_key=True, blank=False)

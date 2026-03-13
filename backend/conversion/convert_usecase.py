@@ -22,44 +22,31 @@ class UsecaseConverter():
       Event_dj.objects.create(
         id = event.iD,
         name = event.name,
-        actor = event.actor,
-        usecase = event.usecase
+        actor_id = event.actor,
+        usecase_id = event.usecase
       )
     for step in usecases.events_steps:
       Step_dj.objects.create(
         id = step.iD,
         system = step.system,
         description = step.description,
-        event = step.event
+        event_id = step.event
       )
 
   def load(self):
     output = UsecaseOutput()
 
     for uc in UC_dj.objects.all():
-      uc_pyd = UC_pyd()
-      uc_pyd.iD = uc.id
-      uc_pyd.name = uc.name
-
+      uc_pyd = UC_pyd(iD=uc.id, name=uc.name)
       output.usecases.append(uc_pyd)
-      for event in uc.usecase_events.all():
-        event_pyd = Event_pyd()
-        event_pyd.iD = event.id
-        event_pyd.name = event.name
-        event_pyd.usecase = event.usecase
-        event_pyd.actor = event.actor.id
 
+      for event in uc.usecase_events.all():
+        event_pyd = Event_pyd(iD=event.id, name=event.name, usecase=event.usecase, actor=event.actor.id)
         output.usecase_events.append(event_pyd)
 
-        actor_pyd = Actor_pyd()
-        actor_pyd.iD = event.actor.id
-        actor_pyd.name = event.actor.name
-        actor_pyd.description = event.actor.description
-
+        actor_pyd = Actor_pyd(iD=event.actor.id, name=event.actor.name, description=event.actor.description)
         output.actors.append(actor_pyd)
+
         for step in event.event_steps.all():
-          step_pyd = Step_pyd()
-          step_pyd.iD = step.id
-          step_pyd.system = step.system
-          step_pyd.description = step.description
-          step_pyd.event = step.event
+          step_pyd = Step_pyd(iD=step.id, system=step.system, description=step.description, event=step.event)
+          output.events_steps.append(step_pyd)

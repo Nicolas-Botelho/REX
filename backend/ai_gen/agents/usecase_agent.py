@@ -65,7 +65,8 @@ The Structured Output have the following fields:
 - event: int; must be a existent event iD; event that the step is part of.
 
 # Final Instructions
-- Answer strictly in the Structured Output Format; and
+- Answer strictly in the Structured Output Format;
+- Return only the newly created use cases, do not return the use cases you recieved; and
 - Answer in the same language the given text in writen.
 '''
   

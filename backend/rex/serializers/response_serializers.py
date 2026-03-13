@@ -1,4 +1,5 @@
 from rest_framework import serializers
 
 class RunAllResponseSerializer(serializers.Serializer):
-  items = serializers.DictField()
+  classes = serializers.ListField(child=serializers.DictField(), required=False)
+  usecases = serializers.ListField(child=serializers.DictField(), required=False)

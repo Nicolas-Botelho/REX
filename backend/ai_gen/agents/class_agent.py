@@ -50,43 +50,44 @@ The Structured Output have the following fields:
 - relations: All the created relations.
 
 ### Class Fields
-- iD: positive integer; must be unique; class identification; and
+- iD: positive integer; must be unique for its class; class identification; and
 - name: string; must be unique; class name.
 
 ### Class Primitive Attribute Fields
-- iD: positive integer; must be unique; class primitive attribute identification;
+- iD: positive integer; must be unique for its class; class primitive attribute identification;
 - name: string; must be unique in the attributes of the class it is part of; class primitive attribute name;
 - attr_type: string; must be one of the primitive types (integer, string, boolean or float); type of the attribute; and
 - klass: integer; must be a existent class iD; class that the attribute is part of.
 
 ### Class Enum Attribute Fields
-- iD: positive integer; must be unique; class enum attribute identification;
+- iD: positive integer; must be unique for its class; class enum attribute identification;
 - name: string; must be unique in the attributes of the class it is part of; class enum attribute name;
 - enum: integer; must be a existent enum iD; enum used to define the attribute; and
 - klass: integer; must be a existent class iD; class that the attribute is part of.
 
 ### Enum Fields
-- iD: positive integer; must be unique; enum identification; and
+- iD: positive integer; must be unique for its class; enum identification; and
 - name: string; must be unique; enum name.
 
 ### Enum Attribute Fields
-- iD: positive integer; must be unique; enum attribute identification;
+- iD: positive integer; must be unique for its class; enum attribute identification;
 - name: string; must be unique in the enum it is part of; enum attribute name; and
 - enum: integer; must be a existent enum iD; enum that the attribute is part of.
 
 ### Relation Class Reference Fields
-- iD: positive integer; must be unique; relation class reference identification;
+- iD: positive integer; must be unique for its class; relation class reference identification;
 - minim: integer; must be lower than or equal to maxim; minimum of that class in the relation;
 - maxim: integer or None; must be higher than or equal to minim and not zero; maximum of that class in the relation or None to mean "N"; and
 - ref_class: integer; must be a existent class iD; referenciated class.
 
 ### Relation Fields
-- iD: positive integer; must be unique; relation identification;
+- iD: positive integer; must be unique for its class; relation identification;
 - src: integer; must be a existent relation class reference iD; source of the relation;
 - tgt: integer; must be a existent relation class reference iD; target of the relation;
 
 # Final Instructions
-- Answer strictly in the Structured Output Format; and
+- Answer strictly in the Structured Output Format;
+- Return only the newly created classes, do not return the classes you recieved; and
 - Answer in the same language the given text in writen.
 '''
   
