@@ -36,10 +36,15 @@
 - [X] Model use case graph invoke view
 - [X] Create use case gralh invoke view path
 
-### 5. Frontend
+### 5. Create Exporters
+- [X] Create a Json Exporter
+- [ ] Add Label to the Enum Attribute
+- [ ] Make the .json nested
+
+### 6. Frontend
 - [ ] Create a frontend that consumes the backend API routes
 
-### 6. Additions (Future)
+### 7. Additions (Future)
 - [ ] Add TONTO generation based on models
 - [ ] Add LaTeX document generation based on models
 - [ ] Create a "make coffee" route

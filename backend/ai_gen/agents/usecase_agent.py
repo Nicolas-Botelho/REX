@@ -44,22 +44,22 @@ The Structured Output have the following fields:
 - steps: All the created steps.
 
 ### Usecase Fields
-- iD: positive integer; must be unique; use case identification; and
+- iD: positive integer; must be unique among the usecases; use case identification; and
 - name: string; must be unique; use case name.
 
 ### Event Fields
-- iD: positive integer; must be unique; event identification;
+- iD: positive integer; must be unique among the events; event identification;
 - name: string; must be unique in the usecase it is part of; event name;
 - actor: positive integer; must be a existent actor iD; actor that executes the event; and
 - usecase: positive integer; must be a existent usecase iD; usecase that the event is part of.
 
 ### Actor Fields
-- iD: positive integer; must be unique; actor identification;
+- iD: positive integer; must be unique among the actors; actor identification;
 - name: string; must be unique; actor name; and
 - description: string or None; optional; optional description of the actor.
 
 ### Step Fields
-- iD: positive integer; must be unique; step identification;
+- iD: positive integer; must be unique among the steps; step identification;
 - system: boolean; True or False; False = Actor executed step and True = System executed step;
 - description: string; no restrictions; description of the executed actions in the step; and
 - event: int; must be a existent event iD; event that the step is part of.

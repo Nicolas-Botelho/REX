@@ -30,7 +30,7 @@ class ClassAttributeEnum(PolymorphicModel):
 class RelationClassReference(PolymorphicModel):
   id = models.PositiveIntegerField(unique=True, primary_key=True, blank=False)
   minim = models.IntegerField(blank=False)
-  maxim = models.IntegerField(blank=False)
+  maxim = models.IntegerField(blank=True, null=True)
   ref_class = models.ForeignKey(Class, related_name='class_relations', blank=False, on_delete=models.CASCADE)
 
 class Relation(PolymorphicModel):

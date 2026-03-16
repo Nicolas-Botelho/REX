@@ -25,6 +25,7 @@ from drf_yasg import openapi
 from rex.views.class_view import ClassViewSet, ClassAttributeEnumViewSet, ClassAttributePrimViewSet, EnumViewSet, EnumAttributeViewSet, RelationViewSet, RelationClassReferenceViewSet
 from rex.views.usecase_view import ActorViewSet, EventViewSet, StepViewSet, UsecaseViewSet
 from rex.views.ai_view import AiViewSet
+from rex.views.generator_view import JsonGeneratorViewSet
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -40,9 +41,13 @@ schema_view = get_schema_view(
 class_router = routers.DefaultRouter()
 usecase_router = routers.DefaultRouter()
 ai_router = routers.DefaultRouter()
+generator_router = routers.DefaultRouter()
 
 # AI
 ai_router.register('ai', AiViewSet, basename='ai')
+
+# Generator
+generator_router.register('json', JsonGeneratorViewSet, basename='json')
 
 # Classes
 class_router.register('class', ClassViewSet, basename='class')
@@ -63,5 +68,6 @@ urlpatterns = [
    path("", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path("classes/", include(class_router.urls)),
    path("use_cases/", include(usecase_router.urls)),
-   path("", include(ai_router.urls))
+   path("", include(ai_router.urls)),
+   path("", include(generator_router.urls))
 ]

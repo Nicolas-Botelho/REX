@@ -27,7 +27,7 @@ class ClassConverter():
       ClassAttrEnum_dj.objects.create(
         id = cae.iD,
         name = cae.name,
-        enum = cae.enum,
+        enum_id = cae.enum,
         klass_id = cae.klass
       )
     for cap in classes.class_primitive_attributes:
@@ -59,26 +59,26 @@ class ClassConverter():
       output.classes.append(cls_pyd)
 
       for cap in clss.class_primitive_attrs.all():
-        cap_pyd = ClassAttrPrim_pyd(iD=cap.id, name=cap.name, attr_type=cap.attr_type, klass=cap.klass)
+        cap_pyd = ClassAttrPrim_pyd(iD=cap.id, name=cap.name, attr_type=cap.attr_type, klass=cap.klass_id)
         output.class_primitive_attributes.append(cap_pyd)
 
       for cae in clss.class_enum_attrs.all():
-        cae_pyd = ClassAttrEnum_pyd(iD=cae.id, name=cae.name, klass=cae.klass, enum=cae.enum.id)
+        cae_pyd = ClassAttrEnum_pyd(iD=cae.id, name=cae.name, klass=cae.klass_id, enum=cae.enum.id)
         output.class_enum_attributes.append(cae_pyd)
 
         enum_pyd = Enum_pyd(iD=cae.enum.id, name=cae.enum.name)
         output.enums.append(enum_pyd)
 
         for e_attr in cae.enum.enum_values.all():
-          enumAttr_pyd = EnumAttr_pyd(iD=e_attr.id, value=e_attr.value, enum=e_attr.enum)
+          enumAttr_pyd = EnumAttr_pyd(iD=e_attr.id, value=e_attr.value, enum=e_attr.enum_id)
           output.enum_attributes.append(enumAttr_pyd)
       
       for rcr in clss.class_relations.all():
-        rcr_pyd = RCR_pyd(iD=rcr.id, minim=rcr.minim, maxim=rcr.maxim, ref_class=rcr.ref_class)
+        rcr_pyd = RCR_pyd(iD=rcr.id, minim=rcr.minim, maxim=rcr.maxim, ref_class=rcr.ref_class_id)
         output.relation_class_references.append(rcr_pyd)
 
         for rel in rcr.rcr_as_srcs.all():
-          rel_pyd = Rel_pyd(iD=rel.id, src=rel.src, tgt=rel.tgt)
+          rel_pyd = Rel_pyd(iD=rel.id, src=rel.src_id, tgt=rel.tgt_id)
           output.relations.append(rel_pyd)
 
     return output

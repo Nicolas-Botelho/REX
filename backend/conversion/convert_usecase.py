@@ -41,12 +41,14 @@ class UsecaseConverter():
       output.usecases.append(uc_pyd)
 
       for event in uc.usecase_events.all():
-        event_pyd = Event_pyd(iD=event.id, name=event.name, usecase=event.usecase, actor=event.actor.id)
+        event_pyd = Event_pyd(iD=event.id, name=event.name, usecase=event.usecase_id, actor=event.actor.id)
         output.usecase_events.append(event_pyd)
 
         actor_pyd = Actor_pyd(iD=event.actor.id, name=event.actor.name, description=event.actor.description)
         output.actors.append(actor_pyd)
 
         for step in event.event_steps.all():
-          step_pyd = Step_pyd(iD=step.id, system=step.system, description=step.description, event=step.event)
+          step_pyd = Step_pyd(iD=step.id, system=step.system, description=step.description, event=step.event_id)
           output.events_steps.append(step_pyd)
+    
+    return output

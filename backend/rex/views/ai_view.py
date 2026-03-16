@@ -18,7 +18,7 @@ class AiViewSet(ViewSet):
 
   @swagger_auto_schema(method='post', request_body=RunAllRequestSerializer, responses={201: RunAllResponseSerializer})
   @action(detail=False, methods=['post'], url_name='run_all')
-  def run_all(self, request: Request, *args, **kwargs) -> RunAllResponseSerializer:
+  def run_all(self, request: Request, *args, **kwargs) -> Response:
 
     serializer = RunAllRequestSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -40,10 +40,7 @@ class AiViewSet(ViewSet):
     if new_usecases:
       uc.save(new_usecases)
 
-    responseSerializer = RunAllResponseSerializer({'classes' : result.get('Classes'), 'usecases' : result.get('Usecases')})
-    # responseSerializer.is_valid(raise_exception=True)
-
-    return Response(responseSerializer.data, status=HTTP_201_CREATED)
+    return Response({'classes' : result.get('Classes'), 'usecases' : result.get('Usecases')}, status=HTTP_201_CREATED)
 
   def run_usecase(self, request, *args, **kwargs) -> Response:
     pass
