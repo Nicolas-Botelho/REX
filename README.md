@@ -44,16 +44,18 @@ subgraph Backend
   B[Conversion Layer]
   C["SQLite (Django ORM)"]
   D[Django Management]
+  E[Generation]
 end
 
 subgraph Frontend
-  E[Frontend App]
+  F[Frontend App]
 end
 
 A <--> B
 B <--> D
 D <--> C
 D <--> E
+D <--> F
 
 ```
 
