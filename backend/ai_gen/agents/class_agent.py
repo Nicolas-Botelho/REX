@@ -71,7 +71,7 @@ The Structured Output have the following fields:
 
 ### Enum Attribute Fields
 - iD: positive integer; must be unique among the enum attributes; enum attribute identification;
-- name: string; must be unique in the enum it is part of; enum attribute name; and
+- name: string; must be unique in the enum it is part of; must be upper cased and spaced with underline (e.g.: ENUM_ATTRIBUTE); enum attribute name; and
 - enum: integer; must be a existent enum iD; enum that the attribute is part of.
 
 ### Relation Class Reference Fields

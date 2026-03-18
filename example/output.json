@@ -1,0 +1,596 @@
+{
+    "class_models": {
+        "enums": [
+            {
+                "iD": 1,
+                "name": "PriorityMethodType",
+                "enum_attributes": [
+                    {
+                        "iD": 1,
+                        "value": "BINARY",
+                        "enum": 1,
+                        "label": "Binary"
+                    },
+                    {
+                        "iD": 2,
+                        "value": "NUMBERED",
+                        "enum": 1,
+                        "label": "Numbered"
+                    },
+                    {
+                        "iD": 3,
+                        "value": "NOT_PRESENT",
+                        "enum": 1,
+                        "label": "Not Present"
+                    }
+                ]
+            },
+            {
+                "iD": 2,
+                "name": "NumberedPriorityOrder",
+                "enum_attributes": [
+                    {
+                        "iD": 4,
+                        "value": "ZERO_IS_MAX",
+                        "enum": 2,
+                        "label": "Zero Is Max"
+                    },
+                    {
+                        "iD": 5,
+                        "value": "ZERO_IS_MIN",
+                        "enum": 2,
+                        "label": "Zero Is Min"
+                    }
+                ]
+            }
+        ],
+        "classes": [
+            {
+                "iD": 1,
+                "name": "User",
+                "klass_attributes": [
+                    {
+                        "iD": 3,
+                        "name": "name",
+                        "attr_type": "string",
+                        "klass": 1
+                    }
+                ]
+            },
+            {
+                "iD": 2,
+                "name": "List",
+                "klass_attributes": [
+                    {
+                        "iD": 1,
+                        "name": "priorityMethodType",
+                        "enum": 1,
+                        "klass": 2
+                    },
+                    {
+                        "iD": 2,
+                        "name": "numberedPriorityOrder",
+                        "enum": 2,
+                        "klass": 2
+                    },
+                    {
+                        "iD": 4,
+                        "name": "name",
+                        "attr_type": "string",
+                        "klass": 2
+                    },
+                    {
+                        "iD": 5,
+                        "name": "numberedPriorityMinRange",
+                        "attr_type": "integer",
+                        "klass": 2
+                    },
+                    {
+                        "iD": 6,
+                        "name": "numberedPriorityMaxRange",
+                        "attr_type": "integer",
+                        "klass": 2
+                    }
+                ]
+            },
+            {
+                "iD": 3,
+                "name": "Task",
+                "klass_attributes": [
+                    {
+                        "iD": 7,
+                        "name": "description",
+                        "attr_type": "string",
+                        "klass": 3
+                    },
+                    {
+                        "iD": 8,
+                        "name": "binaryPriority",
+                        "attr_type": "boolean",
+                        "klass": 3
+                    },
+                    {
+                        "iD": 9,
+                        "name": "numberedPriority",
+                        "attr_type": "integer",
+                        "klass": 3
+                    }
+                ]
+            }
+        ],
+        "relations": [
+            {
+                "iD": 1,
+                "src": {
+                    "iD": 1,
+                    "minim": 1,
+                    "maxim": 1,
+                    "ref_class": 1
+                },
+                "tgt": {
+                    "iD": 2,
+                    "minim": 0,
+                    "maxim": null,
+                    "ref_class": 2
+                }
+            },
+            {
+                "iD": 2,
+                "src": {
+                    "iD": 3,
+                    "minim": 1,
+                    "maxim": 1,
+                    "ref_class": 2
+                },
+                "tgt": {
+                    "iD": 4,
+                    "minim": 0,
+                    "maxim": null,
+                    "ref_class": 3
+                }
+            }
+        ]
+    },
+    "usecase_models": {
+        "usecases": [
+            {
+                "iD": 1,
+                "name": "Manage Lists",
+                "usecase_events": [
+                    {
+                        "iD": 1,
+                        "name": "Create List",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 1,
+                        "event_steps": [
+                            {
+                                "iD": 1,
+                                "system": false,
+                                "description": "User initiates the creation of a new list.",
+                                "event": 1
+                            },
+                            {
+                                "iD": 2,
+                                "system": true,
+                                "description": "System prompts the user for list name.",
+                                "event": 1
+                            },
+                            {
+                                "iD": 3,
+                                "system": false,
+                                "description": "User provides the list name.",
+                                "event": 1
+                            },
+                            {
+                                "iD": 4,
+                                "system": true,
+                                "description": "System prompts the user to define the priority method for the list (binary, numbered, or not present).",
+                                "event": 1
+                            },
+                            {
+                                "iD": 5,
+                                "system": false,
+                                "description": "User selects a priority method.",
+                                "event": 1
+                            },
+                            {
+                                "iD": 6,
+                                "system": true,
+                                "description": "If 'numbered' priority is selected, System prompts the user to define the range and order (0 is max or min priority).",
+                                "event": 1
+                            },
+                            {
+                                "iD": 7,
+                                "system": false,
+                                "description": "If 'numbered' priority is selected, User defines the range and order.",
+                                "event": 1
+                            },
+                            {
+                                "iD": 8,
+                                "system": false,
+                                "description": "User confirms the list creation.",
+                                "event": 1
+                            },
+                            {
+                                "iD": 9,
+                                "system": true,
+                                "description": "System creates the new list with the specified name and priority method.",
+                                "event": 1
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 4,
+                        "name": "View Lists",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 1,
+                        "event_steps": [
+                            {
+                                "iD": 25,
+                                "system": false,
+                                "description": "User initiates viewing available lists.",
+                                "event": 4
+                            },
+                            {
+                                "iD": 26,
+                                "system": true,
+                                "description": "System retrieves and displays all lists, including their names and defined priority methods.",
+                                "event": 4
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 5,
+                        "name": "Delete List",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 1,
+                        "event_steps": [
+                            {
+                                "iD": 27,
+                                "system": false,
+                                "description": "User selects a list from the displayed lists to delete.",
+                                "event": 5
+                            },
+                            {
+                                "iD": 28,
+                                "system": true,
+                                "description": "System prompts the user for confirmation to delete the selected list and all its tasks.",
+                                "event": 5
+                            },
+                            {
+                                "iD": 29,
+                                "system": false,
+                                "description": "User confirms the deletion.",
+                                "event": 5
+                            },
+                            {
+                                "iD": 30,
+                                "system": true,
+                                "description": "System deletes the selected list and all its associated tasks.",
+                                "event": 5
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 6,
+                        "name": "Update List Details",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 1,
+                        "event_steps": [
+                            {
+                                "iD": 31,
+                                "system": false,
+                                "description": "User selects a list to modify.",
+                                "event": 6
+                            },
+                            {
+                                "iD": 32,
+                                "system": false,
+                                "description": "User initiates the update of list details (name or priority method).",
+                                "event": 6
+                            },
+                            {
+                                "iD": 33,
+                                "system": true,
+                                "description": "System displays current list name and priority method and prompts for changes.",
+                                "event": 6
+                            },
+                            {
+                                "iD": 34,
+                                "system": false,
+                                "description": "User provides a new list name or selects a new priority method.",
+                                "event": 6
+                            },
+                            {
+                                "iD": 35,
+                                "system": true,
+                                "description": "If 'numbered' priority is selected, System prompts the user to define the range and order (0 is max or min priority).",
+                                "event": 6
+                            },
+                            {
+                                "iD": 36,
+                                "system": false,
+                                "description": "If 'numbered' priority is selected, User defines the range and order.",
+                                "event": 6
+                            },
+                            {
+                                "iD": 37,
+                                "system": false,
+                                "description": "User confirms the updates.",
+                                "event": 6
+                            },
+                            {
+                                "iD": 38,
+                                "system": true,
+                                "description": "System updates the list with the new name and/or priority method.",
+                                "event": 6
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "iD": 2,
+                "name": "Manage Tasks",
+                "usecase_events": [
+                    {
+                        "iD": 2,
+                        "name": "Add Task to List",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 2,
+                        "event_steps": [
+                            {
+                                "iD": 10,
+                                "system": false,
+                                "description": "User selects an existing list.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 11,
+                                "system": false,
+                                "description": "User initiates adding a new task to the selected list.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 12,
+                                "system": true,
+                                "description": "System prompts the user for task description.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 13,
+                                "system": false,
+                                "description": "User provides the task description.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 14,
+                                "system": true,
+                                "description": "If the selected list has a priority method, System prompts the user to set the task's priority according to the list's method.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 15,
+                                "system": false,
+                                "description": "If applicable, User sets the task's priority.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 16,
+                                "system": false,
+                                "description": "User confirms the task creation.",
+                                "event": 2
+                            },
+                            {
+                                "iD": 17,
+                                "system": true,
+                                "description": "System adds the new task to the selected list with the specified description and priority (if applicable).",
+                                "event": 2
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 3,
+                        "name": "Update Task Priority",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 2,
+                        "event_steps": [
+                            {
+                                "iD": 18,
+                                "system": false,
+                                "description": "User selects a list that has a priority method.",
+                                "event": 3
+                            },
+                            {
+                                "iD": 19,
+                                "system": false,
+                                "description": "User selects a task within the chosen list.",
+                                "event": 3
+                            },
+                            {
+                                "iD": 20,
+                                "system": false,
+                                "description": "User initiates changing the selected task's priority.",
+                                "event": 3
+                            },
+                            {
+                                "iD": 21,
+                                "system": true,
+                                "description": "System displays the current priority and prompts for a new priority based on the list's defined method.",
+                                "event": 3
+                            },
+                            {
+                                "iD": 22,
+                                "system": false,
+                                "description": "User sets the new priority for the task.",
+                                "event": 3
+                            },
+                            {
+                                "iD": 23,
+                                "system": false,
+                                "description": "User confirms the priority change.",
+                                "event": 3
+                            },
+                            {
+                                "iD": 24,
+                                "system": true,
+                                "description": "System updates the task's priority in the list.",
+                                "event": 3
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 7,
+                        "name": "View Tasks in List",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 2,
+                        "event_steps": [
+                            {
+                                "iD": 39,
+                                "system": false,
+                                "description": "User selects an existing list.",
+                                "event": 7
+                            },
+                            {
+                                "iD": 40,
+                                "system": false,
+                                "description": "User initiates viewing tasks within the selected list.",
+                                "event": 7
+                            },
+                            {
+                                "iD": 41,
+                                "system": true,
+                                "description": "System retrieves and displays all tasks in the selected list, including their descriptions and priorities (if applicable).",
+                                "event": 7
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 8,
+                        "name": "Delete Task",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 2,
+                        "event_steps": [
+                            {
+                                "iD": 42,
+                                "system": false,
+                                "description": "User selects an existing list.",
+                                "event": 8
+                            },
+                            {
+                                "iD": 43,
+                                "system": false,
+                                "description": "User selects a task from the displayed tasks to delete.",
+                                "event": 8
+                            },
+                            {
+                                "iD": 44,
+                                "system": true,
+                                "description": "System prompts the user for confirmation to delete the selected task.",
+                                "event": 8
+                            },
+                            {
+                                "iD": 45,
+                                "system": false,
+                                "description": "User confirms the deletion.",
+                                "event": 8
+                            },
+                            {
+                                "iD": 46,
+                                "system": true,
+                                "description": "System deletes the selected task from the list.",
+                                "event": 8
+                            }
+                        ]
+                    },
+                    {
+                        "iD": 9,
+                        "name": "Update Task Details",
+                        "actor": {
+                            "iD": 1,
+                            "name": "User",
+                            "description": "The user of the ToDo List application."
+                        },
+                        "usecase": 2,
+                        "event_steps": [
+                            {
+                                "iD": 47,
+                                "system": false,
+                                "description": "User selects an existing list.",
+                                "event": 9
+                            },
+                            {
+                                "iD": 48,
+                                "system": false,
+                                "description": "User selects a task within the chosen list.",
+                                "event": 9
+                            },
+                            {
+                                "iD": 49,
+                                "system": false,
+                                "description": "User initiates updating task details (e.g., description, completion status).",
+                                "event": 9
+                            },
+                            {
+                                "iD": 50,
+                                "system": true,
+                                "description": "System displays current task details (description, completion status) and prompts for changes.",
+                                "event": 9
+                            },
+                            {
+                                "iD": 51,
+                                "system": false,
+                                "description": "User provides a new description or toggles the task's completion status.",
+                                "event": 9
+                            },
+                            {
+                                "iD": 52,
+                                "system": false,
+                                "description": "User confirms the updates.",
+                                "event": 9
+                            },
+                            {
+                                "iD": 53,
+                                "system": true,
+                                "description": "System updates the task with the new description and/or completion status.",
+                                "event": 9
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

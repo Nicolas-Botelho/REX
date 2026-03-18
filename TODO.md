@@ -38,13 +38,14 @@
 
 ### 5. Create Exporters
 - [X] Create a Json Exporter
-- [ ] Add Label to the Enum Attribute
-- [ ] Make the .json nested
+- [X] Add Label to the Enum Attribute
+- [X] Make the .json nested
 
 ### 6. Frontend
 - [ ] Create a frontend that consumes the backend API routes
 
 ### 7. Additions (Future)
+- [ ] Add a delete all route
 - [ ] Add TONTO generation based on models
 - [ ] Add LaTeX document generation based on models
 - [ ] Create a "make coffee" route
