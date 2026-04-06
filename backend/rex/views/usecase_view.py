@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from django.shortcuts import get_object_or_404
 
 from rex.models.usecase import Actor, Event, Step, Usecase
 from rex.serializers.usecase_serializers import ActorSerializer, EventSerializer, StepSerializer, UsecaseSerializer

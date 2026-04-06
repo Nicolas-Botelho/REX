@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from django.shortcuts import get_object_or_404
 
 from rex.models.klass import Class, ClassAttributeEnum, ClassAttributePrim, Enum, EnumAttribute, Relation, RelationClassReference 
 from rex.serializers.class_serializers import ClassSerializer, ClassAttributeEnumSerializer, ClassAttributePrimSerializer, EnumSerializer, EnumAttributeSerializer, RelationSerializer, RelationClassReferenceSerializer

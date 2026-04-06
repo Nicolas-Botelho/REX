@@ -49,3 +49,4 @@
 - [ ] Add TONTO generation based on models
 - [ ] Add LaTeX document generation based on models
 - [ ] Create a "make coffee" route
+- [ ] Add software project concepts (E.g.: Architecture, Patterns)
