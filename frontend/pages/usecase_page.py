@@ -14,11 +14,9 @@ header()
 
 sidebar()
 
-footer()
-
 st.title("Use Cases")
 
-usecases = load_usecases()
-
-for ucs in usecases:
+for ucs in st.session_state.get("ucs"):
   usecase_card(ucs)
+
+footer()

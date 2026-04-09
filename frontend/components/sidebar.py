@@ -8,3 +8,4 @@ def sidebar():
     st.page_link("./pages/class_page.py", label="Classes")
     # st.page_link("./pages/nrf_page.py", label="Non Functional Requirements")
     # st.page_link("./pages/br_pages.py", label="Business Rules")
+    st.page_link("./pages/class_new.py", label="Create New Class")

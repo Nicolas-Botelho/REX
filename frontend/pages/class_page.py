@@ -15,13 +15,11 @@ header()
 
 sidebar()
 
-footer()
-
 st.title("Classes")
 
-classes = load_class()
+st.page_link(page="./pages/class_new.py", label="Create New Class")
 
-for cls in classes:
+for cls in st.session_state.get("classes"):
   class_card(cls)
 
 # data dict with the response
@@ -29,3 +27,5 @@ for cls in classes:
 # each card opens all the details
 # cards can be changed clicking on the card links
 # classes, attributes, relations can be CRUDed from the cards
+
+footer()

@@ -139,6 +139,3 @@ class JsonGenerator():
     usecase_models.pop('usecase_events')
 
     return data
-
-  def read(self):
-    pass

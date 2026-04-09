@@ -11,8 +11,6 @@ header()
 
 sidebar()
 
-footer()
-
 input = st.text_area("Enter the system text")
 
 if st.button("Create Use Cases"):
@@ -23,3 +21,5 @@ if st.button("Create Non Functional Requirements"):
   st.text("WIP")
 if st.button("Create Business Rules"):
   st.text("WIP")
+
+footer()

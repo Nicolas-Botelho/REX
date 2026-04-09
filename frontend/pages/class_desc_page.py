@@ -91,8 +91,6 @@ header()
 
 sidebar()
 
-footer()
-
 desc_cls = get("classes", "class", int(st.query_params.id))
 
 attrs_str, linked_enums = attrgen(desc_cls)
@@ -122,3 +120,5 @@ if linked_enums:
   """)
   for linked_enum_id, linked_enum_name in linked_enums:
     st.page_link(page="./app.py", label=f"{linked_enum_name}", query_params={"id" : linked_enum_id})
+
+footer()
