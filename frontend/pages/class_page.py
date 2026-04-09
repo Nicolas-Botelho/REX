@@ -21,8 +21,13 @@ st.title("Classes")
 
 classes = load_class()
 
-for cls in classes:
-  class_card(cls)
+if len(classes) == 0:
+  st.markdown("No Classes in the System")
+elif classes[0].get("error") != None:
+  st.error("Erro Interno")
+else:
+  for cls in classes:
+    class_card(cls)
 
 # data dict with the response
 # list of cards with the classes

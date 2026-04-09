@@ -93,7 +93,7 @@ sidebar()
 
 footer()
 
-desc_cls = get("classes", "class", int(st.query_params.id))
+desc_cls = get("classes", "class", int(st.query_params["id"]))
 
 attrs_str, linked_enums = attrgen(desc_cls)
 rel_str, linked_clss = relgen(desc_cls)

@@ -20,5 +20,10 @@ st.title("Use Cases")
 
 usecases = load_usecases()
 
-for ucs in usecases:
-  usecase_card(ucs)
+if len(usecases) == 0:
+  st.markdown("No Use Cases in the System")
+elif usecases[0].get("error") != None:
+  st.error("Erro Interno")
+else:
+  for ucs in usecases:
+    usecase_card(ucs)
