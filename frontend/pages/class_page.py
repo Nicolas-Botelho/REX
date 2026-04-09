@@ -1,5 +1,4 @@
 import streamlit as st
-import requests
 
 from components.page_config import page_config
 from components.header import header
