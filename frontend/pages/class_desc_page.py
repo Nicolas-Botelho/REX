@@ -21,8 +21,6 @@ def write_prim_attr(cls_dict: dict):
     if type(caps) == list:
       for cap in caps:
         string += f"{cap["name"]} : {cap["attr_type"]}\n\n"
-    # elif type(caps) == dict:
-    #   string += f"{caps["name"]} : {caps["attr_type"]}\n\n"
   except:
     pass
 
@@ -39,9 +37,6 @@ def write_enum_attr(cls_dict: dict):
       for cae in caes:
         string += f"{cae["name"]} : {cae["enum"]["name"]}\n\n"
         linked_enums.append((cae["enum"]["id"], cae["enum"]["name"]))
-    # elif type(caes) == dict:
-    #   string += f"{caes["name"]} : {caes["enum"]["name"]}\n\n"
-    #   linked_enums.append((caes["enum"]["id"], caes["enum"]["name"]))
   except:
     pass
   return string, linked_enums
@@ -90,6 +85,8 @@ page_config()
 header()
 
 sidebar()
+
+footer()
 
 desc_cls = get("classes", "class", int(st.query_params.id))
 

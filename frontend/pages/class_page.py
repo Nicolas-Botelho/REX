@@ -1,13 +1,10 @@
 import streamlit as st
-import requests
 
 from components.page_config import page_config
 from components.header import header
 from components.sidebar import sidebar
 from components.footer import footer
 from components.card import class_card
-
-from utils.loader import load_class
 
 page_config()
 
@@ -19,8 +16,15 @@ st.title("Classes")
 
 st.page_link(page="./pages/class_new.py", label="Create New Class")
 
-for cls in st.session_state.get("classes"):
-  class_card(cls)
+classes = st.session_state.get("classes")
+
+if len(classes) == 0:
+  st.markdown("No Classes in the System")
+elif classes[0].get("error") != None:
+  st.error("Erro Interno")
+else:
+  for cls in classes:
+    class_card(cls)
 
 # data dict with the response
 # list of cards with the classes

@@ -6,8 +6,6 @@ from components.sidebar import sidebar
 from components.footer import footer
 from components.card import usecase_card
 
-from utils.loader import load_usecases
-
 page_config()
 
 header()
@@ -16,7 +14,14 @@ sidebar()
 
 st.title("Use Cases")
 
-for ucs in st.session_state.get("ucs"):
-  usecase_card(ucs)
+usecases = st.session_state.get("ucs")
+
+if len(usecases) == 0:
+  st.markdown("No Use Cases in the System")
+elif usecases[0].get("error") != None:
+  st.error("Erro Interno")
+else:
+  for ucs in usecases:
+    usecase_card(ucs)
 
 footer()

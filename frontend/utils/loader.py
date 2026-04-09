@@ -22,11 +22,14 @@ def load_usecase_actor():
   return loaded_actors
 
 def load(module: str, cls: str):
-  BACKEND_URL = st.get_option("server.corsAllowedOrigins")[0]
+  try:
+    BACKEND_URL = st.get_option("server.corsAllowedOrigins")[0]
 
-  response = requests.get(url=f"{BACKEND_URL}/{module}/{cls}/")  
+    response = requests.get(url=f"{BACKEND_URL}/{module}/{cls}/")  
 
-  return response.json()
+    return response.json()
+  except Exception as e:
+    return [{"error" : e.__dict__}]
 
 def load_to_session():
   classes = load_class()

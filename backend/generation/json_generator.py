@@ -19,7 +19,7 @@ class JsonGenerator():
       'usecase_models' : usecases_data
     })
 
-    with open("out/output.json", "w", encoding="utf-8") as f:
+    with open("../out/output.json", "w", encoding="utf-8") as f:
       json.dump(data, f, indent=4)
 
     return True
