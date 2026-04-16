@@ -93,49 +93,49 @@ class JsonGenerator():
     # enum attributes into enum
     for elem in enum_attr_list:
       elem['label'] = enum_labels(elem.get('value'))
-      self.nest(elem, enum_list, 'enum', 'iD', 'enum_attributes')
+      self.nest(elem, enum_list, 'enum', 'id', 'enum_attributes')
     class_models.pop('enum_attributes')
 
     # class attributes into class
     for elem in class_enum_attr_list:
-      self.nest(elem, class_list, 'klass', 'iD', 'klass_attributes')
-    last_enum_attr_id = class_enum_attr_list[-1].get('iD')
+      self.nest(elem, class_list, 'klass', 'id', 'klass_attributes')
+    last_enum_attr_id = class_enum_attr_list[-1].get('id')
     class_models.pop('class_enum_attributes')
 
     # class attributes into class
     for elem in class_primitive_attr_list:
-      elem['iD'] = elem.get('iD') + last_enum_attr_id
-      self.nest(elem, class_list, 'klass', 'iD', 'klass_attributes')
+      elem['id'] = elem.get('id') + last_enum_attr_id
+      self.nest(elem, class_list, 'klass', 'id', 'klass_attributes')
     class_models.pop('class_primitive_attributes')
 
     # references into relation
     for elem in relation_class_ref_list:
-      # compare rcr iD with relation src
+      # compare rcr id with relation src
       try:
-        self.nest(elem, relation_list, 'iD', 'src', 'src', many=False)
+        self.nest(elem, relation_list, 'id', 'src', 'src', many=False)
       except:
         pass
-      # compare rcr iD with relation tgt
+      # compare rcr id with relation tgt
       try:
-        self.nest(elem, relation_list, 'iD', 'tgt', 'tgt', many=False)
+        self.nest(elem, relation_list, 'id', 'tgt', 'tgt', many=False)
       except:
         pass
     class_models.pop('relation_class_references')
     
     # steps into event
     for elem in step_list:
-      self.nest(elem, event_list, 'event', 'iD', 'event_steps')
+      self.nest(elem, event_list, 'event', 'id', 'event_steps')
     usecase_models.pop('events_steps')
 
     # actors into event
     for elem in actor_list:
-      # compare actor iD with event actor
-      self.nest(elem, event_list, 'iD', 'actor', 'actor', many=False)
+      # compare actor id with event actor
+      self.nest(elem, event_list, 'id', 'actor', 'actor', many=False)
     usecase_models.pop('actors')
 
     # events into usecase
     for elem in event_list:
-      self.nest(elem, usecase_list, 'usecase', 'iD', 'usecase_events')
+      self.nest(elem, usecase_list, 'usecase', 'id', 'usecase_events')
     usecase_models.pop('usecase_events')
 
     return data

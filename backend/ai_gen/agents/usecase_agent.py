@@ -44,25 +44,25 @@ The Structured Output have the following fields:
 - steps: All the created steps.
 
 ### Usecase Fields
-- iD: positive integer; must be unique among the usecases; use case identification; and
+- semantic_id: string; must be unique among the usecases; must be snake_case; use case identification; and
 - name: string; must be unique; use case name.
 
 ### Event Fields
-- iD: positive integer; must be unique among the events; event identification;
+- semantic_id: string; must be unique among the events; must be snake_case; event identification;
 - name: string; must be unique in the usecase it is part of; event name;
-- actor: positive integer; must be a existent actor iD; actor that executes the event; and
-- usecase: positive integer; must be a existent usecase iD; usecase that the event is part of.
+- actor: positive integer; must be a existent actor semantic_id; actor that executes the event; and
+- usecase: positive integer; must be a existent usecase semantic_id; usecase that the event is part of.
 
 ### Actor Fields
-- iD: positive integer; must be unique among the actors; actor identification;
+- semantic_id: string; must be unique among the actors; must be snake_case; actor identification;
 - name: string; must be unique; actor name; and
 - description: string or None; optional; optional description of the actor.
 
 ### Step Fields
-- iD: positive integer; must be unique among the steps; step identification;
+- semantic_id: string; must be unique among the steps; must be snake_case; step identification;
 - system: boolean; True or False; False = Actor executed step and True = System executed step;
 - description: string; no restrictions; description of the executed actions in the step; and
-- event: int; must be a existent event iD; event that the step is part of.
+- event: int; must be a existent event semantic_id; event that the step is part of.
 
 # Final Instructions
 - Answer strictly in the Structured Output Format;

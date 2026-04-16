@@ -2,22 +2,22 @@ from typing import List
 from pydantic import BaseModel
 
 class Actor(BaseModel):
-  iD : int
+  semantic_id : str
   name : str
   description : str | None
 
 class Event(BaseModel):
-  iD : int
+  semantic_id : str
   name : str
-  actor : int
-  usecase : int
+  actor : str
+  usecase : str
 
 class Step(BaseModel):
-  iD : int
+  semantic_id : str
   system : bool
   description : str
-  event : int
+  event : str
 
 class Usecase(BaseModel):
-  iD : int
+  semantic_id : str
   name : str

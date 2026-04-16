@@ -2,37 +2,36 @@ from typing import List
 from pydantic import BaseModel
 
 class Enum(BaseModel):
-  iD : int
+  semantic_id : str
   name : str
 
 class EnumAttribute(BaseModel):
-  iD : int
+  semantic_id : str
   value : str
-  enum : int
+  enum : str
 
 class Class(BaseModel):
-  iD : int
+  semantic_id : str
   name : str
 
 class ClassAttributePrim(BaseModel):
-  iD : int
+  semantic_id : str
   name : str
   attr_type : str
-  klass : int
+  klass : str
 
 class ClassAttributeEnum(BaseModel):
-  iD : int
+  semantic_id : str
   name : str
-  enum : int
-  klass : int
+  enum : str
+  klass : str
 
 class RelationClassReference(BaseModel):
-  iD : int
+  semantic_id : str
   minim : int
   maxim : int | None
-  ref_class : int
+  ref_class : str
 
 class Relation(BaseModel):
-  iD : int
-  src : int
-  tgt : int
+  src : str
+  tgt : str

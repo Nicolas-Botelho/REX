@@ -69,7 +69,7 @@ class RelationClassReferenceViewSet(ModelViewSet):
     queryset = self.filter_queryset(self.get_queryset())
 
     if self.action == 'retrieve' or self.action == 'list':
-      queryset = queryset.prefetch_related('rcr_as_srcs', 'rcr_as_tgts')
+      queryset = queryset.select_related('rcr_as_src', 'rcr_as_tgt')
     
     obj = get_object_or_404(queryset, **self.kwargs)
 

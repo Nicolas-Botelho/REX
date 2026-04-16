@@ -67,7 +67,7 @@ usecase_router.register('usecase', UsecaseViewSet, basename='usecase')
 urlpatterns = [
    path("", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path("classes/", include(class_router.urls)),
-   path("use_cases/", include(usecase_router.urls)),
+   path("usecases/", include(usecase_router.urls)),
    path("", include(ai_router.urls)),
    path("", include(generator_router.urls))
 ]
