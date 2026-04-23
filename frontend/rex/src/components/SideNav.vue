@@ -21,10 +21,11 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .sidenav a {
-  color: white;
+  color: #e8edf2;
   margin-bottom: 10px;
   text-decoration: none;
 }

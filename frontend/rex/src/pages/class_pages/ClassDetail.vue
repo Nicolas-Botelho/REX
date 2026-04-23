@@ -52,3 +52,7 @@ watchEffect(async () => {
   classData.value = await getClass(id)
 })
 </script>
+
+<style scoped>
+@import '@/css/style.css';
+</style>

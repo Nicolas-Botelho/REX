@@ -40,7 +40,5 @@ const removeUseCase = async (id) => {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 24px;
-}
+@import '@/css/style.css';
 </style>

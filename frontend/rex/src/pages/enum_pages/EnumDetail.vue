@@ -26,3 +26,7 @@ onMounted(async () => {
   enumData.value = await getEnum(id)
 })
 </script>
+
+<style scoped>
+@import '@/css/style.css';
+</style>

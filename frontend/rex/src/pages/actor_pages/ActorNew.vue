@@ -6,7 +6,7 @@
     <textarea v-model="def_actor" placeholder="Actor{
 Actor description
 }"></textarea>
-
+    <br/><br/>
     <button type="button" @click="addActor">Add Actor</button>
   </div>
 </template>
@@ -31,7 +31,5 @@ const addActor = async () => {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 24px;
-}
+@import '@/css/style.css';
 </style>

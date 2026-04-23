@@ -7,7 +7,7 @@
 ENUM_VALUE
 ANOTHER_VALUE
 }"></textarea>
-
+    <br/><br/>
     <button type="button" @click="addEnum">Add Enum</button>
   </div>
 </template>
@@ -43,7 +43,5 @@ const addEnum = async () => {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 24px;
-}
+@import '@/css/style.css';
 </style>

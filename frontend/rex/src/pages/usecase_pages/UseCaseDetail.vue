@@ -31,3 +31,7 @@ onMounted(async () => {
   ucData.value = await getUseCase(id)
 })
 </script>
+
+<style scoped>
+@import '@/css/style.css';
+</style>

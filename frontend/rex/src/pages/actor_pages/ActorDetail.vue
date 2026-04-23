@@ -27,3 +27,6 @@ onMounted(async () => {
   actorData.value = await getActor(id)
 })
 </script>
+<style scoped>
+@import '@/css/style.css';
+</style>

@@ -16,8 +16,25 @@ import SideNav from './components/SideNav.vue'
 </script>
 
 <style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #e8edf2;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
 .layout {
   display: flex;
+  min-height: 100vh;
 }
 
 .content {
@@ -25,5 +42,3 @@ import SideNav from './components/SideNav.vue'
   padding: 20px;
 }
 </style>
-
-<style scoped></style>

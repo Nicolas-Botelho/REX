@@ -8,7 +8,7 @@ attribute1:type
 attribute2:enum
 }
 Class"0..1"-->"1..N"AnotherClass'></textarea>
-
+    <br/><br/>
     <button type="button" @click="addClass">Add Class</button>
 
   </div>
@@ -144,3 +144,7 @@ onMounted(async () => {
   classes.value = await getClasses()
 })
 </script>
+
+<style scoped>
+@import '@/css/style.css';
+</style>

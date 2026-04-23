@@ -10,7 +10,7 @@ Actor: action description
 System: action description
 }
 }"></textarea>
-
+    <br/><br/>
     <button type="button" @click="addUseCase">Add Use Case</button>
   </div>
 </template>
@@ -89,7 +89,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 24px;
-}
+@import '@/css/style.css';
 </style>
