@@ -27,6 +27,18 @@ class RelationClassReference(PolymorphicModel):
   maxim = models.IntegerField(blank=True, null=True)
   ref_class = models.ForeignKey(Class, related_name='class_relations', blank=False, on_delete=models.CASCADE)
 
+  def delete(self, using = None, keep_parents = False, is_otherside = False):
+    if not is_otherside:
+      otherside = None
+      if hasattr(self, 'rcr_as_src'):
+        otherside = self.rcr_as_src.tgt
+      if hasattr(self, 'rcr_as_tgt'):
+        otherside = self.rcr_as_tgt.src
+      if otherside:
+        otherside.delete(using=using, keep_parents=keep_parents, is_otherside=True)
+
+    return super().delete(using, keep_parents)
+
 class Relation(PolymorphicModel):
   src = models.OneToOneField(RelationClassReference, related_name='rcr_as_src', blank=False, on_delete=models.CASCADE)
   tgt = models.OneToOneField(RelationClassReference, related_name='rcr_as_tgt', blank=False, on_delete=models.CASCADE)
