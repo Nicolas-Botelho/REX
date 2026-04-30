@@ -9,6 +9,7 @@
       {{ loading ? 'Loading...' : 'Submit Description' }}
     </button>
 
+
     <p v-if="successMessage">{{ successMessage }}</p>
     
   </div>
@@ -27,7 +28,7 @@ const handleClick = async () => {
   successMessage.value = ''
 
   try {
-    const result = await generateAll()
+    const result = await generateAll(system_description.value)
     successMessage.value = 'Artifacts generated sucessfully'
   }
   catch (error) {

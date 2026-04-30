@@ -8,8 +8,12 @@
     <ul v-if="eenums">
       <li v-for="eenum in eenums" :key="eenum.id">
         <router-link :to="`enums/${eenum.id}`">{{ eenum.name }}</router-link>
-        <button type="button" @click=""> Update Enum </button>
-        <button type="button" @click="removeEnum(eenum.id)"> Delete Enum </button>
+        <div>
+          <button type="button" @click=""> Update Enum </button>
+        </div>
+        <div>
+          <button type="button" @click="removeEnum(eenum.id)"> Delete Enum </button>          
+        </div>
       </li>
     </ul>
   </div>

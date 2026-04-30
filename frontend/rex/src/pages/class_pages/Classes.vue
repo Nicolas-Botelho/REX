@@ -8,8 +8,12 @@
     <ul v-if="clazzes">
       <li v-for="clazz in clazzes" :key="clazz.id">
         <router-link :to="`classes/${clazz.id}`">{{ clazz.name }}</router-link>
-        <button type="button" @click=""> Update Class </button>
-        <button type="button" @click="removeClass(clazz.id)"> Delete Class </button>
+        <div>
+          <button type="button" @click=""> Update Class </button>
+        </div>
+        <div>
+          <button type="button" @click="removeClass(clazz.id)"> Delete Class </button>
+        </div>
       </li>
     </ul>
   </div>
