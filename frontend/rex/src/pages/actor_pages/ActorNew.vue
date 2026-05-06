@@ -3,10 +3,13 @@
     <h1>New Actor</h1>
     
     <p>Define a New Actor</p>
-    <textarea v-model="def_actor" placeholder="Actor{
-Actor description
-}"></textarea>
+
+    <input placeholder="Class Name" v-model="actor_name">
     <br/><br/>
+
+    <textarea placeholder="Actor Description" v-model="actor_description"></textarea>
+    <br/><br/>
+
     <button type="button" @click="addActor">Add Actor</button>
   </div>
 </template>
@@ -15,18 +18,11 @@ Actor description
 import { ref } from 'vue'
 import { createActor } from '@/services/api/actors'
 
-const def_actor = ref('')
-
-const transform = (actor_string) => {
-  const name = String(actor_string.slice(0,actor_string.indexOf('{')).trim())
-  const description = actor_string.slice(actor_string.indexOf('{')+1,actor_string.indexOf('}'))
-
-  return {'name': name, 'description': description}
-}
+const actor_name = ref('')
+const actor_description = ref('')
 
 const addActor = async () => {
-  const actor_obj = transform(def_actor.value)
-  await createActor(actor_obj.name, actor_obj.description)
+  await createActor(actor_name.value, actor_description.value)
 }
 </script>
 

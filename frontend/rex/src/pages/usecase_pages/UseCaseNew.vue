@@ -3,14 +3,41 @@
     <h1>New Use Case</h1>
 
     <p>Define a New Use Case</p>
-    <textarea v-model="def_uc" placeholder="UseCase{
+    <!-- <textarea v-model="def_uc" placeholder="UseCase{
 Event{
 performer: Actor Name
 Actor: action description
 System: action description
 }
-}"></textarea>
-    <br/><br/>
+}"></textarea> -->
+
+    <input placeholder="Use Case Name" v-model="uc_name">
+
+    <div>
+      <p>Current Events</p>
+      <ul>
+        <li v-for="item in events">
+          {{ item.name }} ({{ item.actor }})
+          <button @click="delEvent(item)">Remove Event</button>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <p>Add New Event</p>
+
+      <input placeholder="Event Name" v-model="event_name">
+      <br/><br/>
+
+      <select placeholder="Select Actor" v-model="event_actor">
+        <option v-for="item of actors">{{ item.name }}</option>
+      </select>
+      <br/><br/>
+
+      <button type="button" @click="addEvent">Add Event</button>
+      <br/><br/>
+    </div>
+
     <button type="button" @click="addUseCase">Add Use Case</button>
   </div>
 </template>
@@ -20,62 +47,31 @@ import { ref, onMounted } from 'vue'
 import { createUseCase, createEvent, createStep } from '@/services/api/usecases'
 import { getActors } from '@/services/api/actors'
 
-const def_uc = ref('')
 const actors = ref([])
 
-const transform = (uc_string) => {
+const uc_name = ref('')
+const events = ref([])
+const event_name = ref('')
+const event_actor = ref('')
 
-  const LINE_EXPRESSION = /\r\n|\n|\r/g
-  const name = String(uc_string.slice(0,uc_string.indexOf('{')).trim())
-  const body = uc_string.slice(uc_string.indexOf('{')+1,uc_string.length-1).split('}')
+const addEvent = () => {
+  events.value.push({name: event_name.value, actor: event_actor.value})
+}
 
-  const events_obj = ref([])
-  for (const item of body) {
-    if (item.replace(LINE_EXPRESSION, '') != '') {
-      const event = item.split('{')
-      const event_name = event[0].replace(LINE_EXPRESSION, '')
-      const steps = event[1].split('\n')
-
-      const steps_obj = ref([])
-      const actor = ref(null)
-
-      for (const step of steps) {
-        const step_list = step.split(':')
-        if (step_list[0].trim() != null && step_list[0].trim() != '') {
-          if (step_list[0].trim() == 'performer') {
-            for (const actor_item of actors.value) {
-              if (actor_item.name.toLowerCase() == step_list[1].trim().toLowerCase()) {
-                actor.value = {'id': actor_item.id, 'name': actor_item.name}
-              }
-            }
-          }
-          else if (step_list[0].trim().toLowerCase() == actor.value.name.toLowerCase()
-            || step_list[0].trim().toLowerCase() =='actor') {
-            steps_obj.value.push({'system': false, 'description': step_list[1].trim()})
-          }
-          else if (step_list[0].trim().toLowerCase() == 'system') {
-            steps_obj.value.push({'system': true, 'description': step_list[1].trim()})
-          }
-        }
-      }
-
-      events_obj.value.push({'name': event_name, 'steps': steps_obj.value, 'actor': actor.value.id})
-    }
-  }
-  return {'name': name, 'events': events_obj.value}
+const delEvent = (item) => {
+  let event_index = events.value.indexOf(item)
+  events.value.splice(event_index, 1)
 }
 
 const addUseCase = async () => {
   try {
-    const uc_obj = transform(def_uc.value)
+    const newUC = await createUseCase(uc_name.value)
 
-    const newUC = await createUseCase(uc_obj.name)
-
-    for (const uc_event of uc_obj.events) {
+    for (const uc_event of events.value) {
       const newEvent = await createEvent(uc_event.name, uc_event.actor, newUC.id)
-      for (const event_step of uc_event.steps) {
-        await createStep(event_step.system, event_step.description, newEvent.id)
-      }
+      // for (const event_step of uc_event.steps) {
+      //   await createStep(event_step.system, event_step.description, newEvent.id)
+      // }
     }
   }
   catch (error) {

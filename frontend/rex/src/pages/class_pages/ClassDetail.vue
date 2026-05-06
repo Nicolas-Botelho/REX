@@ -2,17 +2,12 @@
   <div v-if="classData">
     <h1>{{ classData.name }}</h1>
 
-      <h2 v-if="classData.class_primitive_attrs.length">Primitive Type Attributes</h2>
+      <h2 v-if="classData.class_primitive_attrs.length || classData.class_enum_attrs.length">Attributes</h2>
 
       <ul>
         <li v-for="item in classData.class_primitive_attrs" :key="item.id">
           {{ item.name }} : {{ item.attr_type }}
         </li>
-      </ul>
-
-      <h2 v-if="classData.class_enum_attrs.length">Enum Type Attributes</h2>
-
-      <ul>
         <li v-for="item in classData.class_enum_attrs" :key="item.id">
           {{ item.name }} : <router-link :to="`/enums/${item.enum.id}`"> {{ item.enum.name }} </router-link> 
         </li>
