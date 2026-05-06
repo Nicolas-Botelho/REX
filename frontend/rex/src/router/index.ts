@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/pages/Home.vue'
 import Generate from '@/pages/Generate.vue'
+import Export from '@/pages/Export.vue'
 
 import Classes from '@/pages/class_pages/Classes.vue'
 import ClassDetail from '@/pages/class_pages/ClassDetail.vue'
@@ -23,6 +24,7 @@ const router = createRouter({
   routes: [
     {path: '/', component: Home},
     {path: '/generate', component: Generate},
+    {path: '/export', component: Export},
     {path: '/classes', component: Classes},
     {path: '/classes/:id', component: ClassDetail},
     {path: '/classes/new', component: ClassNew},
