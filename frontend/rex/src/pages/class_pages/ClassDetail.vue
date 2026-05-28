@@ -1,15 +1,14 @@
 <template>
   <div v-if="classData">
     <h1>{{ classData.name }}</h1>
+    <p style="text-align: center;"><<{{ classData.stereotype }}>></p>
 
-      <h2 v-if="classData.class_primitive_attrs.length || classData.class_enum_attrs.length">Attributes</h2>
+      <h2 v-if="classData.class_attrs.length">Attributes</h2>
 
       <ul>
-        <li v-for="item in classData.class_primitive_attrs" :key="item.id">
-          {{ item.name }} : {{ item.attr_type }}
-        </li>
-        <li v-for="item in classData.class_enum_attrs" :key="item.id">
-          {{ item.name }} : <router-link :to="`/enums/${item.enum.id}`"> {{ item.enum.name }} </router-link> 
+        <li v-for="item in classData.class_attrs" :key="item.id">
+          <p v-if="item.attr_type">{{ item.name }} : {{ item.attr_type }}</p>
+          <p v-if="item.enum">{{ item.name }} : <router-link :to="`/enums/${item.enum.id}`"> {{ item.enum.name }} </router-link></p>
         </li>
       </ul>
 

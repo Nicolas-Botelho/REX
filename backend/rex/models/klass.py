@@ -10,17 +10,25 @@ class EnumAttribute(PolymorphicModel):
 
 class Class(PolymorphicModel):
   name = models.CharField(unique=True, blank=False)
+  stereotype = models.CharField(blank=True, null=True)
 
-class ClassAttributePrim(PolymorphicModel):
+class Inheritance(PolymorphicModel):
+  parent = models.ForeignKey(Class, related_name='class_parents', blank=False, on_delete=models.CASCADE)
+  child = models.ForeignKey(Class, related_name='class_childs', blank=False, on_delete=models.CASCADE)
+
+class Readable(PolymorphicModel):
+  pass
+
+class ClassAttribute(Readable):
   name = models.CharField(blank=False)
+  klass = models.ForeignKey(Class, related_name='class_attrs', blank=False, on_delete=models.CASCADE)
+
+class ClassAttributePrim(ClassAttribute):
   primitive_types = {'string' : 'string', 'integer' : 'integer', 'boolean' : 'boolean', 'float' : 'float'}
   attr_type = models.CharField(choices=primitive_types, blank=False)
-  klass = models.ForeignKey(Class, related_name='class_primitive_attrs', blank=False, on_delete=models.CASCADE)
 
-class ClassAttributeEnum(PolymorphicModel):
-  name = models.CharField(blank=False)
+class ClassAttributeEnum(ClassAttribute):
   enum = models.ForeignKey(Enum, related_name='enum_related_classes', blank=False, on_delete=models.PROTECT)
-  klass = models.ForeignKey(Class, related_name='class_enum_attrs', blank=False, on_delete=models.CASCADE)
 
 class RelationClassReference(PolymorphicModel):
   minim = models.IntegerField(blank=False)
@@ -39,6 +47,6 @@ class RelationClassReference(PolymorphicModel):
 
     return super().delete(using, keep_parents)
 
-class Relation(PolymorphicModel):
+class Relation(Readable):
   src = models.OneToOneField(RelationClassReference, related_name='rcr_as_src', blank=False, on_delete=models.CASCADE)
   tgt = models.OneToOneField(RelationClassReference, related_name='rcr_as_tgt', blank=False, on_delete=models.CASCADE)

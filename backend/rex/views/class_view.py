@@ -1,8 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
 
-from rex.models.klass import Class, ClassAttributeEnum, ClassAttributePrim, Enum, EnumAttribute, Relation, RelationClassReference 
-from rex.serializers.class_serializers import ClassSerializer, ClassAttributeEnumSerializer, ClassAttributePrimSerializer, EnumSerializer, EnumAttributeSerializer, RelationSerializer, RelationClassReferenceSerializer
+from rex.models.klass import Class, ClassAttributeEnum, ClassAttributePrim, Enum, EnumAttribute, Relation, RelationClassReference, Inheritance
+from rex.serializers.class_serializers import ClassSerializer, ClassAttributeEnumSerializer, ClassAttributePrimSerializer, EnumSerializer, EnumAttributeSerializer, RelationSerializer, RelationClassReferenceSerializer, InheritanceSerializer
 
 class ClassViewSet(ModelViewSet):
   serializer_class = ClassSerializer
@@ -12,12 +12,16 @@ class ClassViewSet(ModelViewSet):
     queryset = self.filter_queryset(self.get_queryset())
 
     if self.action == 'retrieve' or self.action == 'list':
-      queryset = queryset.prefetch_related('class_primitive_attrs', 'class_enum_attrs', 'class_relations')
+      queryset = queryset.prefetch_related('class_attrs', 'class_relations', 'class_parents', 'class_childs')
     
     obj = get_object_or_404(queryset, **self.kwargs)
 
     self.check_object_permissions(self.request, obj)
     return obj
+  
+class InheritanceViewSet(ModelViewSet):
+  serializer_class = InheritanceSerializer
+  queryset = Inheritance.objects.all()
 
 class ClassAttributeEnumViewSet(ModelViewSet):
   serializer_class = ClassAttributeEnumSerializer

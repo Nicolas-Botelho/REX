@@ -44,7 +44,7 @@ System: action description
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { createUseCase, createEvent, createStep } from '@/services/api/usecases'
+import { createUseCase, createEvent } from '@/services/api/usecases'
 import { getActors } from '@/services/api/actors'
 
 const actors = ref([])

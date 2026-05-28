@@ -1,4 +1,3 @@
-import { sys } from 'typescript'
 import request from './api'
 
 // Use Cases
@@ -39,23 +38,4 @@ export function updateEvent(
 
 export function deleteEvent(id: number) {
   return request(`usecases/event/${id}/`, {'method': 'DELETE'})
-}
-
-// Steps
-export function createStep(system: boolean, description: string, event_id: number) {
-  return request('usecases/step/', {
-    'method': 'POST',
-    'data': {system: system, description: description, event: event_id}})
-}
-
-export function updateStep(
-  id: number, system: boolean, description: string, event_id: number
-) {
-  return request(`usecases/step/${id}/`, {
-    'method': 'PUT',
-    'data': {system: system, description: description, event: event_id}})
-}
-
-export function deleteStep(id: number) {
-  return request(`usecases/step/${id}/`, {'method': 'DELETE'})
 }

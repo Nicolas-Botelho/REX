@@ -1,9 +1,9 @@
 import json
 import copy
-from typing import Any
 
-from conversion.convert_class import ClassConverter
-from conversion.convert_usecase import UsecaseConverter
+import ai_gen.models.klass as cls_mod
+import ai_gen.models.usecase as uc_mod
+from conversion.convert_model import ClassConverter, UsecaseConverter
 from generation.utils import enum_labels
 
 class JsonGenerator():
@@ -11,131 +11,231 @@ class JsonGenerator():
     cc = ClassConverter()
     uc = UsecaseConverter()
 
-    classes_data = cc.load().model_dump()
-    usecases_data = uc.load().model_dump()
+    classes_data = cc.load()
+    usecases_data, step_data = uc.load()
+    data = {
+      "class_models": {
+        "enums": [],
+        "classes": [],
+        "relations": [],
+        "inheritances": []
+      },
+      "usecase_models": {
+        "usecases": [],
+        "actors": [],
+        "steps": []
+      }
+    }
 
-    data = self.nest_data({
-      'class_models' : classes_data,
-      'usecase_models' : usecases_data
-    })
+    data["class_models"] = self.fill_classes(classes_data)
+    data["usecase_models"] = self.fill_usecases(usecases_data, step_data)
 
-    with open("../out/output.json", "w", encoding="utf-8") as f:
+    with open("../out/out.json", "w", encoding="utf-8") as f:
       json.dump(data, f, indent=4)
 
     return True
+  
+  def fill_classes(self, cls_list: list[cls_mod.Class]):
+    data = {
+      "enums": [],
+      "classes": [],
+      "relations": [],
+      "inheritances": []
+    }
 
-  def nest(self, elem: dict, reverse_ref_elem_list: list[dict], ref_name: str, lookup_name: str, nest_name: str, many: bool = True):
-    """
-    Nest a element in a object inside a list.
-    OBS: The lookup_name must be unique, otherwise the method will change only one of the dicts.
+    for cls in cls_list:
+      new_class = {
+        "id": cls.id,
+        "name": cls.name,
+        "klass_attributes": [] 
+      }
 
-    Args:
-      elem (dict): element to be nested.
-      reverse_ref_elem_list (list[dict]): list with the dict that the element will be nested inside of.
-      ref_name (str): name of the reference key in elem. Must reference a unique field.
-      lookup_name (str): name of the lookup key in the target dict. Must be unique.
-      nest_name (str): name of the key that the elem will be nested into.
-      many (bool): if true, the nest field will be considered as a list; else, it will be considered a single value field and will uptade its value, if the field already exists.
+      for atr in cls.class_attrs:
+        new_attr = None
+        if isinstance(atr, cls_mod.ClassAttributePrim):
+          new_attr = {
+            "id": atr.id,
+            "name": atr.name,
+            "attr_type": atr.attr_type,
+            "klass": atr.klass
+          }
+        elif isinstance(atr, cls_mod.ClassAttributeEnum):
+          new_attr = {
+            "id": atr.id,
+            "name": atr.name,
+            "enum": atr.enum.id,
+            "klass": atr.klass
+          }
+          new_enum = {
+            "id": atr.enum.id,
+            "name": atr.enum.name,
+            "enum_attributes": [{"id": value.id, "value":value.value, "label":enum_labels(value.value), "enum":value.enum.id} for value in atr.enum.enum_values]
+          }
+          if not any(x["id"] == new_enum["id"] for x in data["enums"]):
+            data["enums"].append(new_enum)
 
-    Returns:
-      None: changes the correct dict inside the list.
-    """
+        if new_attr:
+          new_class["klass_attributes"].append(copy.deepcopy(new_attr))
 
-    reference = elem.get(ref_name)
-    reverse_ref_map = {}
-    for item in reverse_ref_elem_list:
-      key = item.get(lookup_name)
-      if type(key) != dict:
-        reverse_ref_map[key] = item
-    reverse_ref_elem = reverse_ref_map.get(reference)
+      for rel in cls.class_relations:
+        new_rel = None
+        if rel.rcr_as_src:
+          new_rel = {
+            "id": rel.rcr_as_src.id,
+            "src": {
+              "id": rel.id,
+              "minim": rel.minim,
+              "maxim": rel.maxim,
+              "ref_class": rel.ref_class.id
+            },
+            "tgt": {
+              "id": rel.rcr_as_src.tgt.id,
+              "minim": rel.rcr_as_src.tgt.minim,
+              "maxim": rel.rcr_as_src.tgt.maxim,
+              "ref_class": rel.rcr_as_src.tgt.ref_class.id
+            }
+          }
+        elif rel.rcr_as_tgt:
+          new_rel = {
+            "id": rel.rcr_as_tgt.id,
+            "src": {
+              "id": rel.rcr_as_tgt.src.id,
+              "minim": rel.rcr_as_tgt.src.minim,
+              "maxim": rel.rcr_as_tgt.src.maxim,
+              "ref_class": rel.rcr_as_tgt.src.ref_class.id
+            },
+            "tgt": {
+              "id": rel.id,
+              "minim": rel.minim,
+              "maxim": rel.maxim,
+              "ref_class": rel.ref_class.id
+            }
+          }
+        if new_rel and not any(x["id"] == new_rel["id"] for x in data["relations"]):
+          data["relations"].append(new_rel)
 
-    if reverse_ref_elem is None:
-      raise Exception(f"Invalid reference: {ref_name}={reference}")
-
-    if many:
-      reverse_ref_elem.setdefault(nest_name, []).append(copy.copy(elem))
-    else:
-      reverse_ref_elem[nest_name] = copy.copy(elem)
-
-  def nest_data(self, data: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
-
-    # nested structure: classes
-    # class
-    #   class prim attr
-    #   class enum attr
-    # enum
-    #   enum attr
-    # relation
-    #   rcr
-
-    # nested structure: usecases
-    # usecase
-    #   event
-    #     actor
-    #     step
-
-    class_models = data.get('class_models')
-    usecase_models = data.get('usecase_models')
-
-    enum_list = class_models.get('enums')
-    enum_attr_list = class_models.get('enum_attributes')
-    class_list = class_models.get('classes')
-    class_enum_attr_list = class_models.get('class_enum_attributes')
-    class_primitive_attr_list = class_models.get('class_primitive_attributes')
-    relation_class_ref_list = class_models.get('relation_class_references')
-    relation_list = class_models.get('relations')
-
-    actor_list = usecase_models.get('actors')
-    event_list = usecase_models.get('usecase_events')
-    step_list = usecase_models.get('events_steps')
-    usecase_list = usecase_models.get('usecases')
-
-    # enum attributes into enum
-    for elem in enum_attr_list:
-      elem['label'] = enum_labels(elem.get('value'))
-      self.nest(elem, enum_list, 'enum', 'id', 'enum_attributes')
-    class_models.pop('enum_attributes')
-
-    # class attributes into class
-    for elem in class_enum_attr_list:
-      self.nest(elem, class_list, 'klass', 'id', 'klass_attributes')
-    last_enum_attr_id = class_enum_attr_list[-1].get('id')
-    class_models.pop('class_enum_attributes')
-
-    # class attributes into class
-    for elem in class_primitive_attr_list:
-      elem['id'] = elem.get('id') + last_enum_attr_id
-      self.nest(elem, class_list, 'klass', 'id', 'klass_attributes')
-    class_models.pop('class_primitive_attributes')
-
-    # references into relation
-    for elem in relation_class_ref_list:
-      # compare rcr id with relation src
-      try:
-        self.nest(elem, relation_list, 'id', 'src', 'src', many=False)
-      except:
-        pass
-      # compare rcr id with relation tgt
-      try:
-        self.nest(elem, relation_list, 'id', 'tgt', 'tgt', many=False)
-      except:
-        pass
-    class_models.pop('relation_class_references')
-    
-    # steps into event
-    for elem in step_list:
-      self.nest(elem, event_list, 'event', 'id', 'event_steps')
-    usecase_models.pop('events_steps')
-
-    # actors into event
-    for elem in actor_list:
-      # compare actor id with event actor
-      self.nest(elem, event_list, 'id', 'actor', 'actor', many=False)
-    usecase_models.pop('actors')
-
-    # events into usecase
-    for elem in event_list:
-      self.nest(elem, usecase_list, 'usecase', 'id', 'usecase_events')
-    usecase_models.pop('usecase_events')
+      for inh in cls.class_childs:
+        new_inh = {
+          "id": inh.id,
+          "parent_class": inh.parent.id,
+          "child_class": inh.child.id
+        }
+        if not any(x["id"] == new_inh["id"] for x in data["inheritances"]):
+          data["inheritances"].append(new_inh)
+      for inh in cls.class_parents:
+        new_inh = {
+          "id": inh.id,
+          "parent_class": inh.parent.id,
+          "child_class": inh.child.id
+        }
+        if not any(x["id"] == new_inh["id"] for x in data["inheritances"]):
+          data["inheritances"].append(new_inh)
+      
+      data["classes"].append(copy.deepcopy(new_class))
 
     return data
+
+  def fill_usecases(self, uc_list: list[uc_mod.Usecase], st_list: list[uc_mod.Step]):
+    data = {
+      "usecases": [],
+      "actors": [],
+      "steps": []
+    }
+
+    for uc in uc_list:
+      new_uc = {
+        "id": uc.id,
+        "name": uc.name,
+        "usecase_events": []
+      }
+
+      for event in uc.usecase_events:
+        new_actor = {
+          "id": event.actor.id,
+          "name": event.actor.name,
+          "description": event.actor.description
+        }
+        if not any(x["id"] == new_actor["id"] for x in data["actors"]):
+          data["actors"].append(copy.deepcopy(new_actor))
+
+        new_step = self.action_dict(event.first_step)
+        if not any(x["id"] == new_step["id"] for x in data["steps"]):
+          data["steps"].append(copy.deepcopy(new_step))
+
+        new_event = {
+          "id": event.id,
+          "name": event.name,
+          "actor": event.actor.id,
+          "first_step": event.first_step.id
+        }
+        new_uc["usecase_events"].append(copy.deepcopy(new_event))
+
+      data["usecases"].append(copy.deepcopy(new_uc))
+
+    for step in st_list:
+      new_step = None
+      if isinstance(step, uc_mod.Action):
+        new_step = self.action_dict(step)
+      elif isinstance(step, uc_mod.Decision):
+        new_step = {
+          "id": step.id,
+          "description": step.description,
+          "next_steps": [next_step_id for next_step_id in step.next_steps]
+        }
+      if new_step and not any(x["id"] == new_step["id"] for x in data["steps"]):
+        data["steps"].append(new_step)
+    
+    return data
+
+  def action_dict(self, action: uc_mod.Action):
+    if isinstance(action, uc_mod.ModifyAction):
+      if action.action_type == 'create':
+        return {
+          "id": action.id,
+          "action_type": "CREATE_ACTION",
+          "description": action.description,
+          "next_step": action.next_step,
+          "related_klasses": [klass.id for klass in action.related_classes]
+        }
+      elif action.action_type == 'update':
+        return {
+          "id": action.id,
+          "action_type": "UPDATE_ACTION",
+          "description": action.description,
+          "next_step": action.next_step,
+          "related_klasses": [klass.id for klass in action.related_classes]
+        }
+      elif action.action_type == 'delete':
+        return {
+          "id": action.id,
+          "action_type": "CREATE_ACTION",
+          "description": action.description,
+          "next_step": action.next_step,
+          "related_klasses": [klass.id for klass in action.related_classes]
+        }
+    elif isinstance(action, uc_mod.TextReadAction):
+      return {
+        "id": action.id,
+        "action_type": "READ_ACTION",
+        "match_percent": action.match_percent,
+        "description": action.description,
+        "next_step": action.next_step,
+        "related_klasses": [klass.id for klass in action.related_classes],
+        "related_attributes": [attr.id for attr in action.read_attributes]
+      }
+    elif isinstance(action, uc_mod.ReadAction):
+      return {
+        "id": action.id,
+        "action_type": "READ_ACTION",
+        "description": action.description,
+        "next_step": action.next_step,
+        "related_klasses": [klass.id for klass in action.related_classes],
+        "related_attributes": [attr.id for attr in action.read_attributes]
+      }
+    else:
+      return {
+        "id": action.id,
+        "action_type": "NO_TYPE_ACTION",
+        "description": action.description,
+        "next_step": action.next_step
+      }
