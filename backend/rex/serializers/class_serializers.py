@@ -1,144 +1,111 @@
 from rest_framework import serializers
 
-# from rex.models.klass import Class, ClassAttribute, ClassAttributeEnum, ClassAttributePrim, Enum, EnumAttribute, Relation, RelationClassReference, Inheritance
 from rex.models import klass as cls_mod
-
-class EnumSimpleSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = cls_mod.Enum
-    fields = ['id', 'name']
-
-class EnumAttributeSerializer(serializers.ModelSerializer):
-  enum = EnumSimpleSerializer(read_only=True)
-  enum_id = serializers.PrimaryKeyRelatedField(
-    queryset=cls_mod.Enum.objects.all(),
-    source='enum',
-    write_only=True
-  )
-
-  class Meta:
-    model = cls_mod.EnumAttribute
-    exclude = ('polymorphic_ctype',)
-
-class EnumSerializer(serializers.ModelSerializer):
-  enum_values = EnumAttributeSerializer(many=True, read_only=True)
-
-  class Meta:
-    model = cls_mod.Enum
-    exclude = ('polymorphic_ctype',)
 
 class ClassSimpleSerializer(serializers.ModelSerializer):
   class Meta:
     model = cls_mod.Class
-    fields = ['id', 'name']
-
-class ClassAttributeEnumSerializer(serializers.ModelSerializer):
-  enum = EnumSerializer(read_only=True)
-  enum_id = serializers.PrimaryKeyRelatedField(
-      queryset=cls_mod.Enum.objects.all(),
-      source='enum',
-      write_only=True
-    )
-  
-  class Meta:
-    model = cls_mod.ClassAttributeEnum
-    exclude = ('polymorphic_ctype',)
-
-class ClassAttributePrimSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = cls_mod.ClassAttributePrim
-    exclude = ('polymorphic_ctype',)
+    fields = ['name', 'stereotype']
 
 class ClassAttributeSerializer(serializers.ModelSerializer):
-  klass = ClassSimpleSerializer(read_only=True)
-  klass_id = serializers.PrimaryKeyRelatedField(
+  clazz = ClassSimpleSerializer(read_only=True)
+  clazz_id = serializers.PrimaryKeyRelatedField(
     queryset=cls_mod.Class.objects.all(),
-    source='klass',
+    source='clazz',
     write_only=True
   )
-
-  def to_representation(self, instance):
-    if isinstance(instance, cls_mod.ClassAttributePrim):
-      return ClassAttributePrimSerializer(instance, context=self.context).data
-
-    elif isinstance(instance, cls_mod.ClassAttributeEnum):
-      return ClassAttributeEnumSerializer(instance, context=self.context).data
-
-    return super().to_representation(instance)
 
   class Meta:
     model = cls_mod.ClassAttribute
     exclude = ('polymorphic_ctype',)
 
-class RCRSimpleSerializer(serializers.ModelSerializer):
-  ref_class = ClassSimpleSerializer(read_only=True)
-  ref_class_id = serializers.PrimaryKeyRelatedField(
+class ACRSimpleSerializer(serializers.ModelSerializer):
+  class_name = serializers.SerializerMethodField()
+  clazz = ClassSimpleSerializer(read_only=True)
+  clazz_id = serializers.PrimaryKeyRelatedField(
     queryset=cls_mod.Class.objects.all(),
-    source='ref_class',
+    source='clazz',
     write_only=True
   )
 
   class Meta:
-    model = cls_mod.RelationClassReference
-    fields = ['id', 'minim', 'maxim', 'ref_class', 'ref_class_id']
+    model = cls_mod.AssociationClassReference
+    fields = ['id', 'class_min', 'class_max', 'clazz', 'clazz_id', 'class_name']
 
-class RelationSimpleSerializer(serializers.ModelSerializer):
-  src = RCRSimpleSerializer(read_only=True)
+  def get_class_name(self, obj):
+    return obj.clazz.name
+
+class AssociationSimpleSerializer(serializers.ModelSerializer):
+  src = ACRSimpleSerializer(read_only=True)
   src_id = serializers.PrimaryKeyRelatedField(
-    queryset=cls_mod.RelationClassReference.objects.all(),
+    queryset=cls_mod.AssociationClassReference.objects.all(),
     source='src',
     write_only=True
   )
-  tgt = RCRSimpleSerializer(read_only=True)
+  tgt = ACRSimpleSerializer(read_only=True)
   tgt_id = serializers.PrimaryKeyRelatedField(
-    queryset=cls_mod.RelationClassReference.objects.all(),
+    queryset=cls_mod.AssociationClassReference.objects.all(),
     source='tgt',
     write_only=True
   )
 
   class Meta:
-    model = cls_mod.Relation
+    model = cls_mod.Association
     fields = ['id', 'src', 'src_id', 'tgt', 'tgt_id']
 
-class RelationSerializer(serializers.ModelSerializer):
-  src = RCRSimpleSerializer(read_only=True)
+class AssociationSerializer(serializers.ModelSerializer):
+  src = ACRSimpleSerializer(read_only=True)
   src_id = serializers.PrimaryKeyRelatedField(
-    queryset=cls_mod.RelationClassReference.objects.all(),
+    queryset=cls_mod.AssociationClassReference.objects.all(),
     source='src',
     write_only=True
   )
-  tgt = RCRSimpleSerializer(read_only=True)
+  tgt = ACRSimpleSerializer(read_only=True)
   tgt_id = serializers.PrimaryKeyRelatedField(
-    queryset=cls_mod.RelationClassReference.objects.all(),
+    queryset=cls_mod.AssociationClassReference.objects.all(),
     source='tgt',
     write_only=True
   )
 
   class Meta:
-    model = cls_mod.Relation
+    model = cls_mod.Association
     exclude = ('polymorphic_ctype',)
 
-class RelationClassReferenceSerializer(serializers.ModelSerializer):
-  rcr_as_src = RelationSerializer(read_only=True)
-  rcr_as_tgt = RelationSerializer(read_only=True)
-  ref_class = ClassSimpleSerializer(read_only=True)
-  ref_class_id = serializers.PrimaryKeyRelatedField(
+class AssociationClassReferenceSerializer(serializers.ModelSerializer):
+  class_name = serializers.SerializerMethodField()
+  clazz = ClassSimpleSerializer(read_only=True)
+  clazz_id = serializers.PrimaryKeyRelatedField(
     queryset=cls_mod.Class.objects.all(),
-    source='ref_class',
+    source='clazz',
+    write_only=True
+  )
+  acr_as_src = AssociationSerializer(read_only=True)
+  acr_as_src_id = serializers.PrimaryKeyRelatedField(
+    queryset=cls_mod.Association.objects.all(),
+    source='acr_as_src',
+    write_only=True
+  )
+  acr_as_tgt = AssociationSerializer(read_only=True)
+  acr_as_tgt_id = serializers.PrimaryKeyRelatedField(
+    queryset=cls_mod.Association.objects.all(),
+    source='acr_as_tgt',
     write_only=True
   )
 
   class Meta:
-    model = cls_mod.RelationClassReference
+    model = cls_mod.AssociationClassReference
     exclude = ('polymorphic_ctype',)
+
+  def get_class_name(self, obj):
+    return obj.clazz.name
 
 class ReadableSerializer(serializers.ModelSerializer):
   def to_representation(self, instance):
     if isinstance(instance, cls_mod.ClassAttribute):
       return ClassAttributeSerializer(instance, context=self.context).data
 
-    elif isinstance(instance, cls_mod.Relation):
-      return RelationSerializer(instance, context=self.context).data
+    elif isinstance(instance, cls_mod.Association):
+      return AssociationSerializer(instance, context=self.context).data
   
   class Meta:
     model = cls_mod.Readable
@@ -163,10 +130,10 @@ class InheritanceSerializer(serializers.ModelSerializer):
     exclude = ('polymorphic_ctype',)
 
 class ClassSerializer(serializers.ModelSerializer):
-  class_attrs = ClassAttributeSerializer(many=True, read_only=True)
-  class_relations = RelationClassReferenceSerializer(many=True, read_only=True)
-  class_parents = InheritanceSerializer(many=True, read_only=True)
-  class_childs = InheritanceSerializer(many=True, read_only=True)
+  class_attributes = ClassAttributeSerializer(many=True, read_only=True)
+  class_associations = AssociationClassReferenceSerializer(many=True, read_only=True)
+  class_parent_in = InheritanceSerializer(many=True, read_only=True)
+  class_child_in = InheritanceSerializer(many=True, read_only=True)
 
   class Meta:
     model = cls_mod.Class

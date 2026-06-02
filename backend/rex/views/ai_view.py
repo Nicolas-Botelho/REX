@@ -8,9 +8,11 @@ from drf_yasg.utils import swagger_auto_schema
 from ai_gen.graph.usecase_class_graph import full_graph
 from ai_gen.models.response_model.class_response import ClassOutput
 from ai_gen.models.response_model.usecase_response import UsecaseOutput
-from conversion.convert_model import ClassConverter, UsecaseConverter
+from conversion.load_class import ClassLoader
 from conversion.save_class import ClassSaver
-from conversion.save_usecases import UsecaseSaver
+from conversion.load_usecase import UsecaseLoader
+from conversion.save_usecase import UsecaseSaver
+from conversion.utils.transformation import TransformAssociation
 from rex.serializers.request_serializers import RunAllRequestSerializer
 from rex.serializers.response_serializers import RunAllResponseSerializer
 
@@ -25,12 +27,16 @@ class AiViewSet(ViewSet):
 
     input_text = serializer.validated_data.get('input_text')
 
-    cc = ClassConverter()
-    uc = UsecaseConverter()
+    cl = ClassLoader()
+    ul = UsecaseLoader()
 
-    clsInput = ClassOutput(classes=cc.load())
-    loaded_usecases, loaded_steps = uc.load()
-    ucInput = UsecaseOutput(usecases=loaded_usecases, event_steps=loaded_steps)
+    loaded_classes, loaded_assocs, loaded_inhers = cl.load()
+
+    loaded_assocs = TransformAssociation.transform(loaded_assocs)
+
+    clsInput = ClassOutput(classes=loaded_classes, associations=loaded_assocs, inheritances=loaded_inhers)
+    loaded_usecases = ul.load()
+    ucInput = UsecaseOutput(usecases=loaded_usecases)
 
     result = full_graph.invoke({'InputText': input_text, 'OldUsecases': ucInput, 'OldClasses': clsInput})
 
@@ -39,9 +45,9 @@ class AiViewSet(ViewSet):
 
     if new_classes or new_usecases:
       cs = ClassSaver()
-      class_maps = cs.save_model(new_classes.classes)
+      cs.save_model(new_classes.classes, TransformAssociation.reverse(new_classes.associations), new_classes.inheritances)
 
-      us = UsecaseSaver(class_map=class_maps.get('class_map'), attribute_map=class_maps.get('attribute_map'), relation_map=class_maps.get('relation_map'))
-      us.save_model(new_usecases.usecases, new_usecases.event_steps)
+      us = UsecaseSaver(cs.class_map, cs.attributes_map, cs.association_map)
+      us.save_model(new_usecases.usecases) # , new_usecases.event_steps
 
     return Response({}, status=HTTP_201_CREATED)

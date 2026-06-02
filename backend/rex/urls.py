@@ -51,23 +51,20 @@ generator_router.register('json', JsonGeneratorViewSet, basename='json')
 
 # Classes
 class_router.register('class', cls_viw.ClassViewSet, basename='class')
-class_router.register('class_attribute_enum', cls_viw.ClassAttributeEnumViewSet, basename='class_attribute_enum')
-class_router.register('class_attribute_prim', cls_viw.ClassAttributePrimViewSet, basename='class_attribute_prim')
-class_router.register('enum', cls_viw.EnumViewSet, basename='enum')
-class_router.register('enum_attribute', cls_viw.EnumAttributeViewSet, basename='enum_attribute')
-class_router.register('relation', cls_viw.RelationViewSet, basename='relation')
-class_router.register('relation_class_reference', cls_viw.RelationClassReferenceViewSet, basename='relation_class_reference')
+class_router.register('class_attribute', cls_viw.ClassAttributeViewSet, basename='class_attribute')
+class_router.register('association', cls_viw.AssociationViewSet, basename='association')
+class_router.register('association_class_reference', cls_viw.AssociationClassReferenceViewSet, basename='association_class_reference')
 class_router.register('inheritance', cls_viw.InheritanceViewSet, basename='inheritance')
 
 # Use Case
 usecase_router.register('actor', uc_viw.ActorViewSet, basename='actor')
 usecase_router.register('event', uc_viw.EventViewSet, basename='event')
-usecase_router.register('step', uc_viw.StepViewSet, basename='step')
-usecase_router.register('action', uc_viw.ActionViewSet, basename='action')
-usecase_router.register('modify_action', uc_viw.ModifyActionViewSet, basename='modify_action')
-usecase_router.register('read_action', uc_viw.ReadActionViewSet, basename='read_action')
-usecase_router.register('text_read_action', uc_viw.TextReadActionViewSet, basename='text_read_action')
-usecase_router.register('decision', uc_viw.DecisionViewSet, basename='decision')
+# usecase_router.register('step', uc_viw.StepViewSet, basename='step')
+# usecase_router.register('action', uc_viw.ActionViewSet, basename='action')
+# usecase_router.register('modify_action', uc_viw.ModifyActionViewSet, basename='modify_action')
+# usecase_router.register('read_action', uc_viw.ReadActionViewSet, basename='read_action')
+# usecase_router.register('text_read_action', uc_viw.TextReadActionViewSet, basename='text_read_action')
+# usecase_router.register('decision', uc_viw.DecisionViewSet, basename='decision')
 usecase_router.register('usecase', uc_viw.UsecaseViewSet, basename='usecase')
 
 urlpatterns = [

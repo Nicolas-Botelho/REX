@@ -1,23 +1,23 @@
 # Class Model Definition
 
 ## Class
-Definition of a class.
+Definition of a class. A class is the representation of a group of "things" that share common properties.
 
 - id (int): integer class id
 - name (str): unique name of the class
-- stereotype (str | None): defined category of a class
+- stereotype (str): defined category of a class
 - class_attributes (list[Primitive Type Attribute | Enum Type Attribute]): attributes of the class
 - class_relations (list[Relation Class Reference]): relations among classes
 - class_childs (list[Inheritance]): inheritances where the class is a parent of other classes
 - class_parents (list[Inheritance]): inheritances where the class is a child of other classes
 
 ### Stereotypes
-- Kind
-- Subkind
-- Role
+- Kind: represents a concept that gives identity to its instances
+- Subkind: represents a kind that specializes from another kind
+- Role: represents a function of a kind
 
 ## Class Attribute
-Definition of the attributes of a class. A class attribute must be one from one of the types below.
+Definition of the attributes of a class. Attributes define properties of a class that are shared among all instances of that class. A class attribute must be one from one of the types below.
 
 ### Primitive Type Attribute
 An attribute that it's value is from a primitive type.
@@ -36,7 +36,7 @@ An attribute that it's valid values are from an enum.
 - klass (int): integer class id. represent the class that this attribute is part of.
 
 ## Class Relation
-Definition of the relations of a class.
+Definition of the relations of a class. A class relation is a property of a class that is defined by an association with another class.
 
 ### Relation Class Reference
 One end of a relation.
@@ -56,7 +56,7 @@ The source and target of the relation.
 - tgt (ref_RelationClassReference): reference to the relation class reference that is the target of the relation.
 
 ## Class Inheritance
-Definition of the relations of a class.
+Definition of the inheritances of a class. A class inheritance is when a class inherits all the properties of another class and adds properties of its own.
 
 ### Inheritance
 An inheritance between two classes.

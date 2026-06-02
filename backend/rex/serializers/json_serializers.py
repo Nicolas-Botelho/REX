@@ -9,10 +9,16 @@ class JsonClassSerializer():
     serializer = cls_ser.ClassSerializer(queryset, many=True)
     return list(serializer.data)
 
-class JsonEnumSerializer():
+class JsonAssociationSerializer():
   def get(self):
-    queryset = cls_mod.Enum.objects.all()
-    serializer = cls_ser.EnumSerializer(queryset, many=True)
+    queryset = cls_mod.Association.objects.all()
+    serializer = cls_ser.AssociationSerializer(queryset, many=True)
+    return list(serializer.data)
+
+class JsonInheritanceSerializer():
+  def get(self):
+    queryset = cls_mod.Inheritance.objects.all()
+    serializer = cls_ser.InheritanceSerializer(queryset, many=True)
     return list(serializer.data)
 
 class JsonUseCaseSerializer():
@@ -27,8 +33,8 @@ class JsonActorSerializer():
     serializer = uc_ser.ActorSerializer(queryset, many=True)
     return list(serializer.data)
   
-class JsonStepSerializer():
-  def get(self):
-    queryset = uc_mod.Step.objects.all()
-    serializer = uc_ser.StepSerializer(queryset, many=True)
-    return list(serializer.data)
+# class JsonStepSerializer():
+#   def get(self):
+#     queryset = uc_mod.Step.objects.all()
+#     serializer = uc_ser.StepSerializer(queryset, many=True)
+#     return list(serializer.data)

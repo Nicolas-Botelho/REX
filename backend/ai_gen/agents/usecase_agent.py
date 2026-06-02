@@ -16,13 +16,17 @@ def call_llm(state: State):
 
   instruction = f'''
 # Task
-You are a Requirements Engineer tasked with reading a text about a system and defining its Funtional Requirements in the form of Use Cases.
+You are a Requirements Engineer tasked with:
+- Reading a text description of a system;
+- Identifying the usecases and actors of the system based on the description of the system
+- Identifying the events of the usecases and with actor is the performer of each event;
+- Updating the given usecases with the new usecases, events and actors; and
+- Returning this newly updated usecases alongside with their events and with actor is associated with each event.
 
 # About the Input
 You are going to recieve the following input:
 - The text you must read;
-- The current version of the Use Cases;
-- The current version of the Event's Steps; and
+- The current version of the Use Cases; and
 - The current version of the Classes.
 
 ## About the current Classes and Use Cases
@@ -31,7 +35,7 @@ If you do not recieve the current Use Cases, it means you are doing the first ve
 # About the Classes
 {open("ai_gen/models/docs/classes.md", "r").read()}
 
-# About the Use Cases and Event's Steps
+# About the Use Cases
 {open("ai_gen/models/docs/usecases.md", "r").read()}
 
 # Final Instructions
@@ -40,7 +44,8 @@ If you do not recieve the current Use Cases, it means you are doing the first ve
 - Answer in the same language the given text in writen.
 '''
   
-  llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text), HumanMessage(content=current_usecases.__str__()), HumanMessage(content=current_classes.__str__())]
+  # llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text), HumanMessage(content=current_usecases.__str__()), HumanMessage(content=current_classes.__str__())]
+  llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text)]
 
   response = llm_struct_output.invoke(llm_input)
 

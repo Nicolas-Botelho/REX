@@ -1,18 +1,18 @@
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
 
-from rex.models.klass import Class, ClassAttributeEnum, ClassAttributePrim, Enum, EnumAttribute, Relation, RelationClassReference, Inheritance
-from rex.serializers.class_serializers import ClassSerializer, ClassAttributeEnumSerializer, ClassAttributePrimSerializer, EnumSerializer, EnumAttributeSerializer, RelationSerializer, RelationClassReferenceSerializer, InheritanceSerializer
+from rex.models import klass as cls_mod
+from rex.serializers import class_serializers as cls_ser
 
 class ClassViewSet(ModelViewSet):
-  serializer_class = ClassSerializer
-  queryset = Class.objects.all()
+  serializer_class = cls_ser.ClassSerializer
+  queryset = cls_mod.Class.objects.all()
 
   def get_object(self):
     queryset = self.filter_queryset(self.get_queryset())
 
     if self.action == 'retrieve' or self.action == 'list':
-      queryset = queryset.prefetch_related('class_attrs', 'class_relations', 'class_parents', 'class_childs')
+      queryset = queryset.prefetch_related('class_attributes', 'class_associations', 'class_parent_in', 'class_child_in')
     
     obj = get_object_or_404(queryset, **self.kwargs)
 
@@ -20,60 +20,26 @@ class ClassViewSet(ModelViewSet):
     return obj
   
 class InheritanceViewSet(ModelViewSet):
-  serializer_class = InheritanceSerializer
-  queryset = Inheritance.objects.all()
+  serializer_class = cls_ser.InheritanceSerializer
+  queryset = cls_mod.Inheritance.objects.all()
 
-class ClassAttributeEnumViewSet(ModelViewSet):
-  serializer_class = ClassAttributeEnumSerializer
-  queryset = ClassAttributeEnum.objects.all()
+class ClassAttributeViewSet(ModelViewSet):
+  serializer_class = cls_ser.ClassAttributeSerializer
+  queryset = cls_mod.ClassAttribute.objects.all()
 
-  def get_object(self):
-    queryset = self.filter_queryset(self.get_queryset())
+class AssociationViewSet(ModelViewSet):
+  serializer_class = cls_ser.AssociationSerializer
+  queryset = cls_mod.Association.objects.all()
 
-    if self.action == 'retrieve' or self.action == 'list':
-      queryset = queryset.select_related('enum')
-    
-    obj = get_object_or_404(queryset, **self.kwargs)
-
-    self.check_object_permissions(self.request, obj)
-    return obj
-
-class ClassAttributePrimViewSet(ModelViewSet):
-  serializer_class = ClassAttributePrimSerializer
-  queryset = ClassAttributePrim.objects.all()
-
-class EnumViewSet(ModelViewSet):
-  serializer_class = EnumSerializer
-  queryset = Enum.objects.all()
+class AssociationClassReferenceViewSet(ModelViewSet):
+  serializer_class = cls_ser.AssociationClassReferenceSerializer
+  queryset = cls_mod.AssociationClassReference.objects.all()
 
   def get_object(self):
     queryset = self.filter_queryset(self.get_queryset())
 
     if self.action == 'retrieve' or self.action == 'list':
-      queryset = queryset.prefetch_related('enum_values')
-    
-    obj = get_object_or_404(queryset, **self.kwargs)
-
-    self.check_object_permissions(self.request, obj)
-    return obj
-
-class EnumAttributeViewSet(ModelViewSet):
-  serializer_class = EnumAttributeSerializer
-  queryset = EnumAttribute.objects.all()
-
-class RelationViewSet(ModelViewSet):
-  serializer_class = RelationSerializer
-  queryset = Relation.objects.all()
-
-class RelationClassReferenceViewSet(ModelViewSet):
-  serializer_class = RelationClassReferenceSerializer
-  queryset = RelationClassReference.objects.all()
-
-  def get_object(self):
-    queryset = self.filter_queryset(self.get_queryset())
-
-    if self.action == 'retrieve' or self.action == 'list':
-      queryset = queryset.select_related('rcr_as_src', 'rcr_as_tgt')
+      queryset = queryset.select_related('acr_as_src', 'acr_as_tgt')
     
     obj = get_object_or_404(queryset, **self.kwargs)
 
