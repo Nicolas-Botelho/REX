@@ -7,9 +7,9 @@ import Classes from '@/pages/class_pages/Classes.vue'
 import ClassDetail from '@/pages/class_pages/ClassDetail.vue'
 import ClassNew from '@/pages/class_pages/ClassNew.vue'
 
-import Enums from '@/pages/enum_pages/Enums.vue'
-import EnumDetail from '@/pages/enum_pages/EnumDetail.vue'
-import EnumNew from '@/pages/enum_pages/EnumNew.vue'
+//import Enums from '@/pages/enum_pages/Enums.vue'
+//import EnumDetail from '@/pages/enum_pages/EnumDetail.vue'
+//import EnumNew from '@/pages/enum_pages/EnumNew.vue'
 
 import UseCases from '@/pages/usecase_pages/UseCases.vue'
 import UseCaseDetail from '@/pages/usecase_pages/UseCaseDetail.vue'
@@ -29,9 +29,9 @@ const router = createRouter({
     {path: '/classes', component: Classes},
     {path: '/classes/:id', component: ClassDetail},
     {path: '/classes/new', component: ClassNew},
-    {path: '/enums', component: Enums},
-    {path: '/enums/:id', component: EnumDetail},
-    {path: '/enums/new', component: EnumNew},
+    //{path: '/enums', component: Enums},
+    //{path: '/enums/:id', component: EnumDetail},
+    //{path: '/enums/new', component: EnumNew},
     {path: '/usecases', component: UseCases},
     {path: '/usecases/:id', component: UseCaseDetail},
     {path: '/usecases/new', component: UseCaseNew},

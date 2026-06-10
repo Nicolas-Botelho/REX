@@ -3,24 +3,25 @@
     <h1>{{ classData.name }}</h1>
     <p style="text-align: center;"><<{{ classData.stereotype }}>></p>
 
-      <h2 v-if="classData.class_attrs.length">Attributes</h2>
+      <h2 v-if="classData.class_attributes.length">Attributes</h2>
 
       <ul>
-        <li v-for="item in classData.class_attrs" :key="item.id">
-          <p v-if="item.attr_type">{{ item.name }} : {{ item.attr_type }}</p>
-          <p v-if="item.enum">{{ item.name }} : <router-link :to="`/enums/${item.enum.id}`"> {{ item.enum.name }} </router-link></p>
+        <li v-for="item in classData.class_attributes" :key="item.id">
+          <p v-if="item.attr_type">{{ item.name }} : {{ item.attr_type }}
+            <p v-for="value in item.valid_values">- {{ value }}</p>
+          </p>  
         </li>
       </ul>
 
-      <h2 v-if="classData.class_relations.length">Relations</h2>
+      <h2 v-if="classData.class_associations.length">Relations</h2>
 
       <ul>
-        <li v-for="item in classData.class_relations" :key="item.id">
-          <p v-if="item.rcr_as_src">
-            {{ classData.name }} "{{ item.minim ?? "N" }}..{{ item.maxim ?? "N" }}" --> "{{ item.rcr_as_src.tgt.minim ?? "N" }}..{{ item.rcr_as_src.tgt.maxim ?? "N" }}" <router-link :to="`/classes/${item.rcr_as_src.tgt.ref_class.id}`"> {{ item.rcr_as_src.tgt.ref_class.name }} </router-link>
+        <li v-for="item in classData.class_associations" :key="item.id">
+          <p v-if="item.acr_as_src">
+            {{ classData.name }} "{{ item.class_min ?? "N" }}..{{ item.class_max ?? "N" }}" --> "{{ item.acr_as_src.tgt.class_min ?? "N" }}..{{ item.acr_as_src.tgt.class_max ?? "N" }}" <router-link :to="`/classes/${item.acr_as_src.tgt.clazz.id}`"> {{ item.acr_as_src.tgt.clazz.name }} </router-link>
           </p>
-          <p v-else-if="item.rcr_as_tgt">
-            <router-link :to="`/classes/${item.rcr_as_tgt.src.ref_class.id}`"> {{ item.rcr_as_tgt.src.ref_class.name }} </router-link> "{{ item.rcr_as_tgt.src.minim ?? "N" }}..{{ item.rcr_as_tgt.src.maxim ?? "N" }}" --> "{{ item.minim ?? "N" }}..{{ item.maxim ?? "N" }}" {{ classData.name }}
+          <p v-else-if="item.acr_as_tgt">
+            <router-link :to="`/classes/${item.acr_as_tgt.src.clazz.id}`"> {{ item.acr_as_tgt.src.clazz.name }} </router-link> "{{ item.acr_as_tgt.src.class_min ?? "N" }}..{{ item.acr_as_tgt.src.class_max ?? "N" }}" --> "{{ item.class_min ?? "N" }}..{{ item.class_max ?? "N" }}" {{ classData.name }}
           </p>
         </li>
       </ul>

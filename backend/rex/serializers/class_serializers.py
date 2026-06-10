@@ -5,7 +5,7 @@ from rex.models import klass as cls_mod
 class ClassSimpleSerializer(serializers.ModelSerializer):
   class Meta:
     model = cls_mod.Class
-    fields = ['name', 'stereotype']
+    fields = ['id', 'name', 'stereotype']
 
 class ClassAttributeSerializer(serializers.ModelSerializer):
   clazz = ClassSimpleSerializer(read_only=True)

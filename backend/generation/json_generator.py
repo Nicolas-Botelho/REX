@@ -15,31 +15,26 @@ class JsonGenerator():
 
     classes_data, associations_data, inheritances_data = cc.load()
     usecases_data = uc.load()
+
     data = {
       "class_models": {
-        "enums": [],
-        "classes": [],
-        "relations": [],
-        "inheritances": []
+        "classes": [clazz.dict() for clazz in classes_data],
+        "associations": [assoc.dict() for assoc in associations_data],
+        "relations": [assoc.dict() for assoc in associations_data],
+        "inheritances": [inher.dict() for inher in inheritances_data]
       },
       "usecase_models": {
-        "usecases": [],
-        "actors": [],
-        "steps": []
+        "usecases": [usecs.dict() for usecs in usecases_data]
       }
     }
 
-    data["class_models"] = self.fill_classes(classes_data)
-    data["usecase_models"] = self.fill_usecases(usecases_data)
+    # with open("../out/out.json", "w", encoding="utf-8") as f:
+    #   json.dump(data, f, indent=4, ensure_ascii=False)
 
-    with open("../out/out.json", "w", encoding="utf-8") as f:
-      json.dump(data, f, indent=4)
-
-    return True
+    return data
   
   def fill_classes(self, cls_list: list[cls_mod.Class]):
     data = {
-      "enums": [],
       "classes": [],
       "relations": [],
       "inheritances": []

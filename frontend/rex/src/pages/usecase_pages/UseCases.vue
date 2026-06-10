@@ -9,9 +9,7 @@
       <li v-for="uc in ucs" :key="uc.id">
         <router-link :to="`usecases/${uc.id}`">{{ uc.name }}</router-link>
         <div>
-          <button type="button" @click=""> Update Use Case </button>
-        <!-- </div>
-        <div> -->
+          <!-- <button type="button" @click=""> Update Use Case </button> -->
           <button type="button" @click="removeUseCase(uc.id)"> Delete Use Case </button>
         </div>
       </li>

@@ -4,11 +4,11 @@
 
     <p>{{ actorData.description }}</p>
 
-    <ul v-if="actorData.actor_events.length">
+    <!-- <ul v-if="actorData.actor_events.length">
       <li v-for="event in actorData.actor_events">
         <router-link :to="`/usecases/${event.usecase}`">{{ event.name }}</router-link>
       </li>
-    </ul>
+    </ul> -->
 
   </div>
   <p v-else>Loading...</p>

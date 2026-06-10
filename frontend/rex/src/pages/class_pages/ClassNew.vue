@@ -11,7 +11,7 @@
       <p>Current Attributes</p>
       <ul>
         <li v-for="item in attrs">
-          {{ item.name }} : {{ item.type_name ?? item.enum_name }}
+          {{ item.name }} : {{ item.type_name }}
           <button @click="delAttribute(item)">Remove Attribute</button>
         </li>
       </ul>
@@ -28,7 +28,6 @@
         <option value="float">Float</option>
         <option value="integer">Integer</option>
         <option value="string">String</option>
-        <option v-for="item in enums"> {{ item.name }} </option>
       </select>
       <br/><br/>
 
@@ -82,7 +81,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { getClasses, createClass, createPrimAttr, createEnumAttr, createRCR, createRelation } from '@/services/api/classes'
-import { getEnums } from '@/services/api/enums'
+// import { getEnums } from '@/services/api/enums'
 
 const enums = ref([])
 const classes = ref([])

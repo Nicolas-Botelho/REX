@@ -9,9 +9,7 @@
       <li v-for="actor in actors" :key="actor.id">
         <router-link :to="`actors/${actor.id}`">{{ actor.name }}</router-link>
         <div>
-          <button type="button" @click=""> Update Actor </button>
-        </div>
-        <div>
+          <!-- <button type="button" @click=""> Update Actor </button> -->
           <button type="button" @click="removeActor(actor.id)"> Delete Actor </button>
         </div>
       </li>

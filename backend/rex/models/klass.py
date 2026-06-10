@@ -29,9 +29,9 @@ class AssociationClassReference(PolymorphicModel):
     if not is_otherside:
       otherside = None
       if hasattr(self, 'acr_as_src'):
-        otherside = self.rcr_as_src.tgt
+        otherside = self.acr_as_src.tgt
       if hasattr(self, 'acr_as_tgt'):
-        otherside = self.rcr_as_tgt.src
+        otherside = self.acr_as_tgt.src
       if otherside:
         otherside.delete(using=using, keep_parents=keep_parents, is_otherside=True)
 

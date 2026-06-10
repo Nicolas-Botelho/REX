@@ -17,10 +17,19 @@ const successMessage = ref('')
 
 const downloadJson = async () => {
   try {
-    await generateJson()
-    successMessage.value = 'Json file generated sucessfully'
-    const link = document.createElement('a')
-    link.download = '@/../../out/output.json'
+    const data = await generateJson()
+
+    const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 4)], {type: 'application/json'}))
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'output.json';
+
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }
   catch (error) {
     console.error(error)

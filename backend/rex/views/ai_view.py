@@ -47,7 +47,8 @@ class AiViewSet(ViewSet):
       cs = ClassSaver()
       cs.save_model(new_classes.classes, TransformAssociation.reverse(new_classes.associations), new_classes.inheritances)
 
-      us = UsecaseSaver(cs.class_map, cs.attributes_map, cs.association_map)
-      us.save_model(new_usecases.usecases) # , new_usecases.event_steps
+      if new_usecases:
+        us = UsecaseSaver(cs.class_map, cs.attributes_map, cs.association_map)
+        us.save_model(new_usecases.usecases) # , new_usecases.event_steps
 
     return Response({}, status=HTTP_201_CREATED)

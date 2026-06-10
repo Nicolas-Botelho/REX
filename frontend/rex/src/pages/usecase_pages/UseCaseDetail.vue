@@ -5,11 +5,11 @@
     <h2 v-if="ucData.usecase_events.length">Events</h2>
     <div v-for="event in ucData.usecase_events">
       <h3>{{ event.name }}</h3>
-      <router-link :to="`/actors/${event.actor.id}`">{{ event.actor.name }}</router-link>
-      
-      <br><br>
+      <p> Actor: <router-link :to="`/actors/${event.actor.id}`">{{ event.actor.name }}</router-link></p>
 
-      <router-link :to="`/steps/${event.first_step.id}`">First Step: {{ event.first_step.description }}</router-link>
+      <!-- <router-link :to="`/steps/${event.first_step.id}`">First Step: {{ event.first_step.description }}</router-link> -->
+
+      <p>{{ event.description }}</p>
     </div>
     
   </div>

@@ -47,3 +47,5 @@ class TransformAssociation():
       )
 
       normal_assoc.append(pyd.Association(src=src_acr, tgt=tgt_acr))
+    
+    return normal_assoc
