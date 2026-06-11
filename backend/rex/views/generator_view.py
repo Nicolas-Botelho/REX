@@ -13,7 +13,8 @@ class JsonGeneratorViewSet(ViewSet):
   @action(detail=False, methods=['get'], url_name='json_generator')
   def json_generator(self, request, *args, **kwargs):
     jg = JsonGenerator()
-    if jg.create():
-      return Response(status=HTTP_201_CREATED)
+    data = jg.create()
+    if data:
+      return Response(status=HTTP_201_CREATED, data=data)
     else:
       return Response(status=HTTP_500_INTERNAL_SERVER_ERROR)

@@ -5,5 +5,5 @@ export function generateAll(text_input: string) {
 }
 
 export function generateJson() {
-  return request('json/json_generate', {method: 'GET'})
+  return request('json/json_generator', {method: 'GET'})
 }

@@ -12,9 +12,65 @@ h2 {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h3 {
+  color: #1f2d3a;
+  text-align: justify;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 p {
   color: #2c3e50;
   text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
+}
+
+li {
+  color: #2c3e50;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  color: #2c3e50;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+}
+
+a:hover {
+  /* font-weight: bold; */
+  color: #42b983;
+}
+
+button {
+  color: #dfdfdf;
+  background: #2c3e50;
+
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button:hover {
+  /* Scale up and lift */
+  transform: translateY(-2px) scale(1.02);
+  /* Change background and add shadow */
+  background: #42b983;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+textarea {
+  min-width: 50vw;
+  max-width: 50vw;
+  min-height: 50vh;
+  max-height: 50vh;
 }

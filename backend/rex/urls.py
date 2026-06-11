@@ -22,8 +22,8 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from rex.views.class_view import ClassViewSet, ClassAttributeEnumViewSet, ClassAttributePrimViewSet, EnumViewSet, EnumAttributeViewSet, RelationViewSet, RelationClassReferenceViewSet
-from rex.views.usecase_view import ActorViewSet, EventViewSet, StepViewSet, UsecaseViewSet
+import rex.views.class_view as cls_viw
+import rex.views.usecase_view as uc_viw
 from rex.views.ai_view import AiViewSet
 from rex.views.generator_view import JsonGeneratorViewSet
 
@@ -50,19 +50,22 @@ ai_router.register('ai', AiViewSet, basename='ai')
 generator_router.register('json', JsonGeneratorViewSet, basename='json')
 
 # Classes
-class_router.register('class', ClassViewSet, basename='class')
-class_router.register('class_attribute_enum', ClassAttributeEnumViewSet, basename='class_attribute_enum')
-class_router.register('class_attribute_prim', ClassAttributePrimViewSet, basename='class_attribute_prim')
-class_router.register('enum', EnumViewSet, basename='enum')
-class_router.register('enum_attribute', EnumAttributeViewSet, basename='enum_attribute')
-class_router.register('relation', RelationViewSet, basename='relation')
-class_router.register('relation_class_reference', RelationClassReferenceViewSet, basename='relation_class_reference')
+class_router.register('class', cls_viw.ClassViewSet, basename='class')
+class_router.register('class_attribute', cls_viw.ClassAttributeViewSet, basename='class_attribute')
+class_router.register('association', cls_viw.AssociationViewSet, basename='association')
+class_router.register('association_class_reference', cls_viw.AssociationClassReferenceViewSet, basename='association_class_reference')
+class_router.register('inheritance', cls_viw.InheritanceViewSet, basename='inheritance')
 
 # Use Case
-usecase_router.register('actor', ActorViewSet, basename='actor')
-usecase_router.register('event', EventViewSet, basename='event')
-usecase_router.register('step', StepViewSet, basename='step')
-usecase_router.register('usecase', UsecaseViewSet, basename='usecase')
+usecase_router.register('actor', uc_viw.ActorViewSet, basename='actor')
+usecase_router.register('event', uc_viw.EventViewSet, basename='event')
+# usecase_router.register('step', uc_viw.StepViewSet, basename='step')
+# usecase_router.register('action', uc_viw.ActionViewSet, basename='action')
+# usecase_router.register('modify_action', uc_viw.ModifyActionViewSet, basename='modify_action')
+# usecase_router.register('read_action', uc_viw.ReadActionViewSet, basename='read_action')
+# usecase_router.register('text_read_action', uc_viw.TextReadActionViewSet, basename='text_read_action')
+# usecase_router.register('decision', uc_viw.DecisionViewSet, basename='decision')
+usecase_router.register('usecase', uc_viw.UsecaseViewSet, basename='usecase')
 
 urlpatterns = [
    path("", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

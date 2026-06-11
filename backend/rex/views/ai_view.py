@@ -3,14 +3,16 @@ from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
-from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
-from ai_gen.graph.usecase_class_graph import full_graph, usecase_graph, class_graph
-from conversion.convert_class import ClassConverter
-from conversion.convert_usecase import UsecaseConverter
-# from rex.models.klass import Class
-# from rex.models.usecase import Usecase
+from ai_gen.graph.usecase_class_graph import full_graph
+from ai_gen.models.response_model.class_response import ClassOutput
+from ai_gen.models.response_model.usecase_response import UsecaseOutput
+from conversion.load_class import ClassLoader
+from conversion.save_class import ClassSaver
+from conversion.load_usecase import UsecaseLoader
+from conversion.save_usecase import UsecaseSaver
+from conversion.utils.transformation import TransformAssociation
 from rex.serializers.request_serializers import RunAllRequestSerializer
 from rex.serializers.response_serializers import RunAllResponseSerializer
 
@@ -24,26 +26,29 @@ class AiViewSet(ViewSet):
     serializer.is_valid(raise_exception=True)
 
     input_text = serializer.validated_data.get('input_text')
-    
-    cc = ClassConverter()
-    uc = UsecaseConverter()
 
-    clsInput = cc.load()
-    ucInput = uc.load()
+    cl = ClassLoader()
+    ul = UsecaseLoader()
+
+    loaded_classes, loaded_assocs, loaded_inhers = cl.load()
+
+    loaded_assocs = TransformAssociation.transform(loaded_assocs)
+
+    clsInput = ClassOutput(classes=loaded_classes, associations=loaded_assocs, inheritances=loaded_inhers)
+    loaded_usecases = ul.load()
+    ucInput = UsecaseOutput(usecases=loaded_usecases)
 
     result = full_graph.invoke({'InputText': input_text, 'OldUsecases': ucInput, 'OldClasses': clsInput})
 
-    new_classes = result.get('Classes')
-    new_usecases = result.get('Usecases')
-    if new_classes:
-      cc.save(new_classes)
-    if new_usecases:
-      uc.save(new_usecases)
+    new_classes: ClassOutput = result.get('Classes')
+    new_usecases: UsecaseOutput = result.get('Usecases')
 
-    return Response({'classes' : result.get('Classes'), 'usecases' : result.get('Usecases')}, status=HTTP_201_CREATED)
+    if new_classes or new_usecases:
+      cs = ClassSaver()
+      cs.save_model(new_classes.classes, TransformAssociation.reverse(new_classes.associations), new_classes.inheritances)
 
-  def run_usecase(self, request, *args, **kwargs) -> Response:
-    pass
+      if new_usecases:
+        us = UsecaseSaver(cs.class_map, cs.attributes_map, cs.association_map)
+        us.save_model(new_usecases.usecases) # , new_usecases.event_steps
 
-  def run_class(self, request, *args, **kwargs) -> Response:
-    pass
+    return Response({}, status=HTTP_201_CREATED)
