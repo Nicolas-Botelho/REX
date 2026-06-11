@@ -1,3 +1,43 @@
-The system is designed to help manage a small library in a simple and organized way. From the user’s perspective, it allows people to browse available books and borrow them when they are in stock. Each person has their own access to the system, where their activity is recorded, making it easy to keep track of which books they currently have and which ones they have already returned.
-When someone wants to borrow a book, they can check if it is available and request it. Once the request is confirmed, the system records the borrowing and marks the book as unavailable so that others know it is already in use. Later, when the user finishes reading, they can return the book, and the system updates the record and makes the book available again for other users.
-Overall, the system ensures that the library’s collection is properly managed while giving users a clear and straightforward way to borrow and return books without confusion.
+O sistema tem como objetivo gerenciar o funcionamento de uma biblioteca, controlando livros, exemplares físicos, usuários, empréstimos e devoluções.
+A biblioteca mantém um catálogo de livros. Cada livro possui informações cadastrais, como título, autor, editora, edição, ISBN, categoria e ano de publicação. Um mesmo livro pode possuir vários exemplares físicos disponíveis para empréstimo e consulta.
+Cada exemplar representa uma unidade física específica de um livro e deve possuir identificação própria, permitindo que o sistema acompanhe individualmente sua situação. O sistema deve armazenar informações como código de patrimônio, estado de conservação, localização na biblioteca e situação atual do exemplar.
+Os exemplares podem assumir diferentes estados, como:
+disponível para empréstimo;
+emprestado;
+reservado;
+em manutenção;
+indisponível.
+O estado de conservação de um exemplar deve ser registrado e atualizado sempre que necessário. O sistema deve permitir classificar o exemplar, por exemplo, como:
+novo;
+bom;
+regular;
+danificado;
+inutilizável.
+Usuários cadastrados na biblioteca podem realizar empréstimos de exemplares disponíveis. Cada empréstimo deve registrar:
+o usuário responsável;
+o exemplar emprestado;
+a data do empréstimo;
+a data prevista para devolução;
+a data efetiva de devolução;
+a situação do empréstimo.
+Enquanto um exemplar estiver associado a um empréstimo ativo, ele deve ser considerado indisponível para novos empréstimos.
+O sistema deve permitir consultar:
+quais exemplares estão emprestados;
+quais usuários estão com empréstimos ativos;
+as datas previstas de devolução;
+os exemplares disponíveis para empréstimo;
+o histórico de empréstimos de cada exemplar;
+o histórico de empréstimos de cada usuário.
+Quando um exemplar for devolvido, o sistema deve atualizar automaticamente sua situação para disponível, desde que ele não esteja reservado ou em manutenção. O estado de conservação do exemplar também poderá ser reavaliado no momento da devolução.
+A biblioteca possui regras de negócio relacionadas à quantidade mínima de exemplares disponíveis de cada livro. O sistema deve garantir que:
+cada livro possua sempre, no mínimo, 5 exemplares cadastrados no acervo;
+livros que possuam apenas 5 exemplares ou menos não possam ter exemplares emprestados;
+empréstimos somente sejam autorizados quando a quantidade total de exemplares do livro for superior a 5;
+o sistema impeça a realização de empréstimos que violem essa restrição.
+Além disso, o sistema deve ser capaz de informar, em tempo real:
+quantos exemplares existem de cada livro;
+quantos exemplares estão disponíveis;
+quantos estão emprestados;
+quantos estão em manutenção;
+quais livros estão temporariamente bloqueados para empréstimo devido à quantidade insuficiente de exemplares.
+O sistema também deve manter registros históricos de empréstimos e devoluções para fins de auditoria e acompanhamento do uso do acervo.
