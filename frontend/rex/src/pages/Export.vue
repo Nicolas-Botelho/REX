@@ -30,6 +30,8 @@ const downloadJson = async () => {
 
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+
+    successMessage.value = 'Json file generated sucessfully'
   }
   catch (error) {
     console.error(error)

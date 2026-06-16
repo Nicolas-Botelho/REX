@@ -37,17 +37,18 @@ The minimal cardinality has to be a number, but the maximal cardinality is None 
 
 # Final Instructions
 - Answer strictly in the Structured Output Format;
-- Return all the classes, the ones you are given and the ones you created; and
-- Answer in the same language the given text in writen.
+- Return all the classes, the ones you are given and the ones you created;
+- Answer in the same language the given text in writen but only use english characters;
+- All classes used in the given event's steps must be created and thry must have the exact same name as given;
 - A class is considered incomplete if:
-  - it has no attributes while attributes can be inferred;
+  - it has no attributes while attributes can be inferred; or
   - it has no associoations while associoations can be inferred.
-- Before producing the final output, verify that every identified class contains all possible attributes and participates in all inferable associoations.
+- Before producing the final output, verify that every identified class contains all possible attributes and participates in all inferable associoations; and
 - Do not return empty lists merely to satisfy the schema.
 '''
   
-  # llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text), HumanMessage(content=current_classes.__str__()), HumanMessage(content=new_usecases.__str__())]
-  llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text)]
+  llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text), HumanMessage(content=current_classes.__str__()), HumanMessage(content=new_usecases.__str__())]
+  # llm_input = [SystemMessage(content=instruction), HumanMessage(content=input_text)]
 
   response = llm_struct_output.invoke(llm_input)
 

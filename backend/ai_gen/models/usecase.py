@@ -4,45 +4,29 @@ from enum import Enum
 
 from ai_gen.models.klass import Class, ClassAttribute
 
-# class Step(BaseModel):
-#   id : int
-#   description : str
+class Step(BaseModel):
+  step_code : str
+  description : str
+  class_name: str
 
-# class Action(Step):
-#   next_step : int | None
+class Action(Step):
+  next_step : str | None
+  category: str
 
-# class Decision(Step):
-#   next_steps : List[int] = Field(default_factory=list)
-
-# class ModificationTypeEnum(str, Enum):
-#   CREATE = "create"
-#   UPDATE = "update"
-#   DELETE = "delete"
-
-# class ModifyAction(Action):
-#   related_classes : List[Class] = Field(default_factory=list)
-#   action_type : ModificationTypeEnum
-
-# class ReadAction(Action):
-#   related_classes : List[Class] = Field(default_factory=list)
-#   read_attributes : List[ClassAttributePrim | ClassAttributeEnum] = Field(default_factory=list)
-
-# class TextReadAction(ReadAction):
-#   match_percent : float
+class Decision(Step):
+  next_steps : List[str] = Field(default_factory=list)
 
 class Actor(BaseModel):
-  id : int
   name : str
-  description : str
+  description : str | None
 
 class Event(BaseModel):
-  id : int
   name : str
-  description : str
-  # first_step : Action | Decision | ModifyAction | ReadAction | TextReadAction
+  # description : str
+  # first_step_code : str #| ModifyAction | ReadAction | TextReadAction
+  event_steps : List[Action | Decision] = Field(default_factory=list)
   actor : Actor
 
 class Usecase(BaseModel):
-  id : int
   name : str
   usecase_events : List[Event] = Field(default_factory=list)

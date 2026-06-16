@@ -2,6 +2,12 @@
 
 A requirement management tool with a requirement from text extraction.
 
+## Requirements
+- Python 3.12;
+- Gemini API Key;
+- Node 22; and
+- npm.
+
 ## How to Run?
 
 1. Clone the Repository
@@ -30,9 +36,10 @@ python manage.py runserver
 
 5. Run the frontend
 
-  5.1 Go to the frontend folder and run
+  5.1 Go to the `rex` folder inside the frontend folder and run
 ```bash
-python streamlit app.py
+npm i
+npm run dev
 ```
 
 ## Other informations

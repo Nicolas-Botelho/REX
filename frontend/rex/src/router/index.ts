@@ -14,7 +14,7 @@ import ClassNew from '@/pages/class_pages/ClassNew.vue'
 import UseCases from '@/pages/usecase_pages/UseCases.vue'
 import UseCaseDetail from '@/pages/usecase_pages/UseCaseDetail.vue'
 import UseCaseNew from '@/pages/usecase_pages/UseCaseNew.vue'
-import StepDetail from '@/pages/usecase_pages/StepDetail.vue'
+// import StepDetail from '@/pages/usecase_pages/StepDetail.vue'
 
 import Actors from '@/pages/actor_pages/Actors.vue'
 import ActorDetail from '@/pages/actor_pages/ActorDetail.vue'
@@ -35,7 +35,7 @@ const router = createRouter({
     {path: '/usecases', component: UseCases},
     {path: '/usecases/:id', component: UseCaseDetail},
     {path: '/usecases/new', component: UseCaseNew},
-    {path: '/steps/:id', component: StepDetail},
+    // {path: '/steps/:id', component: StepDetail},
     {path: '/actors', component: Actors},
     {path: '/actors/:id', component: ActorDetail},
     {path: '/actors/new', component: ActorNew},

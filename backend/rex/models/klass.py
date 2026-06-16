@@ -3,7 +3,8 @@ from polymorphic.models import PolymorphicModel
 
 class Class(PolymorphicModel):
   name = models.CharField(unique=True)
-  stereotype = models.CharField(null=True)
+  stereotypes = {'kind':'kind','subkind':'subkind','role':'role'}
+  stereotype = models.CharField(choices=stereotypes, blank=False)
 
 class Inheritance(PolymorphicModel):
   parent = models.ForeignKey(Class, related_name='class_parent_in', blank=False, on_delete=models.CASCADE)

@@ -1,53 +1,39 @@
 # REX Models
 
-## Class Diagram
+## Class Diagram Model
 ```mermaid
 classDiagram
 
-class Enum {
-  iD : int
-  name : String
-}
-
-class EnumAttribute {
-  iD : int
-  value : String
-}
-
 class Class {
-  iD : int
-  name : String
+  name : string
+  stereotype: string
 }
 
-class ClassAttributePrim {
-  iD : int
-  name : String
-  attr_type : PrimitiveTypes
+class Attribute {
+  name : string
+  attr_type : string
+  is_multiple : boolean
+  valid_values : list[string]
 }
 
-class ClassAtributeEnum {
-  iD : int
-  name : String
+class Association
+
+class AssociationClassReference {
+  class_min : integer
+  class_max : integer | null
 }
 
-class RelationClassReference {
-  iD : int
-  minim : int
-  maxim : int
-}
+class Inheritance
 
-class Relation {
-  iD : int
-}
+Class "1" -- "0..*" Attribute
 
-Enum "1" -- "0..*" EnumAttribute
-Class "1" -- "0..*" ClassAttributePrim
-Enum "1" -- "0..*" ClassAttributeEnum
-Class "1" -- "0..*" ClassAttributeEnum
-Class "1" -- "0..*" RelationClassReference
-RelationClassReference "2" -- "0..*" Relation
+Class "1" -- "0..*" AssociationClassReference
 
-note for Relation "2 relationships with RelationClassReference</br>One for Source Class and one for Target Class"
+AssociationClassReference "1" -- "1" Association : source (src)
+AssociationClassReference "1" -- "1" Association : target (tgt)
+
+Class "1" -- "0..*" Inheritance : parent
+Inheritance "0..*" -- "1" Class : child
 ```
 
 ## Use Case Model
@@ -55,30 +41,44 @@ note for Relation "2 relationships with RelationClassReference</br>One for Sourc
 classDiagram
 
 class Usecase {
-  iD : int
-  name : String
+  name : string
 }
 
 class Event {
-  iD : int
-  name : String
-}
-
-class Step {
-  iD : int
-  system : boolean
-  description : String
+  name : string
 }
 
 class Actor {
-  iD : int
-  name : String
-  description : String
+  name : string
+  description : string
 }
 
-Usecase "1" -- "0..*" Event
-Event "1" -- "0..*" Step
-Event "1..*" -- "1" Actor
+class Step {
+  step_code : string
+  description : string
+}
 
-note for Step "system is True for a System Action and False for a Actor Action"
+class Action {
+  categoty : string
+}
+
+class Decision
+
+class Class {
+  name : string
+  stereotype: string
+}
+
+Usecase "1" -- "1..*" Event
+
+Event "1" -- "1..*" Step
+Event "0..*" -- "1" Actor
+
+Step "0..*" -- "1" Class
+
+Action "0..*" -- "1" Step
+Decision "0..*" -- "0..*" Step
+
+Step <|-- Action
+Step <|-- Decision
 ```

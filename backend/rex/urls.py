@@ -59,12 +59,9 @@ class_router.register('inheritance', cls_viw.InheritanceViewSet, basename='inher
 # Use Case
 usecase_router.register('actor', uc_viw.ActorViewSet, basename='actor')
 usecase_router.register('event', uc_viw.EventViewSet, basename='event')
-# usecase_router.register('step', uc_viw.StepViewSet, basename='step')
-# usecase_router.register('action', uc_viw.ActionViewSet, basename='action')
-# usecase_router.register('modify_action', uc_viw.ModifyActionViewSet, basename='modify_action')
-# usecase_router.register('read_action', uc_viw.ReadActionViewSet, basename='read_action')
-# usecase_router.register('text_read_action', uc_viw.TextReadActionViewSet, basename='text_read_action')
-# usecase_router.register('decision', uc_viw.DecisionViewSet, basename='decision')
+usecase_router.register('step', uc_viw.StepViewSet, basename='step')
+usecase_router.register('action', uc_viw.ActionViewSet, basename='action')
+usecase_router.register('decision', uc_viw.DecisionViewSet, basename='decision')
 usecase_router.register('usecase', uc_viw.UsecaseViewSet, basename='usecase')
 
 urlpatterns = [
