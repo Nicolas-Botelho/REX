@@ -1,40 +1,46 @@
 from langgraph.graph import START, END, StateGraph
 
 from ai_gen.state import State
+from ai_gen.agents.domain_narrative_agent import call_llm as call_narrative
+from ai_gen.agents.requirement_agent import call_llm as call_requirement
 from ai_gen.agents.class_agent import call_llm as call_class
 from ai_gen.agents.usecase_agent import call_llm as call_usecase
 
 # Full Workflow and Graph
 full_workflow = StateGraph(State)
 
+full_workflow.add_node("dn_node", call_narrative)
+full_workflow.add_node("req_node", call_requirement)
 full_workflow.add_node("uc_node", call_usecase)
 full_workflow.add_node("cls_node", call_class)
 
-full_workflow.add_edge(START, "uc_node")
+full_workflow.add_edge(START, "dn_node")
+full_workflow.add_edge("dn_node", "req_node")
+full_workflow.add_edge("req_node", "uc_node")
 full_workflow.add_edge("uc_node", "cls_node")
 full_workflow.add_edge("cls_node", END)
 
 full_graph = full_workflow.compile()
 
 # Usecase Workflow and Graph
-usecase_workflow = StateGraph(State)
+# usecase_workflow = StateGraph(State)
 
-usecase_workflow.add_node("uc_node", call_usecase)
+# usecase_workflow.add_node("uc_node", call_usecase)
 
-usecase_workflow.add_edge(START, "uc_node")
-usecase_workflow.add_edge("uc_node", END)
+# usecase_workflow.add_edge(START, "uc_node")
+# usecase_workflow.add_edge("uc_node", END)
 
-usecase_graph = usecase_workflow.compile()
+# usecase_graph = usecase_workflow.compile()
 
-# Class Workflow and Graph
-class_workflow = StateGraph(State)
+# # Class Workflow and Graph
+# class_workflow = StateGraph(State)
 
-class_workflow.add_node("cls_node", call_class)
+# class_workflow.add_node("cls_node", call_class)
 
-class_workflow.add_edge(START, "cls_node")
-class_workflow.add_edge("cls_node", END)
+# class_workflow.add_edge(START, "cls_node")
+# class_workflow.add_edge("cls_node", END)
 
-class_graph = class_workflow.compile()
+# class_graph = class_workflow.compile()
 
 # print(full_graph.invoke({"InputText": """
 # O sistema a ser desenvolvido tem como objetivo central integrar, automatizar e otimizar processos internos de uma organização que atualmente dependem de controles manuais e ferramentas desconectadas. A proposta consiste na criação de uma plataforma web responsiva, acessível em diferentes dispositivos, capaz de centralizar informações estratégicas, operacionais e gerenciais em um único ambiente seguro e intuitivo. Esse sistema deverá atender às necessidades de diferentes perfis de usuários, com níveis de permissão bem definidos, garantindo que cada colaborador visualize e manipule apenas os dados pertinentes às suas responsabilidades.

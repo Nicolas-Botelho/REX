@@ -6,12 +6,12 @@
     <p v-if="error">{{ error }}</p>
 
     <ul v-if="ucs">
-      <li v-for="uc in ucs" :key="uc.id">
-        <router-link :to="`usecases/${uc.id}`">{{ uc.name }}</router-link>
-        <div>
-          <!-- <button type="button" @click=""> Update Use Case </button> -->
+      <li v-for="(uc, index) in ucs" :key="index">
+        <router-link :to="`usecases/${index}`">{{ uc.name }}</router-link>
+        <!-- <div>
+          <button type="button" @click=""> Update Use Case </button>
           <button type="button" @click="removeUseCase(uc.id)"> Delete Use Case </button>
-        </div>
+        </div> -->
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { deleteUseCase, getUseCases } from '@/services/api/usecases'
+import { getUseCases } from '@/services/api/usecases'
 
 const ucs = ref([])
 const loading = ref(true)
@@ -28,6 +28,7 @@ const error = ref(null)
 onMounted(async () => {
   try {
     ucs.value = await getUseCases()
+    ucs.value = ucs.value.data
   } catch (err) {
     error.value = err.message
   } finally {
@@ -35,10 +36,10 @@ onMounted(async () => {
   }
 })
 
-const removeUseCase = async (id) => {
-  await deleteUseCase(id)
-  ucs.value = await getUseCases()
-}
+// const removeUseCase = async (id) => {
+//   await deleteUseCase(id)
+//   ucs.value = await getUseCases()
+// }
 </script>
 
 <style scoped>

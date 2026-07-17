@@ -11,6 +11,7 @@
 
 
     <p v-if="successMessage">{{ successMessage }}</p>
+    <p v-if="errorMessage">{{ errorMessage }}</p>
     
   </div>
 </template>
@@ -21,6 +22,7 @@ import { generateAll } from '@/services/api/utils'
 
 const system_description = ref('')
 const successMessage = ref('')
+const errorMessage = ref('')
 const loading = ref(false)
 
 const handleClick = async () => {
@@ -32,6 +34,7 @@ const handleClick = async () => {
     successMessage.value = 'Artifacts generated sucessfully'
   }
   catch (error) {
+    errorMessage.value = 'Failed to generate the artifacts'
     console.error(error)
   }
   finally {

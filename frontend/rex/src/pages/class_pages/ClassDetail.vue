@@ -3,48 +3,93 @@
     <h1>{{ classData.name }}</h1>
     <p style="text-align: center;"><<{{ classData.stereotype }}>></p>
 
-      <h2 v-if="classData.class_attributes.length">Attributes</h2>
+      <h2 v-if="classData.class_attributes && classData.class_attributes.length">Attributes</h2>
 
       <ul>
-        <li v-for="item in classData.class_attributes" :key="item.id">
+        <li v-for="(item, index) in classData.class_attributes" :key="index">
           <p v-if="item.attr_type">{{ item.name }} : {{ item.attr_type }}
             <p v-for="value in item.valid_values">- {{ value }}</p>
           </p>  
         </li>
       </ul>
 
-      <h2 v-if="classData.class_associations.length">Relations</h2>
+      <h2 v-if="classData.associations && classData.associations.length">Associations</h2>
 
       <ul>
-        <li v-for="item in classData.class_associations" :key="item.id">
-          <p v-if="item.acr_as_src">
-            {{ classData.name }} "{{ item.class_min ?? "N" }}..{{ item.class_max ?? "N" }}" --> "{{ item.acr_as_src.tgt.class_min ?? "N" }}..{{ item.acr_as_src.tgt.class_max ?? "N" }}" <router-link :to="`/classes/${item.acr_as_src.tgt.clazz.id}`"> {{ item.acr_as_src.tgt.clazz.name }} </router-link>
+        <li v-for="(item, index) in classData.associations" :key="index">
+          <p v-if="item.src.class_name == classData.name">
+            {{ classData.name }} "{{ item.src.class_min }}..{{ item.src.class_max ?? "N" }}" -> "{{ item.tgt.class_min }}..{{ item.tgt.class_max ?? "N" }}" <a href="#" @click.prevent="goToClass(item.tgt.class_name)">{{ item.tgt.class_name }}</a>
           </p>
-          <p v-else-if="item.acr_as_tgt">
-            <router-link :to="`/classes/${item.acr_as_tgt.src.clazz.id}`"> {{ item.acr_as_tgt.src.clazz.name }} </router-link> "{{ item.acr_as_tgt.src.class_min ?? "N" }}..{{ item.acr_as_tgt.src.class_max ?? "N" }}" --> "{{ item.class_min ?? "N" }}..{{ item.class_max ?? "N" }}" {{ classData.name }}
+          <p v-else-if="item.tgt.class_name == classData.name">
+            <a href="#" @click.prevent="goToClass(item.src.class_name)">{{ item.src.class_name }}</a> "{{ item.src.class_min }}..{{ item.src.class_max ?? "N" }}" -> "{{ item.tgt.class_min }}..{{ item.tgt.class_max ?? "N" }}" {{ classData.name }}
           </p>
         </li>
       </ul>
+
+      <h2 v-if="classData.inheritances && classData.inheritances.length">Inheritances</h2>
+
+      <ul>
+        <li v-for="(item, index) in classData.inheritances" :key="index">
+          <p v-if="item.parent_class_name == classData.name">
+            {{ classData.name }} <|- <a href="#" @click.prevent="goToClass(item.child_class_name)">{{ item.child_class_name }}</a>
+          </p>
+          <p v-else-if="item.child_class_name == classData.name">
+            <a href="#" @click.prevent="goToClass(item.parent_class_name)">{{ item.parent_class_name }}</a> <|- {{ classData.name }}
+          </p>
+        </li>
+      </ul>
+
   </div>
+  <p v-else-if="errorMessage">{{ errorMessage }}</p>
   <p v-else>Loading...</p>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, watchEffect } from 'vue'
-import { getClass } from '@/services/api/classes'
+import { getClass, getClassAssociations, getClassInheritances, getClassByName } from '@/services/api/classes'
 
 const route = useRoute()
+const router = useRouter()
 const classData = ref(null)
+const classAssociations = ref(null)
+const classInheritances = ref(null)
+
+const errorMessage = ref('')
+
+async function goToClass(className) {
+  const data = await getClassByName(className)
+  router.push(`/classes/${data.data[0].index}`)
+}
 
 onMounted(async () => {
-  const id = route.params.id
-  classData.value = await getClass(id)
+  try {
+    const id = route.params.id
+    classData.value = await getClass(id)
+    classData.value = classData.value.data
+    classAssociations.value = await getClassAssociations(classData.value.name)
+    classInheritances.value = await getClassInheritances(classData.value.name)
+    classData.value.associations = classAssociations.value.data
+    classData.value.inheritances = classInheritances.value.data 
+  }
+  catch (error) {
+    errorMessage.value = 'Failed to fetch'
+  }
 })
 
 watchEffect(async () => {
-  const id = route.params.id
-  classData.value = await getClass(id)
+  try {
+    const id = route.params.id
+    classData.value = await getClass(id)
+    classData.value = classData.value.data
+    classAssociations.value = await getClassAssociations(classData.value.name)
+    classInheritances.value = await getClassInheritances(classData.value.name)
+    classData.value.associations = classAssociations.value.data
+    classData.value.inheritances = classInheritances.value.data 
+  }
+  catch (error) {
+    errorMessage.value = 'Failed to fetch'
+  }
 })
 </script>
 

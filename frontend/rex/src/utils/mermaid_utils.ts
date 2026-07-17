@@ -20,7 +20,7 @@ export async function mermaidSvgCreator(steps: Array<any>) {
       if (step.next_step) {
         diagram += 
 `
-    ${step.step_code} --> ${step.next_step.step_code}
+    ${step.step_code} --> ${step.next_step}
 `
       }
     }

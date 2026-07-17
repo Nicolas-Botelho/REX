@@ -17,6 +17,15 @@ h3 {
   text-align: justify;
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+h4 {
+  color: #2c3e50;
+  text-align:justify;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
 }
 
 p {
@@ -73,4 +82,22 @@ textarea {
   max-width: 50vw;
   min-height: 50vh;
   max-height: 50vh;
+}
+
+.scroll-box {
+  max-width: 95%;
+  width: 100%;
+  max-height: 75vh;
+  height: 100%;
+  padding: 15px;
+  border: 1px solid #2c3e50;
+  overflow: auto;
+  margin: 20px auto;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: normal;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
