@@ -41,7 +41,7 @@ This layer has the objective of using AI agents to create the respective models 
 Utility layer that transforms the management layer models into the ai layer models and instanciates the ai layer models into mamagement layer models.
 
 ## Generation Layer
-Layer that stores the functions for the supported generations (E.g.: Json). Their serializers are stored in the serializer sublayer at the management layer.
+Layer that stores the functions for the supported generations (e.g.: Json). Their serializers are stored in the serializer sublayer at the management layer.
 
 ## Frontend Layer
-The user interaction layer. Calls the Backend API routes.
+The user interaction layer. Calls the Backend API routes and presents the classes and use cases.

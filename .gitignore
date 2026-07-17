@@ -14,7 +14,7 @@ __pycache__
 .env
 
 # output
-out.json
+out*.json
 
 # ignore
 IGNORE

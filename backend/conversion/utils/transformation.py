@@ -1,5 +1,5 @@
-from ai_gen.models import klass as pyd
-from ai_gen.models import ai_klass as aig
+from models import klass as pyd
+from models import ai_klass as aig
 
 class TransformAssociation():
   def transform(associations: list[pyd.Association]) -> list[aig.Association]:

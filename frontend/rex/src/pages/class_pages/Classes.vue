@@ -6,12 +6,12 @@
     <p v-if="error">{{ error }}</p>
 
     <ul v-if="clazzes">
-      <li v-for="clazz in clazzes" :key="clazz.id">
-        <router-link :to="`classes/${clazz.id}`">{{ clazz.name }}</router-link>
-        <div>
-          <!-- <button type="button" @click=""> Update Class </button> -->
+      <li v-for="(clazz, index) in clazzes" :key="index">
+        <router-link :to="`classes/${index}`">{{ clazz.name }}</router-link>
+        <!-- <div>
+          <button type="button" @click=""> Update Class </button>
           <button type="button" @click="removeClass(clazz.id)"> Delete Class </button>
-        </div>
+        </div> -->
       </li>
     </ul>
   </div>
@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getClasses, deleteClass } from '@/services/api/classes'
+import { getClasses } from '@/services/api/classes'
 
 const clazzes = ref([])
 const loading = ref(true)
@@ -33,6 +33,7 @@ const removeClass = async (id) => {
 onMounted(async () => {
   try {
     clazzes.value = await getClasses()
+    clazzes.value = clazzes.value.data
   } catch (err) {
     error.value = err.message
   } finally {
