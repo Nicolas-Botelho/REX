@@ -54,13 +54,13 @@
   <p v-else>Loading...</p>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getRequirements, getFRs, getNFRs, getBRs } from '@/services/api/requirement'
+import { getFRs, getNFRs, getBRs } from '@/services/api/requirement'
 
-const frData = ref(null)
-const nfrData = ref(null)
-const brData = ref(null)
+const frData = ref()
+const nfrData = ref()
+const brData = ref()
 
 const errorMessage = ref('')
 

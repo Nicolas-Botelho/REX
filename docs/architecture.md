@@ -1,47 +1,55 @@
 # REX Archtecture
 
 ```mermaid
-flowchart
+flowchart LR
+
+A[Gemini]
+B[JSON File]
 
 subgraph Backend
-  A[AI]
-  B[Conversion Layer]
-  C["Database SQLite (Django ORM)"]
-  D[Django Management]
-  E[Generation]
+  C[Model Layer]
+  D[Controller Layer]
+  E[AI Layer]
+  F[View Layer]
 end
 
 subgraph Frontend
-  F[Frontend App]
+  G[API Connection Layer]
+  H[Pages Layer]
 end
 
-A <--> B
-B <--> D
-D <--> C
-D <--> E
-D <--> F
+C --- D
+D --- E
+D --- F
+E --- F
+F --- G
+
+A --- E
+B --- D
+
+G --- H
 ```
 
-## Management Layer
-This layer is responsable for manipulating and retrieving the created models (explained at [models.md](models.md)). The Management Layer was created using the Django Framework and is divided in the following sublayers:
-* **models**: Definition of the domain classes and their attributes; This layer is also used by the Django ORM (Object Relational Mapping) to define the database classes;
-* **serializers**: Define the behaviour of the views and their relation with their respective models; and
-* **views**: Define the views exposed in the Backend API.
+## Model Layer
+Defines all the models used in the system.
 
-## Database Layer
-The database layer is a hidden layer that is created automatically by the Django Framework using the models of the models sublayer from the management layer. It is created in SQLite nad stores the created objects.
+The models are divided in 4 groups: Domain Narrative, Requirements, Use Cases and Classes.
+
+The models are better explained in [Models](./models.md).
+
+## Controller Layer
+Divided in 2 parts:
+- Converter: Transforms given dictionaries in instances of the models; and
+- Generator: Reads from and writes in the JSON file.
 
 ## AI Layer
-This layer has the objective of using AI agents to create the respective models based on a given textual description of a information system. The AI layer uses LangChain and LangGraph to organize the agent's flow and the Gemini API to create the models. It is organized in the following layers:
-* **models**: Recreation of the management layer models; And the definition of the response models used to standarize the AI output;
-* **agents**: Definition of the agents and their inputs, prompts and output formats; and
-* **graph**: Organization of the agents in invokable langgraph graphs;
+Instanciates models based on a user-given input and on already existent models.
 
-## Conversion Layer
-Utility layer that transforms the management layer models into the ai layer models and instanciates the ai layer models into mamagement layer models.
+## View Layer
+Creates the API routes to access the backend.
 
-## Generation Layer
-Layer that stores the functions for the supported generations (e.g.: Json). Their serializers are stored in the serializer sublayer at the management layer.
+## API Connection Layer
+Creates functions to use the backend API.
 
-## Frontend Layer
-The user interaction layer. Calls the Backend API routes and presents the classes and use cases.
+## Pages Layer
+Creates the pages accessed by the user.

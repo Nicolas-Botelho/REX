@@ -1,7 +1,7 @@
 <template>
   <h1>Domain Narrative</h1>
   <div v-if="dnData">
-    <h2>Context</h2>
+    <h2 v-if="dnData.system_context">Context</h2>
     <p>{{ dnData.system_context }}</p>
 
     <h2 v-if="dnData.users && dnData.users.length > 0">Users</h2>
@@ -23,11 +23,11 @@
   <p v-else>Loading...</p>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getNarrative } from '@/services/api/narrative'
 
-const dnData = ref(null)
+const dnData = ref()
 const errorMessage = ref('')
 
 onMounted(async () => {
