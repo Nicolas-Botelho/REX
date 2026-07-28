@@ -32,15 +32,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref, watchEffect } from 'vue';
 import { generateJson, importJson } from '@/services/api/utils';
 
 const successExportMessage = ref('')
 const errorExportMessage = ref('')
 
-const fileInput = ref(null)
-const currentData = ref(null)
+const fileInput = ref()
+const currentData = ref()
 const errorImportMessage = ref('')
 const successImportMessage = ref('')
 
@@ -74,7 +74,7 @@ const triggerFileInput = () => {
   fileInput.value.click()
 }
 
-const handleFileChange = (event) => {
+const handleFileChange = (event: any) => {
   const file = event.target.files[0]
 
   errorImportMessage.value = ''
@@ -89,7 +89,7 @@ const handleFileChange = (event) => {
 
   const reader = new FileReader()
 
-  reader.onload = async (e) => {
+  reader.onload = async (e: any) => {
     try {
       const parsedData = JSON.parse(e.target.result)
       await importJson(parsedData)

@@ -7,9 +7,9 @@
 
       <ul>
         <li v-for="(item, index) in classData.class_attributes" :key="index">
-          <p v-if="item.attr_type">{{ item.name }} : {{ item.attr_type }}
+          <p v-if="item.attr_type && item.is_multiple">{{ item.name }} : {{ item.attr_type }} <template v-if="item.is_multiple">(many)</template>
             <p v-for="value in item.valid_values">- {{ value }}</p>
-          </p>  
+          </p>
         </li>
       </ul>
 
@@ -44,20 +44,20 @@
   <p v-else>Loading...</p>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, watchEffect } from 'vue'
 import { getClass, getClassAssociations, getClassInheritances, getClassByName } from '@/services/api/classes'
 
 const route = useRoute()
 const router = useRouter()
-const classData = ref(null)
-const classAssociations = ref(null)
-const classInheritances = ref(null)
+const classData = ref()
+const classAssociations = ref()
+const classInheritances = ref()
 
 const errorMessage = ref('')
 
-async function goToClass(className) {
+async function goToClass(className: string) {
   const data = await getClassByName(className)
   router.push(`/classes/${data.data[0].index}`)
 }
@@ -65,7 +65,7 @@ async function goToClass(className) {
 onMounted(async () => {
   try {
     const id = route.params.id
-    classData.value = await getClass(id)
+    classData.value = await getClass(Number(id))
     classData.value = classData.value.data
     classAssociations.value = await getClassAssociations(classData.value.name)
     classInheritances.value = await getClassInheritances(classData.value.name)
@@ -80,7 +80,7 @@ onMounted(async () => {
 watchEffect(async () => {
   try {
     const id = route.params.id
-    classData.value = await getClass(id)
+    classData.value = await getClass(Number(id))
     classData.value = classData.value.data
     classAssociations.value = await getClassAssociations(classData.value.name)
     classInheritances.value = await getClassInheritances(classData.value.name)

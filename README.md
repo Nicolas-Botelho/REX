@@ -12,37 +12,33 @@ A requirement management tool with a requirement from text extraction.
 
 1. Clone the Repository
 ```bash
-git clone 
+git clone https://github.com/Nicolas-Botelho/REX.git
 ```
 
-2. Create a virtual enviroment and install the requirements
+2. Create a .env file and add the GEMINI_API_KEY.
+> OBS: The Langsmith variables are optional
+
+3. Create a virtural enviroment and install the Python requirements
 ```bash
 python -m venv .venv
 .venv/bin/activate
-
 pip install -r requirements.txt
 ```
 
-3. Create a .env file and add the enviroment variables
-
-4. Run the backend
-
-  4.1. Go to the backend folder and run
+4. Build the frontend
 ```bash
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+cd frontend/rex
+npm i
+npm run build
 ```
 
-5. Run the frontend
-
-  5.1 Go to the `rex` folder inside the frontend folder and run
+5. Run the backend
 ```bash
-npm i
-npm run dev
+cd backend
+fastapi dev app.py
 ```
 
 ## Other informations
 * [Architecture](./docs/architecture.md)
 * [Models](./docs/models.md)
-* [Json Generation Example](./example/output.json)
+* [Generation Examples](./example/examples.md)

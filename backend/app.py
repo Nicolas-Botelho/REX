@@ -16,8 +16,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173",  # Your Vite/React/Vue frontend
-    "http://127.0/.0.1:5173", # Good to add as well
+    "http://localhost:8000",  # Your Vite/React/Vue frontend
+    "http://127.0.0.1:8000",  # Good to add as well
 ]
 
 app.add_middleware(
@@ -59,3 +59,8 @@ app.include_router(class_router, tags=["Class"])
 app.include_router(usecase_router, tags=["Usecase"])
 app.include_router(requirement_router, tags=["Requirement"])
 app.include_router(narrative_router, tags=["Narrative"])
+
+try:
+  app.frontend("/", directory="../frontend/rex/dist")
+except:
+  print("ERROR: No frontend build found")

@@ -8,20 +8,16 @@
     <ul v-if="ucs">
       <li v-for="(uc, index) in ucs" :key="index">
         <router-link :to="`usecases/${index}`">{{ uc.name }}</router-link>
-        <!-- <div>
-          <button type="button" @click=""> Update Use Case </button>
-          <button type="button" @click="removeUseCase(uc.id)"> Delete Use Case </button>
-        </div> -->
       </li>
     </ul>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getUseCases } from '@/services/api/usecases'
 
-const ucs = ref([])
+const ucs = ref()
 const loading = ref(true)
 const error = ref(null)
 
@@ -29,7 +25,7 @@ onMounted(async () => {
   try {
     ucs.value = await getUseCases()
     ucs.value = ucs.value.data
-  } catch (err) {
+  } catch (err: any) {
     error.value = err.message
   } finally {
     loading.value = false
