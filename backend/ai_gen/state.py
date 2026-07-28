@@ -18,3 +18,16 @@ class State(TypedDict):
   Requirements : Optional[RequirementOutput]
   Classes : Optional[ClassOutput]
   Usecases : Optional[UsecaseOutput]
+
+class NoStructState(TypedDict):
+  InputText : str
+
+  OldDomainNarrative : Optional[str]
+  OldRequirements : Optional[str]
+  OldClasses : Optional[str]
+  OldUsecases : Optional[str]
+
+  DomainNarrative : Optional[str]
+  Requirements : Optional[str]
+  Classes : Optional[str]
+  Usecases : Optional[str]

@@ -1,4 +1,4 @@
-from ai_gen.graph.usecase_class_graph import full_graph
+from ai_gen.graph.usecase_class_graph import full_graph, ns_graph
 from models.response_model.class_response import ClassOutput, HumanClassOutput
 from models.response_model.usecase_response import UsecaseOutput
 from models.response_model.requirement_response import RequirementOutput
@@ -36,6 +36,10 @@ def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = Fals
   ndInput = NarrativeOutput(domain_narrative=loaded_narrative, questions=loaded_narrative_q)
 
   result = full_graph.invoke({'InputText': input_text, 'OldDomainNarrative': ndInput, 'OldRequirements': rqInput, 'OldUsecases': ucInput, 'OldClasses': clsInput})
+
+  print("NO STRUCT TEST START")
+  print(ns_graph.invoke({'InputText': input_text}))
+  print("NO STRUCT TEST END")
 
   new_classes: ClassOutput = result.get('Classes')
   new_usecases: UsecaseOutput = result.get('Usecases')

@@ -9,7 +9,7 @@
 
       <div v-html="event.svg"></div>
 
-      <p v-for="step in event.event_steps">{{ step.step_code }}: {{ step.description }} ({{ step.category }}) -> <a href="#" @click.prevent="goToClass(step.class_name)">{{ step.class_name }}</a>
+      <p v-for="step in event.event_steps">{{ step.step_code }}: {{ step.description }} <template v-if="step.category">({{ step.category }})</template> <template v-if="step.class_name">-> <a href="#" @click.prevent="goToClass(step.class_name)">{{ step.class_name }}</a></template>
       
       </p>
 

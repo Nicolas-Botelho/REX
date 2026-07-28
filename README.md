@@ -41,4 +41,4 @@ fastapi dev app.py
 ## Other informations
 * [Architecture](./docs/architecture.md)
 * [Models](./docs/models.md)
-* [Json Generation Example](./example/book.json)
+* [Generation Examples](./example/examples.md)

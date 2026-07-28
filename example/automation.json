@@ -1,15 +1,15 @@
 {
     "narrative_models": {
         "domain_narrative": {
-            "system_context": "O sistema é uma plataforma web responsiva desenvolvida para integrar, automatizar e otimizar processos internos de uma organização que atualmente depende de controles manuais e ferramentas desconectadas. Seu objetivo é centralizar informações estratégicas, operacionais e gerenciais em um ambiente seguro e intuitivo, proporcionando ganhos em produtividade, redução de custos operacionais e melhoria na qualidade das informações para tomada de decisão, contribuindo para maior controle, rastreabilidade e eficiência organizacional.",
+            "system_context": "O sistema é uma plataforma web responsiva, acessível em diferentes dispositivos, projetada para integrar, automatizar e otimizar processos internos de uma organização. Ele centralizará informações estratégicas, operacionais e gerenciais em um ambiente seguro e intuitivo, substituindo controles manuais e ferramentas desconectadas. A arquitetura será moderna, com separação entre front-end e back-end, focando em escalabilidade, manutenção facilitada, experiência do usuário e segurança robusta (autenticação, criptografia, auditoria).",
             "users": [
                 {
                     "name": "Colaborador",
-                    "description": "Usuário geral da plataforma, com níveis de permissão definidos para visualizar e manipular apenas os dados pertinentes às suas responsabilidades, e que recebe notificações sobre prazos, pendências e atualizações."
+                    "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                 },
                 {
                     "name": "Administrador",
-                    "description": "Usuário responsável pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
+                    "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                 }
             ],
             "system_functionalities": [
@@ -19,7 +19,7 @@
                 "Geração de relatórios personalizados",
                 "Painéis gerenciais com indicadores de desempenho em tempo real",
                 "Configuração de fluxos de trabalho automatizados",
-                "Envio de notificações automáticas (por e-mail ou dentro da plataforma)",
+                "Envio de notificações automáticas (por e-mail ou na plataforma)",
                 "Parametrização de regras, categorias e permissões"
             ]
         },
@@ -27,6 +27,190 @@
     },
     "requirement_models": {
         "requirements": [
+            {
+                "code": "FR-001",
+                "description": "O sistema deve centralizar informações estratégicas, operacionais e gerenciais.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": []
+            },
+            {
+                "code": "FR-002",
+                "description": "O sistema deve gerenciar perfis de usuários.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": []
+            },
+            {
+                "code": "FR-003",
+                "description": "O sistema deve definir níveis de permissão para usuários.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-002"
+                ]
+            },
+            {
+                "code": "FR-004",
+                "description": "O sistema deve garantir que cada usuário visualize apenas os dados pertinentes às suas responsabilidades.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-003"
+                ]
+            },
+            {
+                "code": "FR-005",
+                "description": "O sistema deve garantir que cada usuário manipule apenas os dados pertinentes às suas responsabilidades.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-003"
+                ]
+            },
+            {
+                "code": "FR-006",
+                "description": "O back-end deve processar as regras de negócio.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": []
+            },
+            {
+                "code": "FR-007",
+                "description": "O back-end deve integrar-se com um banco de dados relacional.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-006"
+                ]
+            },
+            {
+                "code": "FR-008",
+                "description": "O back-end deve permitir integrações externas por meio de APIs.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-006"
+                ]
+            },
+            {
+                "code": "FR-009",
+                "description": "O sistema deve implementar autenticação robusta.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-002"
+                ]
+            },
+            {
+                "code": "FR-010",
+                "description": "O sistema deve implementar criptografia de dados sensíveis.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "NFR-003"
+                ]
+            },
+            {
+                "code": "FR-011",
+                "description": "O sistema deve gerar registros de auditoria para rastreamento de ações críticas.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "NFR-003"
+                ]
+            },
+            {
+                "code": "FR-012",
+                "description": "O sistema deve permitir o cadastro de usuários.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-002"
+                ]
+            },
+            {
+                "code": "FR-013",
+                "description": "O sistema deve permitir o gerenciamento de usuários.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-002"
+                ]
+            },
+            {
+                "code": "FR-014",
+                "description": "O sistema deve permitir o controle de processos internos.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-001"
+                ]
+            },
+            {
+                "code": "FR-015",
+                "description": "O sistema deve permitir o acompanhamento de solicitações.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-001"
+                ]
+            },
+            {
+                "code": "FR-016",
+                "description": "O sistema deve gerar relatórios personalizados.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-001"
+                ]
+            },
+            {
+                "code": "FR-017",
+                "description": "O sistema deve exibir painéis gerenciais com indicadores de desempenho em tempo real.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-001"
+                ]
+            },
+            {
+                "code": "FR-018",
+                "description": "O sistema deve permitir a configuração de fluxos de trabalho automatizados.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-014"
+                ]
+            },
+            {
+                "code": "FR-019",
+                "description": "O sistema deve enviar notificações automáticas por e-mail.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": []
+            },
+            {
+                "code": "FR-020",
+                "description": "O sistema deve exibir notificações automáticas dentro da plataforma.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": []
+            },
+            {
+                "code": "FR-021",
+                "description": "As notificações devem informar sobre prazos, pendências e atualizações relevantes.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-019",
+                    "FR-020"
+                ]
+            },
+            {
+                "code": "FR-022",
+                "description": "O sistema deve permitir a parametrização de regras.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-006"
+                ]
+            },
+            {
+                "code": "FR-023",
+                "description": "O sistema deve permitir a parametrização de categorias.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-001"
+                ]
+            },
+            {
+                "code": "FR-024",
+                "description": "O sistema deve permitir a parametrização de permissões.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR-003",
+                    "FR-022"
+                ]
+            },
             {
                 "code": "NFR-001",
                 "description": "O sistema deve ser uma plataforma web responsiva.",
@@ -42,48 +226,20 @@
                 ]
             },
             {
-                "code": "FR-001",
-                "description": "O sistema deve centralizar informações estratégicas, operacionais e gerenciais.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
                 "code": "NFR-003",
-                "description": "O sistema deve proporcionar um ambiente seguro.",
+                "description": "O sistema deve ser seguro.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": []
             },
             {
                 "code": "NFR-004",
-                "description": "O sistema deve proporcionar um ambiente intuitivo.",
+                "description": "O sistema deve ser intuitivo.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": []
             },
             {
-                "code": "FR-007",
-                "description": "O sistema deve permitir o cadastro e gerenciamento de usuários.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
-                "code": "FR-003",
-                "description": "O sistema deve permitir a definição de níveis de permissão para usuários.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-007"
-                ]
-            },
-            {
-                "code": "BR-001",
-                "description": "Cada colaborador deve visualizar e manipular apenas os dados pertinentes às suas responsabilidades.",
-                "requirement_type": "business_rule",
-                "depends_on_requirements_codes": [
-                    "FR-003"
-                ]
-            },
-            {
                 "code": "NFR-005",
-                "description": "A arquitetura do sistema deve ser baseada em uma estrutura moderna com separação entre front-end e back-end.",
+                "description": "A arquitetura do sistema deve ter separação clara entre front-end e back-end.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": []
             },
@@ -91,31 +247,17 @@
                 "code": "NFR-006",
                 "description": "O sistema deve ser escalável.",
                 "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": []
+                "depends_on_requirements_codes": [
+                    "NFR-005"
+                ]
             },
             {
                 "code": "NFR-007",
                 "description": "O sistema deve ter manutenção facilitada.",
                 "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
-                "code": "FR-004",
-                "description": "O back-end do sistema deve processar as regras de negócio.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
-                "code": "FR-005",
-                "description": "O sistema deve integrar-se com um banco de dados relacional.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
-                "code": "FR-006",
-                "description": "O sistema deve permitir integrações externas por meio de APIs.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
+                "depends_on_requirements_codes": [
+                    "NFR-005"
+                ]
             },
             {
                 "code": "NFR-008",
@@ -125,23 +267,25 @@
             },
             {
                 "code": "NFR-009",
-                "description": "O sistema deve ter navegação simples.",
+                "description": "A navegação do front-end deve ser simples.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "NFR-008"
+                    "NFR-008",
+                    "NFR-004"
                 ]
             },
             {
                 "code": "NFR-010",
-                "description": "O sistema deve ter clareza visual.",
+                "description": "A interface do front-end deve ter clareza visual.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "NFR-008"
+                    "NFR-008",
+                    "NFR-004"
                 ]
             },
             {
                 "code": "NFR-011",
-                "description": "O sistema deve permitir eficiência na execução das tarefas.",
+                "description": "O front-end deve ser eficiente na execução das tarefas.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
                     "NFR-008"
@@ -149,119 +293,28 @@
             },
             {
                 "code": "NFR-012",
-                "description": "O sistema deve implementar autenticação robusta.",
+                "description": "O sistema deve ser adaptável ao crescimento e às mudanças estratégicas da instituição.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "FR-007"
+                    "NFR-005",
+                    "NFR-006",
+                    "NFR-007"
                 ]
             },
             {
                 "code": "NFR-013",
-                "description": "O sistema deve criptografar dados sensíveis.",
+                "description": "O sistema deve seguir boas práticas de usabilidade.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "NFR-003"
+                    "NFR-004",
+                    "NFR-008",
+                    "NFR-009",
+                    "NFR-010",
+                    "NFR-011"
                 ]
             },
             {
                 "code": "NFR-014",
-                "description": "O sistema deve registrar auditoria para rastreamento de ações críticas.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "NFR-003"
-                ]
-            },
-            {
-                "code": "FR-008",
-                "description": "O sistema deve controlar processos internos.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
-                "code": "FR-009",
-                "description": "O sistema deve permitir o acompanhamento de solicitações.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-008"
-                ]
-            },
-            {
-                "code": "FR-010",
-                "description": "O sistema deve gerar relatórios personalizados.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-001"
-                ]
-            },
-            {
-                "code": "FR-011",
-                "description": "O sistema deve exibir painéis gerenciais com indicadores de desempenho em tempo real.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-001"
-                ]
-            },
-            {
-                "code": "FR-012",
-                "description": "O sistema deve permitir a configuração de fluxos de trabalho automatizados.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-008"
-                ]
-            },
-            {
-                "code": "FR-013",
-                "description": "O sistema deve enviar notificações automáticas (por e-mail ou dentro da plataforma).",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-007"
-                ]
-            },
-            {
-                "code": "FR-014",
-                "description": "O sistema deve permitir a parametrização de regras.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-004"
-                ]
-            },
-            {
-                "code": "FR-015",
-                "description": "O sistema deve permitir a parametrização de categorias.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-001"
-                ]
-            },
-            {
-                "code": "FR-016",
-                "description": "O sistema deve permitir a parametrização de permissões.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "FR-003"
-                ]
-            },
-            {
-                "code": "NFR-015",
-                "description": "O sistema deve ser adaptável ao crescimento e às mudanças estratégicas da instituição.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "NFR-007",
-                    "FR-014",
-                    "FR-015",
-                    "FR-016"
-                ]
-            },
-            {
-                "code": "NFR-016",
-                "description": "O sistema deve seguir boas práticas de usabilidade.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "NFR-008"
-                ]
-            },
-            {
-                "code": "NFR-017",
                 "description": "O sistema deve seguir boas práticas de acessibilidade.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
@@ -270,26 +323,35 @@
                 ]
             },
             {
-                "code": "NFR-018",
+                "code": "NFR-015",
+                "description": "O sistema deve ser utilizável por diferentes perfis de usuários de forma eficiente.",
+                "requirement_type": "non_functional_requirement",
+                "depends_on_requirements_codes": [
+                    "NFR-013",
+                    "NFR-014"
+                ]
+            },
+            {
+                "code": "NFR-016",
                 "description": "O sistema deve ser estável.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": []
             },
             {
-                "code": "NFR-019",
+                "code": "NFR-017",
                 "description": "O sistema deve ser confiável.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "NFR-018"
+                    "NFR-016"
                 ]
             },
             {
-                "code": "NFR-020",
+                "code": "NFR-018",
                 "description": "O sistema deve estar preparado para operar em ambiente produtivo.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "NFR-018",
-                    "NFR-019"
+                    "NFR-016",
+                    "NFR-017"
                 ]
             }
         ],
@@ -298,22 +360,17 @@
     "class_models": {
         "classes": [
             {
-                "name": "Sistema",
-                "stereotype": "kind",
-                "class_attributes": []
-            },
-            {
-                "name": "Usuario",
+                "name": "User",
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "idUsuario",
+                        "name": "id",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "nome",
+                        "name": "name",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -325,13 +382,13 @@
                         "valid_values": []
                     },
                     {
-                        "name": "senha",
+                        "name": "passwordHash",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "ativo",
+                        "name": "isActive",
                         "attr_type": "boolean",
                         "is_multiple": false,
                         "valid_values": []
@@ -339,75 +396,173 @@
                 ]
             },
             {
-                "name": "Administrador",
-                "stereotype": "role",
-                "class_attributes": []
-            },
-            {
-                "name": "Colaborador",
-                "stereotype": "role",
-                "class_attributes": []
-            },
-            {
-                "name": "NivelDePermissao",
+                "name": "Profile",
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "idNivelDePermissao",
+                        "name": "id",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "nome",
+                        "name": "name",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "descricao",
+                        "name": "description",
                         "attr_type": "string",
                         "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "permissoesFuncionais",
-                        "attr_type": "string",
-                        "is_multiple": true,
                         "valid_values": []
                     }
                 ]
             },
             {
-                "name": "Processo",
+                "name": "Permission",
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "idProcesso",
+                        "name": "id",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "tipo",
+                        "name": "name",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "descricao",
+                        "name": "description",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "dataInicio",
+                        "name": "level",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "AuditLog",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "timestamp",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "dataLimite",
+                        "name": "action",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "details",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "Session",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "loginTime",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "logoutTime",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "isActive",
+                        "attr_type": "boolean",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "Process",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "type",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "initialData",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "currentStatus",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "history",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "creationDate",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "Request",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "details",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -416,150 +571,22 @@
                         "name": "status",
                         "attr_type": "string",
                         "is_multiple": false,
-                        "valid_values": [
-                            "em andamento",
-                            "aguardando aprovacao",
-                            "concluido",
-                            "cancelado"
-                        ]
-                    },
-                    {
-                        "name": "comentarios",
-                        "attr_type": "string",
-                        "is_multiple": true,
                         "valid_values": []
                     },
                     {
-                        "name": "anexos",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    }
-                ]
-            },
-            {
-                "name": "FluxoDeTrabalho",
-                "stereotype": "kind",
-                "class_attributes": [
-                    {
-                        "name": "idFluxo",
-                        "attr_type": "integer",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "nome",
+                        "name": "history",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "descricao",
+                        "name": "comments",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "etapas",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "condicoes",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "acoesAutomatizadas",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "transicoes",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    }
-                ]
-            },
-            {
-                "name": "Solicitacao",
-                "stereotype": "kind",
-                "class_attributes": [
-                    {
-                        "name": "idSolicitacao",
-                        "attr_type": "integer",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "descricao",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "status",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "dataCriacao",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "historico",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    }
-                ]
-            },
-            {
-                "name": "Relatorio",
-                "stereotype": "kind",
-                "class_attributes": [
-                    {
-                        "name": "idRelatorio",
-                        "attr_type": "integer",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "tipo",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "parametros",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "dataGeracao",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "formato",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": [
-                            "visualizacao",
-                            "download"
-                        ]
-                    },
-                    {
-                        "name": "conteudo",
+                        "name": "creationDate",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -567,23 +594,35 @@
                 ]
             },
             {
-                "name": "PainelGerencial",
+                "name": "Report",
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "idPainel",
+                        "name": "id",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "nome",
+                        "name": "criteria",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "descricao",
+                        "name": "type",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "generatedData",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "generationDate",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -591,77 +630,65 @@
                 ]
             },
             {
-                "name": "IndicadorDeDesempenho",
+                "name": "Dashboard",
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "idIndicador",
+                        "name": "id",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "nome",
+                        "name": "name",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "valor",
+                        "name": "description",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "configuration",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "PerformanceIndicator",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "name",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "value",
                         "attr_type": "float",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "unidade",
+                        "name": "unit",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "dataHoraAtualizacao",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    }
-                ]
-            },
-            {
-                "name": "Regra",
-                "stereotype": "kind",
-                "class_attributes": [
-                    {
-                        "name": "idRegra",
-                        "attr_type": "integer",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "nome",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "parametros",
-                        "attr_type": "string",
-                        "is_multiple": true,
-                        "valid_values": []
-                    }
-                ]
-            },
-            {
-                "name": "Categoria",
-                "stereotype": "kind",
-                "class_attributes": [
-                    {
-                        "name": "idCategoria",
-                        "attr_type": "integer",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "nome",
+                        "name": "lastUpdated",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -669,39 +696,132 @@
                 ]
             },
             {
-                "name": "Notificacao",
+                "name": "Workflow",
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "idNotificacao",
+                        "name": "id",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "mensagem",
+                        "name": "name",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "tipo",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": [
-                            "email",
-                            "interna"
-                        ]
-                    },
-                    {
-                        "name": "dataHoraEnvio",
+                        "name": "steps",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "lida",
+                        "name": "conditions",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "actions",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "isActive",
                         "attr_type": "boolean",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "Rule",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "name",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "parameters",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "description",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "Category",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "name",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "description",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    }
+                ]
+            },
+            {
+                "name": "Notification",
+                "stereotype": "kind",
+                "class_attributes": [
+                    {
+                        "name": "id",
+                        "attr_type": "integer",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "message",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "type",
+                        "attr_type": "string",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "isRead",
+                        "attr_type": "boolean",
+                        "is_multiple": false,
+                        "valid_values": []
+                    },
+                    {
+                        "name": "sentDate",
+                        "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     }
@@ -711,566 +831,586 @@
         "associations": [
             {
                 "src": {
-                    "class_name": "Usuario",
+                    "class_name": "User",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "Profile",
+                    "class_min": 1,
+                    "class_max": 1
+                }
+            },
+            {
+                "src": {
+                    "class_name": "Profile",
                     "class_min": 1,
                     "class_max": 1
                 },
                 "tgt": {
-                    "class_name": "NivelDePermissao",
-                    "class_min": 0,
+                    "class_name": "Permission",
+                    "class_min": 1,
                     "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Processo",
-                    "class_min": 1,
+                    "class_name": "AuditLog",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Processo",
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Processo",
+                    "class_name": "Session",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "FluxoDeTrabalho",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Solicitacao",
+                    "class_name": "Process",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Relatorio",
+                    "class_name": "Request",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "PainelGerencial",
+                    "class_name": "Report",
                     "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_name": "User",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "PainelGerencial",
+                    "class_name": "Notification",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
+                    "class_min": 1,
+                    "class_max": 1
+                }
+            },
+            {
+                "src": {
+                    "class_name": "PerformanceIndicator",
                     "class_min": 1,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "IndicadorDeDesempenho",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_name": "Dashboard",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "Notificacao",
-                    "class_min": 1,
+                    "class_name": "Process",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_name": "Workflow",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
+                    "class_name": "Notification",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Regra",
+                    "class_name": "Process",
                     "class_min": 0,
-                    "class_max": null
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
+                    "class_name": "Notification",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Categoria",
+                    "class_name": "Request",
                     "class_min": 0,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "FluxoDeTrabalho",
-                    "class_min": 0,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "NivelDePermissao",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_max": 1
                 }
             }
         ],
         "relations": [
             {
                 "src": {
-                    "class_name": "Usuario",
+                    "class_name": "User",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "Profile",
+                    "class_min": 1,
+                    "class_max": 1
+                }
+            },
+            {
+                "src": {
+                    "class_name": "Profile",
                     "class_min": 1,
                     "class_max": 1
                 },
                 "tgt": {
-                    "class_name": "NivelDePermissao",
-                    "class_min": 0,
+                    "class_name": "Permission",
+                    "class_min": 1,
                     "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Processo",
-                    "class_min": 1,
+                    "class_name": "AuditLog",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Processo",
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Processo",
+                    "class_name": "Session",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "FluxoDeTrabalho",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Solicitacao",
+                    "class_name": "Process",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "Relatorio",
+                    "class_name": "Request",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
                     "class_min": 1,
                     "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
                 }
             },
             {
                 "src": {
-                    "class_name": "PainelGerencial",
+                    "class_name": "Report",
                     "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_name": "User",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "PainelGerencial",
+                    "class_name": "Notification",
+                    "class_min": 0,
+                    "class_max": null
+                },
+                "tgt": {
+                    "class_name": "User",
+                    "class_min": 1,
+                    "class_max": 1
+                }
+            },
+            {
+                "src": {
+                    "class_name": "PerformanceIndicator",
                     "class_min": 1,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "IndicadorDeDesempenho",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_name": "Dashboard",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "Notificacao",
-                    "class_min": 1,
+                    "class_name": "Process",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Colaborador",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_name": "Workflow",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
+                    "class_name": "Notification",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Regra",
+                    "class_name": "Process",
                     "class_min": 0,
-                    "class_max": null
+                    "class_max": 1
                 }
             },
             {
                 "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
+                    "class_name": "Notification",
+                    "class_min": 0,
                     "class_max": null
                 },
                 "tgt": {
-                    "class_name": "Categoria",
+                    "class_name": "Request",
                     "class_min": 0,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "FluxoDeTrabalho",
-                    "class_min": 0,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Administrador",
-                    "class_min": 1,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "NivelDePermissao",
-                    "class_min": 0,
-                    "class_max": null
+                    "class_max": 1
                 }
             }
         ],
-        "inheritances": [
-            {
-                "parent_class_name": "Usuario",
-                "child_class_name": "Administrador"
-            },
-            {
-                "parent_class_name": "Usuario",
-                "child_class_name": "Colaborador"
-            }
-        ],
+        "inheritances": [],
         "questions": []
     },
     "usecase_models": {
         "usecases": [
             {
-                "name": "Gerenciar Usuarios",
+                "name": "Autenticar Usuário",
                 "usecase_events": [
                     {
-                        "name": "Cadastrar Usuario",
+                        "name": "Realizar Login",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de gerenciamento de usuarios.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "RL-001",
+                                "description": "Usuário insere suas credenciais (e-mail/username e senha).",
+                                "class_name": "Credential",
+                                "next_step": "RL-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador seleciona a opcao \"Cadastrar Novo Usuario\".",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "RL-002",
+                                "description": "Sistema valida as credenciais fornecidas.",
+                                "class_name": "Credential",
+                                "next_step": "RL-003",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe formulario de cadastro de usuario.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "RL-003",
+                                "description": "Sistema lê o perfil e as permissões associadas ao usuário.",
+                                "class_name": "User",
+                                "next_step": "RL-004",
+                                "category": "read"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador preenche os dados do novo usuario (nome, email, etc.).",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "RL-004",
+                                "description": "Sistema registra a tentativa de login no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "RL-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador atribui o nivel de permissao inicial ao usuario.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "RL-005",
+                                "description": "Sistema concede acesso ao usuário ou exibe uma mensagem de erro em caso de falha na autenticação.",
+                                "class_name": "Session",
+                                "next_steps": [
+                                    "RL-006_Success",
+                                    "RL-006_Failure"
+                                ]
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Administrador confirma o cadastro.",
-                                "class_name": "Administrador",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema valida os dados e registra o novo usuario.",
-                                "class_name": "Sistema",
-                                "next_step": "A8",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A8",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "RL-006_Success",
+                                "description": "Sistema redireciona o usuário para a página inicial.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
+                            },
+                            {
+                                "step_code": "RL-006_Failure",
+                                "description": "Sistema exibe mensagem de erro de autenticação.",
+                                "class_name": "UserInterface",
+                                "next_step": null,
+                                "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "name": "Colaborador",
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     },
                     {
-                        "name": "Editar Usuario",
+                        "name": "Realizar Logout",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de gerenciamento de usuarios.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "RLO-001",
+                                "description": "Usuário solicita o logout do sistema.",
+                                "class_name": "UserInterface",
+                                "next_step": "RLO-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador busca e seleciona o usuario a ser editado.",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "RLO-002",
+                                "description": "Sistema encerra a sessão ativa do usuário.",
+                                "class_name": "Session",
+                                "next_step": "RLO-003",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe os dados atuais do usuario em um formulario.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "RLO-003",
+                                "description": "Sistema registra a ação de logout no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "RLO-004",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador altera os dados desejados.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A5",
-                                "description": "Administrador confirma as alteracoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A6",
-                                "description": "Sistema valida os dados e atualiza o registro do usuario.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "RLO-004",
+                                "description": "Sistema redireciona o usuário para a tela de login.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
+                            }
+                        ],
+                        "actor": {
+                            "name": "Colaborador",
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Gerenciar Usuários",
+                "usecase_events": [
+                    {
+                        "name": "Cadastrar Usuário",
+                        "event_steps": [
+                            {
+                                "step_code": "CU-001",
+                                "description": "Administrador insere os dados do novo usuário (nome, e-mail, perfil, etc.).",
+                                "class_name": "User",
+                                "next_step": "CU-002",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "CU-002",
+                                "description": "Sistema valida os dados inseridos pelo administrador.",
+                                "class_name": "User",
+                                "next_step": "CU-003",
+                                "category": "validate"
+                            },
+                            {
+                                "step_code": "CU-003",
+                                "description": "Sistema cria um novo registro para o usuário.",
+                                "class_name": "User",
+                                "next_step": "CU-004",
+                                "category": "create"
+                            },
+                            {
+                                "step_code": "CU-004",
+                                "description": "Sistema atribui os níveis de permissão definidos ao novo usuário.",
+                                "class_name": "Permission",
+                                "next_step": "CU-005",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "CU-005",
+                                "description": "Sistema registra a ação de cadastro de usuário no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "CU-006",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "CU-006",
+                                "description": "Sistema confirma o cadastro do usuário ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
+                                "next_step": null,
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     },
                     {
-                        "name": "Remover Usuario",
+                        "name": "Atualizar Usuário",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de gerenciamento de usuarios.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "AU-001",
+                                "description": "Administrador seleciona um usuário existente para atualização.",
+                                "class_name": "User",
+                                "next_step": "AU-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador busca e seleciona o usuario a ser removido.",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "AU-002",
+                                "description": "Administrador modifica os dados do usuário (nome, e-mail, perfil, permissões, etc.).",
+                                "class_name": "User",
+                                "next_step": "AU-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema solicita confirmacao da remocao.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "AU-003",
+                                "description": "Sistema valida os dados modificados.",
+                                "class_name": "User",
+                                "next_step": "AU-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador confirma a remocao.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "AU-004",
+                                "description": "Sistema atualiza o registro do usuário no banco de dados.",
+                                "class_name": "User",
+                                "next_step": "AU-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Sistema remove o registro do usuario.",
-                                "class_name": "Sistema",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "AU-005",
+                                "description": "Sistema registra a ação de atualização de usuário no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "AU-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "AU-006",
+                                "description": "Sistema confirma a atualização do usuário ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     },
                     {
-                        "name": "Atribuir Niveis de Permissao a Usuario",
+                        "name": "Excluir Usuário",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de gerenciamento de usuarios.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "EU-001",
+                                "description": "Administrador seleciona um usuário para exclusão.",
+                                "class_name": "User",
+                                "next_step": "EU-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador busca e seleciona o usuario.",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "EU-002",
+                                "description": "Sistema solicita confirmação da exclusão.",
+                                "class_name": "UserInterface",
+                                "next_step": "EU-003",
+                                "category": "output"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe os niveis de permissao disponiveis.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "EU-003",
+                                "description": "Administrador confirma a exclusão do usuário.",
+                                "class_name": "UserInterface",
+                                "next_step": "EU-004",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador seleciona ou ajusta os niveis de permissao do usuario.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "EU-004",
+                                "description": "Sistema desativa ou remove o registro do usuário.",
+                                "class_name": "User",
+                                "next_step": "EU-005",
+                                "category": "delete"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador confirma as alteracoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "EU-005",
+                                "description": "Sistema registra a ação de exclusão de usuário no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "EU-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema atualiza as permissoes do usuario.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "EU-006",
+                                "description": "Sistema confirma a exclusão do usuário.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
+                        }
+                    },
+                    {
+                        "name": "Visualizar Detalhes do Usuário",
+                        "event_steps": [
+                            {
+                                "step_code": "VDU-001",
+                                "description": "Administrador seleciona um usuário para visualizar seus detalhes.",
+                                "class_name": "User",
+                                "next_step": "VDU-002",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "VDU-002",
+                                "description": "Sistema recupera os detalhes do usuário, incluindo seu perfil e permissões.",
+                                "class_name": "User",
+                                "next_step": "VDU-003",
+                                "category": "read"
+                            },
+                            {
+                                "step_code": "VDU-003",
+                                "description": "Sistema exibe os detalhes completos do usuário.",
+                                "class_name": "UserInterface",
+                                "next_step": null,
+                                "category": "output"
+                            }
+                        ],
+                        "actor": {
+                            "name": "Administrador",
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     }
                 ]
@@ -1279,877 +1419,644 @@
                 "name": "Controlar Processos Internos",
                 "usecase_events": [
                     {
-                        "name": "Iniciar Processo",
+                        "name": "Iniciar Novo Processo",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a funcionalidade de controle de processos.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "INP-001",
+                                "description": "Usuário seleciona o tipo de processo a ser iniciado.",
+                                "class_name": "Process",
+                                "next_step": "INP-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Colaborador seleciona a opcao \"Iniciar Novo Processo\".",
-                                "class_name": "Colaborador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "INP-002",
+                                "description": "Usuário insere os dados iniciais necessários para o processo.",
+                                "class_name": "Process",
+                                "next_step": "INP-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe formulario de criacao de processo.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "INP-003",
+                                "description": "Sistema valida os dados inseridos e as permissões do usuário.",
+                                "class_name": "Process",
+                                "next_step": "INP-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Colaborador preenche os detalhes do processo (tipo, descricao, responsaveis, prazos).",
-                                "class_name": "Colaborador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "INP-004",
+                                "description": "Sistema cria uma nova instância do processo com o status inicial.",
+                                "class_name": "Process",
+                                "next_step": "INP-005",
+                                "category": "create"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Colaborador confirma a criacao do processo.",
-                                "class_name": "Colaborador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "INP-005",
+                                "description": "Sistema registra a ação de início do processo no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "INP-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema registra o novo processo e inicia o fluxo de trabalho configurado.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso e notifica os envolvidos.",
-                                "class_name": "Sistema",
+                                "step_code": "INP-006",
+                                "description": "Sistema confirma o início do processo ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     },
                     {
-                        "name": "Atualizar Status de Processo",
+                        "name": "Avançar Etapa de Processo",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a funcionalidade de controle de processos.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "AEP-001",
+                                "description": "Usuário seleciona um processo e a próxima etapa a ser avançada.",
+                                "class_name": "Process",
+                                "next_step": "AEP-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Colaborador busca e seleciona o processo a ser atualizado.",
-                                "class_name": "Colaborador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "AEP-002",
+                                "description": "Usuário insere informações ou anexa documentos relacionados à etapa (se necessário).",
+                                "class_name": "Process",
+                                "next_step": "AEP-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe os detalhes e o status atual do processo.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "AEP-003",
+                                "description": "Sistema valida as informações e as permissões do usuário para avançar a etapa.",
+                                "class_name": "Process",
+                                "next_step": "AEP-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Colaborador seleciona a opcao para atualizar o status.",
-                                "class_name": "Colaborador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "AEP-004",
+                                "description": "Sistema atualiza o status do processo para a próxima etapa.",
+                                "class_name": "Process",
+                                "next_step": "AEP-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Colaborador escolhe o novo status (ex: em andamento, aguardando aprovacao).",
-                                "class_name": "Colaborador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "AEP-005",
+                                "description": "Sistema registra a ação de avanço de etapa no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "AEP-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Colaborador adiciona comentarios ou anexos, se necessario.",
-                                "class_name": "Colaborador",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Colaborador confirma a atualizacao.",
-                                "class_name": "Colaborador",
-                                "next_step": "A8",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A8",
-                                "description": "Sistema atualiza o status do processo e, se aplicavel, dispara acoes do fluxo de trabalho.",
-                                "class_name": "Sistema",
-                                "next_step": "A9",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A9",
-                                "description": "Sistema notifica os envolvidos sobre a atualizacao.",
-                                "class_name": "Sistema",
-                                "next_step": "A10",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A10",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "AEP-006",
+                                "description": "Sistema confirma o avanço da etapa ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     },
                     {
-                        "name": "Concluir Processo",
+                        "name": "Visualizar Processo",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a funcionalidade de controle de processos.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "VP-001",
+                                "description": "Usuário seleciona um processo para visualizar seus detalhes.",
+                                "class_name": "Process",
+                                "next_step": "VP-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Colaborador busca e seleciona o processo a ser concluido.",
-                                "class_name": "Colaborador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "VP-002",
+                                "description": "Sistema recupera os detalhes do processo, incluindo seu status atual e histórico.",
+                                "class_name": "Process",
+                                "next_step": "VP-003",
+                                "category": "read"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe os detalhes do processo.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A4",
-                                "description": "Colaborador seleciona a opcao \"Concluir Processo\".",
-                                "class_name": "Colaborador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A5",
-                                "description": "Sistema solicita confirmacao da conclusao.",
-                                "class_name": "Sistema",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A6",
-                                "description": "Colaborador confirma a conclusao.",
-                                "class_name": "Colaborador",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema marca o processo como concluido e finaliza o fluxo de trabalho.",
-                                "class_name": "Sistema",
-                                "next_step": "A8",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A8",
-                                "description": "Sistema notifica os envolvidos.",
-                                "class_name": "Sistema",
-                                "next_step": "A9",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A9",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "VP-003",
+                                "description": "Sistema exibe os detalhes e o status atual do processo na interface.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     }
                 ]
             },
             {
-                "name": "Acompanhar Solicitacoes",
+                "name": "Acompanhar Solicitações",
                 "usecase_events": [
                     {
-                        "name": "Visualizar Solicitacoes",
+                        "name": "Criar Solicitação",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a funcionalidade de acompanhamento de solicitacoes.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "CS-001",
+                                "description": "Usuário insere os detalhes necessários para a nova solicitação.",
+                                "class_name": "Request",
+                                "next_step": "CS-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Sistema exibe uma lista de solicitacoes pertinentes ao Colaborador.",
-                                "class_name": "Sistema",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "CS-002",
+                                "description": "Sistema valida os dados da solicitação e as permissões do usuário.",
+                                "class_name": "Request",
+                                "next_step": "CS-003",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Colaborador pode filtrar ou pesquisar solicitacoes.",
-                                "class_name": "Colaborador",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "CS-003",
+                                "description": "Sistema cria uma nova solicitação.",
+                                "class_name": "Request",
+                                "next_step": "CS-004",
+                                "category": "create"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Colaborador seleciona uma solicitacao para ver detalhes.",
-                                "class_name": "Colaborador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "CS-004",
+                                "description": "Sistema registra a criação da solicitação no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "CS-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Sistema exibe os detalhes completos da solicitacao, incluindo status e historico.",
-                                "class_name": "Sistema",
+                                "step_code": "CS-005",
+                                "description": "Sistema confirma a criação da solicitação ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "Gerar Relatorios Personalizados",
-                "usecase_events": [
-                    {
-                        "name": "Solicitar Relatorio",
-                        "event_steps": [
-                            {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a funcionalidade de geracao de relatorios.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A2",
-                                "description": "Colaborador seleciona o tipo de relatorio desejado.",
-                                "class_name": "Colaborador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A3",
-                                "description": "Sistema exibe opcoes de parametrizacao para o relatorio (periodo, filtros, dados a incluir).",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A4",
-                                "description": "Colaborador define os parametros do relatorio.",
-                                "class_name": "Colaborador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A5",
-                                "description": "Colaborador confirma a solicitacao de geracao.",
-                                "class_name": "Colaborador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A6",
-                                "description": "Sistema processa os dados e gera o relatorio.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema disponibiliza o relatorio para visualizacao ou download e notifica o Colaborador.",
-                                "class_name": "Sistema",
-                                "next_step": null,
-                                "category": "Normal Flow"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     },
                     {
-                        "name": "Visualizar Relatorio",
+                        "name": "Visualizar Status da Solicitação",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a area de relatorios gerados.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "VSS-001",
+                                "description": "Usuário seleciona uma solicitação para verificar seu status.",
+                                "class_name": "Request",
+                                "next_step": "VSS-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Sistema exibe a lista de relatorios disponiveis.",
-                                "class_name": "Sistema",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "VSS-002",
+                                "description": "Sistema recupera o status atual e o histórico da solicitação.",
+                                "class_name": "Request",
+                                "next_step": "VSS-003",
+                                "category": "read"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Colaborador seleciona o relatorio a ser visualizado.",
-                                "class_name": "Colaborador",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A4",
-                                "description": "Sistema exibe o conteudo do relatorio.",
-                                "class_name": "Sistema",
+                                "step_code": "VSS-003",
+                                "description": "Sistema exibe o status e o histórico da solicitação.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "Visualizar Paineis Gerenciais",
-                "usecase_events": [
-                    {
-                        "name": "Acessar Painel",
-                        "event_steps": [
-                            {
-                                "step_code": "A1",
-                                "description": "Colaborador acessa a funcionalidade de paineis gerenciais.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A2",
-                                "description": "Sistema exibe os paineis disponiveis ao Colaborador, baseados em suas permissoes.",
-                                "class_name": "Sistema",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A3",
-                                "description": "Colaborador seleciona um painel para visualizar.",
-                                "class_name": "Colaborador",
-                                "next_step": null,
-                                "category": "Normal Flow"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     },
                     {
-                        "name": "Visualizar Indicadores",
+                        "name": "Atualizar Solicitação",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Colaborador esta visualizando um painel gerencial.",
-                                "class_name": "Colaborador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "AS-001",
+                                "description": "Usuário seleciona uma solicitação para atualização.",
+                                "class_name": "Request",
+                                "next_step": "AS-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Sistema exibe os indicadores de desempenho em tempo real, graficos e dados sumarizados.",
-                                "class_name": "Sistema",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "AS-002",
+                                "description": "Usuário modifica os detalhes da solicitação ou adiciona comentários.",
+                                "class_name": "Request",
+                                "next_step": "AS-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Colaborador pode interagir com os elementos do painel (ex: aplicar filtros de periodo).",
-                                "class_name": "Colaborador",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "AS-003",
+                                "description": "Sistema valida as modificações e as permissões do usuário.",
+                                "class_name": "Request",
+                                "next_step": "AS-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Sistema atualiza a visualizacao dos indicadores conforme as interacoes.",
-                                "class_name": "Sistema",
+                                "step_code": "AS-004",
+                                "description": "Sistema atualiza a solicitação no banco de dados.",
+                                "class_name": "Request",
+                                "next_step": "AS-005",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "AS-005",
+                                "description": "Sistema registra a atualização da solicitação no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "AS-006",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "AS-006",
+                                "description": "Sistema confirma a atualização da solicitação ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
                         }
                     }
                 ]
             },
             {
-                "name": "Configurar Fluxos de Trabalho",
+                "name": "Gerar Relatórios Personalizados",
                 "usecase_events": [
                     {
-                        "name": "Criar Fluxo de Trabalho",
+                        "name": "Solicitar Geração de Relatório",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de configuracao de fluxos de trabalho.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "SGR-001",
+                                "description": "Usuário seleciona os critérios e o tipo de relatório desejado.",
+                                "class_name": "Report",
+                                "next_step": "SGR-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador seleciona a opcao \"Criar Novo Fluxo de Trabalho\".",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "SGR-002",
+                                "description": "Sistema valida os critérios de seleção e as permissões do usuário.",
+                                "class_name": "Report",
+                                "next_step": "SGR-003",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe interface para definicao de etapas, condicoes e acoes.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "SGR-003",
+                                "description": "Sistema consulta o banco de dados com base nos critérios fornecidos.",
+                                "class_name": "Database",
+                                "next_step": "SGR-004",
+                                "category": "read"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador define o nome, descricao, etapas, transicoes, condicoes e acoes automatizadas do fluxo.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "SGR-004",
+                                "description": "Sistema gera o relatório com os dados compilados.",
+                                "class_name": "Report",
+                                "next_step": "SGR-005",
+                                "category": "create"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador salva o novo fluxo de trabalho.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "SGR-005",
+                                "description": "Sistema registra a geração do relatório no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "SGR-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema valida e registra o fluxo de trabalho.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "SGR-006",
+                                "description": "Sistema disponibiliza o relatório para visualização ou download.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
+                            }
+                        ],
+                        "actor": {
+                            "name": "Colaborador",
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
+                        }
+                    },
+                    {
+                        "name": "Visualizar Relatório Gerado",
+                        "event_steps": [
+                            {
+                                "step_code": "VRG-001",
+                                "description": "Usuário seleciona um relatório previamente gerado para visualização.",
+                                "class_name": "Report",
+                                "next_step": "VRG-002",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "VRG-002",
+                                "description": "Sistema recupera o relatório selecionado.",
+                                "class_name": "Report",
+                                "next_step": "VRG-003",
+                                "category": "read"
+                            },
+                            {
+                                "step_code": "VRG-003",
+                                "description": "Sistema exibe o relatório na interface do usuário.",
+                                "class_name": "UserInterface",
+                                "next_step": null,
+                                "category": "output"
+                            }
+                        ],
+                        "actor": {
+                            "name": "Colaborador",
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Visualizar Painéis Gerenciais",
+                "usecase_events": [
+                    {
+                        "name": "Acessar Painel Gerencial",
+                        "event_steps": [
+                            {
+                                "step_code": "APG-001",
+                                "description": "Usuário seleciona a opção para acessar um painel gerencial.",
+                                "class_name": "Dashboard",
+                                "next_step": "APG-002",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "APG-002",
+                                "description": "Sistema recupera os indicadores de desempenho em tempo real.",
+                                "class_name": "PerformanceIndicator",
+                                "next_step": "APG-003",
+                                "category": "read"
+                            },
+                            {
+                                "step_code": "APG-003",
+                                "description": "Sistema exibe o painel gerencial com os indicadores atualizados.",
+                                "class_name": "UserInterface",
+                                "next_step": null,
+                                "category": "output"
+                            }
+                        ],
+                        "actor": {
+                            "name": "Colaborador",
+                            "description": "Usuários que visualizarão e manipularão dados pertinentes às suas responsabilidades, utilizando as funcionalidades do sistema para acompanhar solicitações, processos e receber notificações."
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Configurar Fluxos de Trabalho Automatizados",
+                "usecase_events": [
+                    {
+                        "name": "Definir Fluxo de Trabalho",
+                        "event_steps": [
+                            {
+                                "step_code": "DFT-001",
+                                "description": "Administrador insere os passos, condições e ações que compõem o novo fluxo de trabalho.",
+                                "class_name": "Workflow",
+                                "next_step": "DFT-002",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "DFT-002",
+                                "description": "Sistema valida a estrutura e a lógica do fluxo de trabalho.",
+                                "class_name": "Workflow",
+                                "next_step": "DFT-003",
+                                "category": "validate"
+                            },
+                            {
+                                "step_code": "DFT-003",
+                                "description": "Sistema cria o novo fluxo de trabalho.",
+                                "class_name": "Workflow",
+                                "next_step": "DFT-004",
+                                "category": "create"
+                            },
+                            {
+                                "step_code": "DFT-004",
+                                "description": "Sistema registra a criação do fluxo de trabalho no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "DFT-005",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "DFT-005",
+                                "description": "Sistema confirma a definição do fluxo de trabalho ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
+                                "next_step": null,
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     },
                     {
-                        "name": "Editar Fluxo de Trabalho",
+                        "name": "Modificar Fluxo de Trabalho",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de configuracao de fluxos de trabalho.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "MFT-001",
+                                "description": "Administrador seleciona um fluxo de trabalho existente para modificação.",
+                                "class_name": "Workflow",
+                                "next_step": "MFT-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador busca e seleciona o fluxo de trabalho a ser editado.",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "MFT-002",
+                                "description": "Administrador modifica os passos, condições ou ações do fluxo de trabalho.",
+                                "class_name": "Workflow",
+                                "next_step": "MFT-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe a configuracao atual do fluxo de trabalho.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "MFT-003",
+                                "description": "Sistema valida as modificações realizadas no fluxo de trabalho.",
+                                "class_name": "Workflow",
+                                "next_step": "MFT-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador modifica as etapas, condicoes ou acoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "MFT-004",
+                                "description": "Sistema atualiza o fluxo de trabalho com as novas definições.",
+                                "class_name": "Workflow",
+                                "next_step": "MFT-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador salva as alteracoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "MFT-005",
+                                "description": "Sistema registra a modificação do fluxo de trabalho no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "MFT-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema valida e atualiza o fluxo de trabalho.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "MFT-006",
+                                "description": "Sistema confirma a atualização do fluxo de trabalho ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
-                        }
-                    },
-                    {
-                        "name": "Visualizar Fluxos de Trabalho",
-                        "event_steps": [
-                            {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de configuracao de fluxos de trabalho.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A2",
-                                "description": "Sistema exibe uma lista dos fluxos de trabalho configurados.",
-                                "class_name": "Sistema",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A3",
-                                "description": "Administrador seleciona um fluxo de trabalho para visualizar seus detalhes.",
-                                "class_name": "Administrador",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A4",
-                                "description": "Sistema exibe os detalhes do fluxo de trabalho selecionado.",
-                                "class_name": "Sistema",
-                                "next_step": null,
-                                "category": "Normal Flow"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
-                        }
-                    },
-                    {
-                        "name": "Remover Fluxo de Trabalho",
-                        "event_steps": [
-                            {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de configuracao de fluxos de trabalho.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A2",
-                                "description": "Administrador busca e seleciona o fluxo de trabalho a ser removido.",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A3",
-                                "description": "Sistema solicita confirmacao da remocao.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A4",
-                                "description": "Administrador confirma a remocao.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A5",
-                                "description": "Sistema remove o fluxo de trabalho.",
-                                "class_name": "Sistema",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A6",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
-                                "next_step": null,
-                                "category": "Normal Flow"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     }
                 ]
             },
             {
-                "name": "Parametrizar Sistema",
+                "name": "Parametrizar Configurações do Sistema",
                 "usecase_events": [
                     {
                         "name": "Ajustar Regras",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de parametrizacao do sistema.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "AR-001",
+                                "description": "Administrador seleciona uma regra do sistema para ajuste.",
+                                "class_name": "SystemSetting",
+                                "next_step": "AR-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador seleciona a opcao \"Gerenciar Regras\".",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "AR-002",
+                                "description": "Administrador modifica os parâmetros da regra selecionada.",
+                                "class_name": "Rule",
+                                "next_step": "AR-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe uma lista de regras configuraveis.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "AR-003",
+                                "description": "Sistema valida os novos parâmetros da regra.",
+                                "class_name": "Rule",
+                                "next_step": "AR-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador seleciona uma regra para ajustar ou criar uma nova.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "AR-004",
+                                "description": "Sistema atualiza a regra no banco de dados.",
+                                "class_name": "Rule",
+                                "next_step": "AR-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador define ou modifica os parametros da regra.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "AR-005",
+                                "description": "Sistema registra a alteração da regra no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "AR-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Administrador salva as alteracoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema atualiza a regra de negocio.",
-                                "class_name": "Sistema",
-                                "next_step": "A8",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A8",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "AR-006",
+                                "description": "Sistema confirma a atualização da regra ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     },
                     {
-                        "name": "Gerenciar Categorias",
+                        "name": "Ajustar Categorias",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de parametrizacao do sistema.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "AC-001",
+                                "description": "Administrador seleciona uma categoria existente ou inicia a criação de uma nova.",
+                                "class_name": "SystemSetting",
+                                "next_step": "AC-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador seleciona a opcao \"Gerenciar Categorias\".",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "AC-002",
+                                "description": "Administrador modifica os parâmetros da categoria ou insere dados para uma nova categoria.",
+                                "class_name": "Category",
+                                "next_step": "AC-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe uma lista de categorias existentes.",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "AC-003",
+                                "description": "Sistema valida os novos parâmetros da categoria.",
+                                "class_name": "Category",
+                                "next_step": "AC-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador pode adicionar, editar ou remover categorias.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "AC-004",
+                                "description": "Sistema atualiza ou cria a categoria no banco de dados.",
+                                "class_name": "Category",
+                                "next_step": "AC-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador salva as alteracoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "AC-005",
+                                "description": "Sistema registra a alteração da categoria no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "AC-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema atualiza as categorias.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "AC-006",
+                                "description": "Sistema confirma a atualização ou criação da categoria ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     },
                     {
-                        "name": "Ajustar Permissoes do Sistema",
+                        "name": "Ajustar Permissões",
                         "event_steps": [
                             {
-                                "step_code": "A1",
-                                "description": "Administrador acessa a funcionalidade de parametrizacao do sistema.",
-                                "class_name": "Administrador",
-                                "next_step": "A2",
-                                "category": "Normal Flow"
+                                "step_code": "AP-001",
+                                "description": "Administrador seleciona um perfil de permissão ou uma permissão específica para ajuste.",
+                                "class_name": "SystemSetting",
+                                "next_step": "AP-002",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A2",
-                                "description": "Administrador seleciona a opcao \"Gerenciar Permissoes\".",
-                                "class_name": "Administrador",
-                                "next_step": "A3",
-                                "category": "Normal Flow"
+                                "step_code": "AP-002",
+                                "description": "Administrador modifica as permissões associadas ou cria novas.",
+                                "class_name": "Permission",
+                                "next_step": "AP-003",
+                                "category": "input"
                             },
                             {
-                                "step_code": "A3",
-                                "description": "Sistema exibe a estrutura de permissoes (ex: para modulos, funcionalidades).",
-                                "class_name": "Sistema",
-                                "next_step": "A4",
-                                "category": "Normal Flow"
+                                "step_code": "AP-003",
+                                "description": "Sistema valida as novas configurações de permissão.",
+                                "class_name": "Permission",
+                                "next_step": "AP-004",
+                                "category": "validate"
                             },
                             {
-                                "step_code": "A4",
-                                "description": "Administrador ajusta as permissoes gerais do sistema.",
-                                "class_name": "Administrador",
-                                "next_step": "A5",
-                                "category": "Normal Flow"
+                                "step_code": "AP-004",
+                                "description": "Sistema atualiza as permissões no banco de dados.",
+                                "class_name": "Permission",
+                                "next_step": "AP-005",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A5",
-                                "description": "Administrador salva as alteracoes.",
-                                "class_name": "Administrador",
-                                "next_step": "A6",
-                                "category": "Normal Flow"
+                                "step_code": "AP-005",
+                                "description": "Sistema registra a alteração das permissões no log de auditoria.",
+                                "class_name": "AuditLog",
+                                "next_step": "AP-006",
+                                "category": "update"
                             },
                             {
-                                "step_code": "A6",
-                                "description": "Sistema atualiza as configuracoes de permissao.",
-                                "class_name": "Sistema",
-                                "next_step": "A7",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "A7",
-                                "description": "Sistema exibe mensagem de sucesso.",
-                                "class_name": "Sistema",
+                                "step_code": "AP-006",
+                                "description": "Sistema confirma a atualização das permissões ou exibe mensagens de erro.",
+                                "class_name": "UserInterface",
                                 "next_step": null,
-                                "category": "Normal Flow"
+                                "category": "output"
                             }
                         ],
                         "actor": {
                             "name": "Administrador",
-                            "description": "Usuario responsavel pela parametrizacao do sistema, ajustando regras, categorias e permissoes conforme as demandas organizacionais. Tambem gerencia usuarios."
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "Receber Notificacoes",
-                "usecase_events": [
-                    {
-                        "name": "Receber Notificacao",
-                        "event_steps": [
-                            {
-                                "step_code": "S1",
-                                "description": "Um evento no sistema (ex: prazo, pendencia, atualizacao) ocorre.",
-                                "class_name": "Sistema",
-                                "next_step": "S2",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "S2",
-                                "description": "Sistema identifica os usuarios a serem notificados.",
-                                "class_name": "Sistema",
-                                "next_step": "S3",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "S3",
-                                "description": "Sistema gera a notificacao (e-mail ou interna na plataforma).",
-                                "class_name": "Sistema",
-                                "next_step": "S4",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "S4",
-                                "description": "Sistema envia a notificacao para o Colaborador.",
-                                "class_name": "Sistema",
-                                "next_step": "S5",
-                                "category": "Normal Flow"
-                            },
-                            {
-                                "step_code": "S5",
-                                "description": "Colaborador visualiza a notificacao.",
-                                "class_name": "Colaborador",
-                                "next_step": null,
-                                "category": "Normal Flow"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Colaborador",
-                            "description": "Usuario geral da plataforma, com niveis de permissao definidos para visualizar e manipular apenas os dados pertinentes as suas responsabilidades, e que recebe notificacoes sobre prazos, pendencias e atualizacoes."
+                            "description": "Usuários com níveis de permissão elevados, responsáveis pelo cadastro e gerenciamento de usuários, e pela parametrização do sistema, ajustando regras, categorias e permissões conforme as demandas organizacionais."
                         }
                     }
                 ]
