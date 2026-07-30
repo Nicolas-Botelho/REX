@@ -17,5 +17,5 @@ __pycache__
 out*.json
 
 # ignore
-IGNORE
+IGNORE*
 IGNORE.*

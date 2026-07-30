@@ -1,400 +1,313 @@
 {
     "narrative_models": {
         "domain_narrative": {
-            "system_context": "O sistema tem como objetivo gerenciar o funcionamento de uma biblioteca, controlando livros, exemplares físicos, usuários, empréstimos e devoluções. Ele mantém um catálogo de livros, gerencia o estado e localização dos exemplares, e aplica regras de negócio para empréstimos e devoluções, garantindo a disponibilidade mínima do acervo.",
+            "system_context": "O sistema tem como objetivo gerenciar o funcionamento de uma biblioteca, controlando o catálogo de livros, os exemplares físicos disponíveis no acervo, os usuários cadastrados, e todas as operações de empréstimos e devoluções. Ele deve garantir a conformidade com as regras de negócio da biblioteca, como a quantidade mínima de exemplares por livro, e fornecer informações em tempo real sobre o acervo.",
             "users": [
                 {
-                    "name": "Usuário da Biblioteca",
-                    "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
-                },
-                {
-                    "name": "Bibliotecário/Administrador",
-                    "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários. Realiza e registra empréstimos e devoluções, atualiza o estado de conservação e situação dos exemplares, e consulta informações gerenciais e históricas do acervo e dos empréstimos."
+                    "name": "Usuário Cadastrado",
+                    "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos."
                 }
             ],
             "system_functionalities": [
-                "Gerenciar o cadastro de livros (título, autor, editora, edição, ISBN, categoria, ano de publicação).",
-                "Gerenciar o cadastro de exemplares físicos (código de patrimônio, estado de conservação, localização, situação atual).",
-                "Registrar e atualizar o estado de conservação de exemplares (novo, bom, regular, danificado, inutilizável).",
-                "Gerenciar o cadastro de usuários da biblioteca.",
-                "Permitir a realização de empréstimos de exemplares disponíveis por usuários cadastrados.",
-                "Registrar detalhes de cada empréstimo (usuário, exemplar, data do empréstimo, data prevista para devolução, data efetiva de devolução, situação do empréstimo).",
-                "Atualizar automaticamente a situação de um exemplar para 'indisponível' quando associado a um empréstimo ativo.",
-                "Permitir a devolução de exemplares.",
-                "Atualizar automaticamente a situação de um exemplar para 'disponível' após a devolução (se não reservado ou em manutenção).",
-                "Permitir a reavaliação do estado de conservação de um exemplar no momento da devolução.",
-                "Garantir que cada livro possua, no mínimo, 5 exemplares cadastrados no acervo.",
-                "Impedir empréstimos de livros que possuam 5 exemplares ou menos no total.",
-                "Autorizar empréstimos somente quando a quantidade total de exemplares do livro for superior a 5.",
-                "Consultar exemplares que estão emprestados.",
-                "Consultar usuários com empréstimos ativos.",
-                "Consultar as datas previstas de devolução.",
-                "Consultar exemplares disponíveis para empréstimo.",
-                "Consultar o histórico de empréstimos de cada exemplar.",
-                "Consultar o histórico de empréstimos de cada usuário.",
-                "Informar em tempo real a quantidade total de exemplares de cada livro.",
-                "Informar em tempo real a quantidade de exemplares disponíveis de cada livro.",
-                "Informar em tempo real a quantidade de exemplares emprestados de cada livro.",
-                "Informar em tempo real a quantidade de exemplares em manutenção de cada livro.",
-                "Informar em tempo real quais livros estão temporariamente bloqueados para empréstimo devido à quantidade insuficiente de exemplares.",
-                "Manter registros históricos de empréstimos e devoluções para fins de auditoria e acompanhamento."
+                "Manter catálogo de livros (título, autor, editora, edição, ISBN, categoria, ano de publicação)",
+                "Controlar exemplares físicos (código de patrimônio, estado de conservação, localização, situação atual)",
+                "Registrar e atualizar o estado de conservação de exemplares (novo, bom, regular, danificado, inutilizável)",
+                "Gerenciar empréstimos de exemplares disponíveis",
+                "Registrar detalhes de empréstimos (usuário, exemplar, data empréstimo, data prevista devolução, data efetiva devolução, situação)",
+                "Atualizar automaticamente a situação de um exemplar para indisponível durante um empréstimo ativo",
+                "Gerenciar devoluções de exemplares",
+                "Atualizar automaticamente a situação de um exemplar para disponível após a devolução (se não reservado ou em manutenção)",
+                "Reavaliar o estado de conservação de um exemplar no momento da devolução",
+                "Consultar exemplares emprestados",
+                "Consultar usuários com empréstimos ativos",
+                "Consultar datas previstas de devolução",
+                "Consultar exemplares disponíveis para empréstimo",
+                "Consultar histórico de empréstimos de cada exemplar",
+                "Consultar histórico de empréstimos de cada usuário",
+                "Garantir que cada livro possua, no mínimo, 5 exemplares cadastrados no acervo",
+                "Impedir empréstimos de livros que possuam 5 exemplares ou menos",
+                "Impedir a realização de empréstimos que violem a restrição de quantidade mínima de exemplares",
+                "Informar em tempo real a quantidade total de exemplares de cada livro",
+                "Informar em tempo real a quantidade de exemplares disponíveis",
+                "Informar em tempo real a quantidade de exemplares emprestados",
+                "Informar em tempo real a quantidade de exemplares em manutenção",
+                "Informar em tempo real quais livros estão temporariamente bloqueados para empréstimo devido à quantidade insuficiente de exemplares",
+                "Manter registros históricos de empréstimos e devoluções para fins de auditoria e acompanhamento"
             ]
         },
-        "questions": []
+        "questions": [
+            {
+                "question": "Existem outros tipos de usuários além dos 'Usuários Cadastrados', como bibliotecários ou administradores, que interagem com o sistema para gerenciar o catálogo, usuários ou configurações do sistema?"
+            },
+            {
+                "question": "O sistema deve permitir a realização de reservas de exemplares, ou a situação 'reservado' é apenas um estado que o exemplar pode assumir por outros meios?"
+            },
+            {
+                "question": "O sistema deve gerenciar multas ou penalidades para devoluções atrasadas?"
+            },
+            {
+                "question": "O sistema deve gerenciar o processo de aquisição de novos livros ou o descarte de exemplares danificados/inutilizáveis?"
+            }
+        ]
     },
     "requirement_models": {
         "requirements": [
             {
-                "code": "REQ001",
-                "description": "O sistema deve manter um catálogo de livros.",
+                "code": "FR001",
+                "description": "O sistema deve permitir o cadastro e a manutenção do catálogo de livros.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": []
             },
             {
-                "code": "REQ002",
-                "description": "O sistema deve permitir o cadastro e gerenciamento das informações cadastrais de um livro, incluindo título, autor, editora, edição, ISBN, categoria e ano de publicação.",
+                "code": "FR002",
+                "description": "O sistema deve armazenar informações cadastrais de cada livro, incluindo título, autor, editora, edição, ISBN, categoria e ano de publicação.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ001"
+                    "FR001"
                 ]
             },
             {
-                "code": "REQ003",
-                "description": "O sistema deve identificar individualmente cada exemplar físico de um livro.",
+                "code": "FR003",
+                "description": "O sistema deve permitir o cadastro e a manutenção de exemplares físicos de livros.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ001"
+                    "FR001"
                 ]
             },
             {
-                "code": "REQ004",
-                "description": "O sistema deve armazenar o código de patrimônio de cada exemplar.",
+                "code": "FR004",
+                "description": "O sistema deve armazenar informações de cada exemplar, incluindo código de patrimônio, estado de conservação, localização na biblioteca e situação atual (disponível para empréstimo, emprestado, reservado, em manutenção, indisponível).",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ003"
+                    "FR003"
                 ]
             },
             {
-                "code": "REQ005",
-                "description": "O sistema deve armazenar o estado de conservação de cada exemplar.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "REQ006",
-                "description": "O sistema deve armazenar a localização de cada exemplar na biblioteca.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "REQ007",
-                "description": "O sistema deve armazenar a situação atual de cada exemplar.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "REQ008",
-                "description": "O sistema deve gerenciar a situação de um exemplar, que pode ser: disponível para empréstimo, emprestado, reservado, em manutenção ou indisponível.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ007"
-                ]
-            },
-            {
-                "code": "REQ009",
+                "code": "FR005",
                 "description": "O sistema deve permitir o registro e a atualização do estado de conservação de um exemplar.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ005"
+                    "FR004"
                 ]
             },
             {
-                "code": "REQ010",
-                "description": "O sistema deve permitir classificar o estado de conservação de um exemplar como: novo, bom, regular, danificado ou inutilizável.",
+                "code": "FR006",
+                "description": "O sistema deve permitir classificar o estado de conservação de um exemplar como 'novo', 'bom', 'regular', 'danificado' ou 'inutilizável'.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ009"
+                    "FR005"
                 ]
             },
             {
-                "code": "REQ011",
-                "description": "O sistema deve permitir o cadastro e gerenciamento de usuários da biblioteca.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": []
-            },
-            {
-                "code": "REQ012",
-                "description": "O sistema deve permitir que usuários cadastrados realizem empréstimos de exemplares.",
+                "code": "FR007",
+                "description": "O sistema deve permitir que usuários cadastrados realizem empréstimos de exemplares disponíveis.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ011",
-                    "REQ008"
+                    "FR004",
+                    "BR002",
+                    "FR019"
                 ]
             },
             {
-                "code": "REQ013",
-                "description": "O sistema deve registrar o usuário responsável por um empréstimo.",
+                "code": "FR008",
+                "description": "O sistema deve registrar os detalhes de cada empréstimo, incluindo o usuário responsável, o exemplar emprestado, a data do empréstimo, a data prevista para devolução, a data efetiva de devolução e a situação do empréstimo.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ012"
+                    "FR007"
                 ]
             },
             {
-                "code": "REQ014",
-                "description": "O sistema deve registrar o exemplar emprestado em um empréstimo.",
+                "code": "FR009",
+                "description": "O sistema deve atualizar automaticamente a situação de um exemplar para 'emprestado' (indisponível) enquanto estiver associado a um empréstimo ativo.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ012"
+                    "FR004",
+                    "FR007"
                 ]
             },
             {
-                "code": "REQ015",
-                "description": "O sistema deve registrar a data do empréstimo.",
+                "code": "FR010",
+                "description": "O sistema deve permitir a consulta de exemplares que estão emprestados.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ012"
+                    "FR008",
+                    "FR009"
                 ]
             },
             {
-                "code": "REQ016",
-                "description": "O sistema deve registrar a data prevista para devolução de um empréstimo.",
+                "code": "FR011",
+                "description": "O sistema deve permitir a consulta de usuários com empréstimos ativos.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ012"
+                    "FR008"
                 ]
             },
             {
-                "code": "REQ017",
-                "description": "O sistema deve registrar a data efetiva de devolução de um empréstimo.",
+                "code": "FR012",
+                "description": "O sistema deve permitir a consulta das datas previstas de devolução.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ012"
+                    "FR008"
                 ]
             },
             {
-                "code": "REQ018",
-                "description": "O sistema deve registrar a situação de um empréstimo.",
+                "code": "FR013",
+                "description": "O sistema deve permitir a consulta de exemplares disponíveis para empréstimo.",
                 "requirement_type": "functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ012"
+                    "FR004",
+                    "FR009",
+                    "FR015"
+                ]
+            },
+            {
+                "code": "FR014",
+                "description": "O sistema deve gerenciar o processo de devolução de exemplares.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR007",
+                    "FR008"
+                ]
+            },
+            {
+                "code": "FR015",
+                "description": "O sistema deve atualizar automaticamente a situação de um exemplar para 'disponível' após a devolução, desde que ele não esteja 'reservado' ou 'em manutenção'.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR004",
+                    "FR014"
+                ]
+            },
+            {
+                "code": "FR016",
+                "description": "O sistema deve permitir a reavaliação do estado de conservação de um exemplar no momento da devolução.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR005",
+                    "FR014"
+                ]
+            },
+            {
+                "code": "FR017",
+                "description": "O sistema deve permitir a consulta do histórico de empréstimos de cada exemplar.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR008"
+                ]
+            },
+            {
+                "code": "FR018",
+                "description": "O sistema deve permitir a consulta do histórico de empréstimos de cada usuário.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR008"
+                ]
+            },
+            {
+                "code": "FR019",
+                "description": "O sistema deve impedir a realização de empréstimos que violem a restrição de quantidade mínima de exemplares por livro.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "BR002",
+                    "FR007"
+                ]
+            },
+            {
+                "code": "FR020",
+                "description": "O sistema deve informar, em tempo real, a quantidade total de exemplares cadastrados de cada livro.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR003"
+                ]
+            },
+            {
+                "code": "FR021",
+                "description": "O sistema deve informar, em tempo real, a quantidade de exemplares disponíveis para empréstimo de cada livro.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR004",
+                    "FR009",
+                    "FR015"
+                ]
+            },
+            {
+                "code": "FR022",
+                "description": "O sistema deve informar, em tempo real, a quantidade de exemplares emprestados de cada livro.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR009"
+                ]
+            },
+            {
+                "code": "FR023",
+                "description": "O sistema deve informar, em tempo real, a quantidade de exemplares em manutenção de cada livro.",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "FR004"
+                ]
+            },
+            {
+                "code": "FR024",
+                "description": "O sistema deve informar, em tempo real, quais livros estão temporariamente bloqueados para empréstimo devido à quantidade insuficiente de exemplares (conforme BR002).",
+                "requirement_type": "functional_requirement",
+                "depends_on_requirements_codes": [
+                    "BR002",
+                    "FR020"
                 ]
             },
             {
                 "code": "BR001",
-                "description": "Um exemplar associado a um empréstimo ativo deve ser considerado indisponível para novos empréstimos.",
+                "description": "Cada livro deve possuir sempre, no mínimo, 5 exemplares cadastrados no acervo.",
                 "requirement_type": "business_rule",
                 "depends_on_requirements_codes": [
-                    "REQ008",
-                    "REQ018"
-                ]
-            },
-            {
-                "code": "REQ019",
-                "description": "O sistema deve atualizar automaticamente a situação de um exemplar para 'emprestado' e 'indisponível' quando ele é associado a um empréstimo ativo.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ012",
-                    "REQ008",
-                    "BR001"
-                ]
-            },
-            {
-                "code": "REQ020",
-                "description": "O sistema deve permitir consultar quais exemplares estão emprestados.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ014",
-                    "REQ018"
-                ]
-            },
-            {
-                "code": "REQ021",
-                "description": "O sistema deve permitir consultar quais usuários estão com empréstimos ativos.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ013",
-                    "REQ018"
-                ]
-            },
-            {
-                "code": "REQ022",
-                "description": "O sistema deve permitir consultar as datas previstas de devolução dos empréstimos.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ016"
-                ]
-            },
-            {
-                "code": "REQ023",
-                "description": "O sistema deve permitir consultar os exemplares disponíveis para empréstimo.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ008"
-                ]
-            },
-            {
-                "code": "REQ024",
-                "description": "O sistema deve permitir consultar o histórico de empréstimos de cada exemplar.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ012",
-                    "REQ014"
-                ]
-            },
-            {
-                "code": "REQ025",
-                "description": "O sistema deve permitir consultar o histórico de empréstimos de cada usuário.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ012",
-                    "REQ013"
-                ]
-            },
-            {
-                "code": "REQ026",
-                "description": "O sistema deve permitir registrar a devolução de um exemplar.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ012"
-                ]
-            },
-            {
-                "code": "REQ027",
-                "description": "O sistema deve atualizar automaticamente a situação de um exemplar para 'disponível' após a devolução, a menos que o exemplar esteja reservado ou em manutenção.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ026",
-                    "REQ008"
-                ]
-            },
-            {
-                "code": "REQ028",
-                "description": "O sistema deve permitir a reavaliação e atualização do estado de conservação de um exemplar no momento da devolução.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ026",
-                    "REQ009"
+                    "FR001",
+                    "FR003"
                 ]
             },
             {
                 "code": "BR002",
-                "description": "Cada livro deve possuir sempre, no mínimo, 5 exemplares cadastrados no acervo.",
+                "description": "Empréstimos somente devem ser autorizados para livros que possuam uma quantidade total de exemplares cadastrados superior a 5.",
                 "requirement_type": "business_rule",
                 "depends_on_requirements_codes": [
-                    "REQ002",
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "REQ029",
-                "description": "O sistema deve impedir a exclusão de um exemplar se a remoção resultar em menos de 5 exemplares para o livro associado.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "BR002",
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "REQ030",
-                "description": "O sistema deve alertar ou impedir a criação de um livro sem, no mínimo, 5 exemplares associados.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "BR002",
-                    "REQ002",
-                    "REQ003"
+                    "FR001",
+                    "FR003",
+                    "FR020"
                 ]
             },
             {
                 "code": "BR003",
-                "description": "Livros que possuam 5 exemplares ou menos não podem ter exemplares emprestados.",
+                "description": "Um exemplar associado a um empréstimo ativo deve ser considerado indisponível para novos empréstimos.",
                 "requirement_type": "business_rule",
                 "depends_on_requirements_codes": [
-                    "REQ001",
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "REQ031",
-                "description": "O sistema deve impedir o empréstimo de exemplares de um livro se o livro possuir 5 exemplares ou menos no total.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "BR003",
-                    "REQ012"
-                ]
-            },
-            {
-                "code": "REQ032",
-                "description": "O sistema deve manter registros históricos de empréstimos e devoluções.",
-                "requirement_type": "functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ012",
-                    "REQ026"
+                    "FR007",
+                    "FR008",
+                    "FR009"
                 ]
             },
             {
                 "code": "NFR001",
-                "description": "O sistema deve ser capaz de informar em tempo real a quantidade total de exemplares de cada livro.",
+                "description": "O sistema deve manter registros históricos de empréstimos e devoluções para fins de auditoria e acompanhamento do uso do acervo.",
                 "requirement_type": "non_functional_requirement",
                 "depends_on_requirements_codes": [
-                    "REQ001",
-                    "REQ003"
-                ]
-            },
-            {
-                "code": "NFR002",
-                "description": "O sistema deve ser capaz de informar em tempo real a quantidade de exemplares disponíveis de cada livro.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ001",
-                    "REQ003",
-                    "REQ008"
-                ]
-            },
-            {
-                "code": "NFR003",
-                "description": "O sistema deve ser capaz de informar em tempo real a quantidade de exemplares emprestados de cada livro.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ001",
-                    "REQ003",
-                    "REQ008"
-                ]
-            },
-            {
-                "code": "NFR004",
-                "description": "O sistema deve ser capaz de informar em tempo real a quantidade de exemplares em manutenção de cada livro.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ001",
-                    "REQ003",
-                    "REQ008"
-                ]
-            },
-            {
-                "code": "NFR005",
-                "description": "O sistema deve ser capaz de informar em tempo real quais livros estão temporariamente bloqueados para empréstimo devido à quantidade insuficiente de exemplares.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ001",
-                    "BR003"
-                ]
-            },
-            {
-                "code": "NFR006",
-                "description": "Os registros históricos de empréstimos e devoluções devem ser mantidos para fins de auditoria e acompanhamento.",
-                "requirement_type": "non_functional_requirement",
-                "depends_on_requirements_codes": [
-                    "REQ032"
+                    "FR008",
+                    "FR014"
                 ]
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "Existem outros tipos de usuários além dos 'Usuários Cadastrados', como bibliotecários ou administradores, que interagem com o sistema para gerenciar o catálogo, usuários ou configurações do sistema?"
+            },
+            {
+                "question": "O sistema deve permitir a realização de reservas de exemplares, ou a situação 'reservado' é apenas um estado que o exemplar pode assumir por outros meios?"
+            },
+            {
+                "question": "O sistema deve gerenciar multas ou penalidades para devoluções atrasadas?"
+            },
+            {
+                "question": "O sistema deve gerenciar o processo de aquisição de novos livros ou o descarte de exemplares danificados/inutilizáveis?"
+            }
+        ]
     },
     "class_models": {
         "classes": [
@@ -439,7 +352,7 @@
                         "valid_values": []
                     },
                     {
-                        "name": "ano_publicacao",
+                        "name": "anoPublicacao",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
@@ -448,16 +361,16 @@
             },
             {
                 "name": "Exemplar",
-                "stereotype": "subkind",
+                "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "codigo_patrimonio",
+                        "name": "codigoPatrimonio",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "estado_conservacao",
+                        "name": "estadoConservacao",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": [
@@ -475,7 +388,7 @@
                         "valid_values": []
                     },
                     {
-                        "name": "situacao_atual",
+                        "name": "situacaoAtual",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": [
@@ -505,14 +418,8 @@
                         "valid_values": []
                     },
                     {
-                        "name": "endereco",
-                        "attr_type": "string",
-                        "is_multiple": false,
-                        "valid_values": []
-                    },
-                    {
-                        "name": "contato",
-                        "attr_type": "string",
+                        "name": "ativo",
+                        "attr_type": "boolean",
                         "is_multiple": false,
                         "valid_values": []
                     }
@@ -523,30 +430,30 @@
                 "stereotype": "kind",
                 "class_attributes": [
                     {
-                        "name": "data_emprestimo",
+                        "name": "dataEmprestimo",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "data_prevista_devolucao",
+                        "name": "dataPrevistaDevolucao",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "data_efetiva_devolucao",
+                        "name": "dataEfetivaDevolucao",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
-                        "name": "situacao_emprestimo",
+                        "name": "situacao",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": [
                             "ativo",
-                            "concluido"
+                            "devolvido"
                         ]
                     }
                 ]
@@ -556,37 +463,37 @@
             {
                 "src": {
                     "class_name": "Livro",
-                    "class_min": 1,
-                    "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Exemplar",
-                    "class_min": 5,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Exemplar",
-                    "class_min": 1,
-                    "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Emprestimo",
                     "class_min": 0,
                     "class_max": null
+                },
+                "tgt": {
+                    "class_name": "Exemplar",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
                     "class_name": "Usuario",
-                    "class_min": 1,
-                    "class_max": 1
+                    "class_min": 0,
+                    "class_max": null
                 },
                 "tgt": {
                     "class_name": "Emprestimo",
+                    "class_min": 1,
+                    "class_max": 1
+                }
+            },
+            {
+                "src": {
+                    "class_name": "Exemplar",
                     "class_min": 0,
                     "class_max": null
+                },
+                "tgt": {
+                    "class_name": "Emprestimo",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             }
         ],
@@ -594,794 +501,567 @@
             {
                 "src": {
                     "class_name": "Livro",
-                    "class_min": 1,
-                    "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Exemplar",
-                    "class_min": 5,
-                    "class_max": null
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Exemplar",
-                    "class_min": 1,
-                    "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Emprestimo",
                     "class_min": 0,
                     "class_max": null
+                },
+                "tgt": {
+                    "class_name": "Exemplar",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             },
             {
                 "src": {
                     "class_name": "Usuario",
-                    "class_min": 1,
-                    "class_max": 1
+                    "class_min": 0,
+                    "class_max": null
                 },
                 "tgt": {
                     "class_name": "Emprestimo",
+                    "class_min": 1,
+                    "class_max": 1
+                }
+            },
+            {
+                "src": {
+                    "class_name": "Exemplar",
                     "class_min": 0,
                     "class_max": null
+                },
+                "tgt": {
+                    "class_name": "Emprestimo",
+                    "class_min": 1,
+                    "class_max": 1
                 }
             }
         ],
         "inheritances": [],
-        "questions": []
+        "questions": [
+            {
+                "question": "O sistema deve permitir a realização de reservas de exemplares, ou a situação 'reservado' é apenas um estado que o exemplar pode assumir por outros meios?"
+            },
+            {
+                "question": "O sistema deve gerenciar multas ou penalidades para devoluções atrasadas?"
+            },
+            {
+                "question": "O sistema deve gerenciar o processo de aquisição de novos livros ou o descarte de exemplares danificados/inutilizáveis?"
+            }
+        ]
     },
     "usecase_models": {
         "usecases": [
             {
-                "name": "Gerenciar Livros",
+                "name": "Gerenciar Catálogo de Livros",
                 "usecase_events": [
                     {
                         "name": "Cadastrar Livro",
                         "event_steps": [
                             {
-                                "step_code": "GL_C_L_01",
-                                "description": "Bibliotecário insere dados do livro (título, autor, editora, edição, ISBN, categoria, ano de publicação).",
+                                "step_code": "GL001_E01_S01",
+                                "description": "Administrador/Bibliotecário informa dados do livro (título, autor, editora, edição, ISBN, categoria, ano de publicação).",
                                 "class_name": "Livro",
-                                "next_step": "GL_C_L_02",
+                                "next_step": "GL001_E01_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GL_C_L_02",
-                                "description": "Sistema valida se todos os dados obrigatórios foram fornecidos.",
+                                "step_code": "GL001_E01_S02",
+                                "description": "Sistema valida se todos os dados obrigatórios foram fornecidos e se o ISBN é único.",
                                 "class_name": "Livro",
-                                "next_step": "GL_C_L_03",
+                                "next_step": "GL001_E01_S03",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "GL_C_L_03",
-                                "description": "Sistema verifica a regra de negócio BR002 (se a criação do livro sem exemplares viola a restrição de mínimo de 5 exemplares, conforme REQ030).",
-                                "class_name": "Livro",
-                                "next_step": "GL_C_L_04",
-                                "category": "validate"
-                            },
-                            {
-                                "step_code": "GL_C_L_04",
+                                "step_code": "GL001_E01_S03",
                                 "description": "Sistema cria um novo registro de Livro com os dados fornecidos.",
                                 "class_name": "Livro",
-                                "next_step": "GL_C_L_05",
+                                "next_step": "GL001_E01_S04",
                                 "category": "create"
                             },
                             {
-                                "step_code": "GL_C_L_05",
-                                "description": "Sistema informa sucesso ou falha na criação do livro.",
+                                "step_code": "GL001_E01_S04",
+                                "description": "Sistema confirma o cadastro do livro.",
                                 "class_name": "Livro",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     },
                     {
                         "name": "Atualizar Informações de Livro",
                         "event_steps": [
                             {
-                                "step_code": "GL_A_L_01",
-                                "description": "Bibliotecário seleciona um Livro existente para atualização (e.g., por ISBN).",
+                                "step_code": "GL001_E02_S01",
+                                "description": "Administrador/Bibliotecário busca um livro pelo título, autor ou ISBN.",
                                 "class_name": "Livro",
-                                "next_step": "GL_A_L_02",
+                                "next_step": "GL001_E02_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GL_A_L_02",
-                                "description": "Sistema recupera as informações atuais do Livro.",
+                                "step_code": "GL001_E02_S02",
+                                "description": "Sistema exibe os dados cadastrais do livro encontrado.",
                                 "class_name": "Livro",
-                                "next_step": "GL_A_L_03",
+                                "next_step": "GL001_E02_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "GL_A_L_03",
-                                "description": "Bibliotecário insere as novas informações do livro.",
+                                "step_code": "GL001_E02_S03",
+                                "description": "Administrador/Bibliotecário modifica os dados do livro.",
                                 "class_name": "Livro",
-                                "next_step": "GL_A_L_04",
+                                "next_step": "GL001_E02_S04",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GL_A_L_04",
-                                "description": "Sistema valida os novos dados fornecidos.",
+                                "step_code": "GL001_E02_S04",
+                                "description": "Sistema valida os novos dados.",
                                 "class_name": "Livro",
-                                "next_step": "GL_A_L_05",
+                                "next_step": "GL001_E02_S05",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "GL_A_L_05",
-                                "description": "Sistema atualiza o registro do Livro com as novas informações.",
+                                "step_code": "GL001_E02_S05",
+                                "description": "Sistema atualiza o registro do Livro com os novos dados.",
                                 "class_name": "Livro",
-                                "next_step": "GL_A_L_06",
+                                "next_step": "GL001_E02_S06",
                                 "category": "update"
                             },
                             {
-                                "step_code": "GL_A_L_06",
-                                "description": "Sistema informa sucesso ou falha na atualização.",
+                                "step_code": "GL001_E02_S06",
+                                "description": "Sistema confirma a atualização do livro.",
                                 "class_name": "Livro",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     },
                     {
-                        "name": "Consultar Livro",
+                        "name": "Consultar Livro no Catálogo",
                         "event_steps": [
                             {
-                                "step_code": "GL_CS_L_01",
-                                "description": "Ator insere critérios de busca para Livro (título, autor, ISBN, etc.).",
+                                "step_code": "GL001_E03_S01",
+                                "description": "Administrador/Bibliotecário informa critérios de busca (título, autor, editora, ISBN, categoria, ano de publicação).",
                                 "class_name": "Livro",
-                                "next_step": "GL_CS_L_02",
+                                "next_step": "GL001_E03_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GL_CS_L_02",
-                                "description": "Sistema busca Livros correspondentes aos critérios de busca.",
+                                "step_code": "GL001_E03_S02",
+                                "description": "Sistema busca livros que correspondem aos critérios.",
                                 "class_name": "Livro",
-                                "next_step": "GL_CS_L_03",
+                                "next_step": "GL001_E03_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "GL_CS_L_03",
-                                "description": "Sistema exibe os detalhes do(s) Livro(s) encontrado(s).",
+                                "step_code": "GL001_E03_S03",
+                                "description": "Sistema exibe a lista de livros encontrados com suas informações cadastrais.",
                                 "class_name": "Livro",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     }
                 ]
             },
             {
-                "name": "Gerenciar Exemplares",
+                "name": "Gerenciar Exemplares Físicos",
                 "usecase_events": [
                     {
                         "name": "Cadastrar Exemplar",
                         "event_steps": [
                             {
-                                "step_code": "GE_C_E_01",
-                                "description": "Bibliotecário seleciona um Livro existente ao qual o exemplar será associado.",
-                                "class_name": "Livro",
-                                "next_step": "GE_C_E_02",
+                                "step_code": "GE002_E01_S01",
+                                "description": "Administrador/Bibliotecário informa qual livro o exemplar pertence e os dados do exemplar (código de patrimônio, estado de conservação inicial, localização).",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E01_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GE_C_E_02",
-                                "description": "Bibliotecário insere dados do exemplar (código de patrimônio, estado de conservação inicial, localização, situação inicial como 'disponível').",
+                                "step_code": "GE002_E01_S02",
+                                "description": "Sistema valida os dados do exemplar e verifica se o código de patrimônio é único.",
                                 "class_name": "Exemplar",
-                                "next_step": "GE_C_E_03",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GE_C_E_03",
-                                "description": "Sistema valida se o código de patrimônio é único e outros dados são válidos.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_C_E_04",
+                                "next_step": "GE002_E01_S03",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "GE_C_E_04",
-                                "description": "Sistema cria um novo registro de Exemplar e o associa ao Livro.",
+                                "step_code": "GE002_E01_S03",
+                                "description": "Sistema obtém a quantidade atual de exemplares para o livro associado.",
+                                "class_name": "Livro",
+                                "next_step": "GE002_E01_S04",
+                                "category": "read"
+                            },
+                            {
+                                "step_code": "GE002_E01_S04",
+                                "description": "Sistema verifica se, com o novo exemplar, a quantidade mínima de 5 exemplares será mantida ou excedida (BR001).",
+                                "class_name": "Livro",
+                                "next_step": "GE002_E01_S05",
+                                "category": "validate"
+                            },
+                            {
+                                "step_code": "GE002_E01_S05",
+                                "description": "Sistema cria um novo registro de Exemplar e o associa ao Livro, definindo a situação inicial como \"disponível para empréstimo\".",
                                 "class_name": "Exemplar",
-                                "next_step": "GE_C_E_05",
+                                "next_step": "GE002_E01_S06",
                                 "category": "create"
                             },
                             {
-                                "step_code": "GE_C_E_05",
-                                "description": "Sistema informa sucesso ou falha no cadastro do exemplar.",
+                                "step_code": "GE002_E01_S06",
+                                "description": "Sistema confirma o cadastro do exemplar.",
                                 "class_name": "Exemplar",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     },
                     {
-                        "name": "Atualizar Estado de Conservação do Exemplar",
+                        "name": "Atualizar Dados do Exemplar",
                         "event_steps": [
                             {
-                                "step_code": "GE_A_E_CS_01",
-                                "description": "Bibliotecário seleciona um Exemplar (e.g., por código de patrimônio).",
+                                "step_code": "GE002_E02_S01",
+                                "description": "Administrador/Bibliotecário busca um exemplar pelo código de patrimônio.",
                                 "class_name": "Exemplar",
-                                "next_step": "GE_A_E_CS_02",
+                                "next_step": "GE002_E02_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GE_A_E_CS_02",
-                                "description": "Sistema recupera as informações do Exemplar.",
+                                "step_code": "GE002_E02_S02",
+                                "description": "Sistema exibe os dados cadastrais do exemplar encontrado (código de patrimônio, estado de conservação, localização, situação atual).",
                                 "class_name": "Exemplar",
-                                "next_step": "GE_A_E_CS_03",
+                                "next_step": "GE002_E02_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "GE_A_E_CS_03",
-                                "description": "Bibliotecário seleciona o novo estado de conservação (novo, bom, regular, danificado, inutilizável).",
+                                "step_code": "GE002_E02_S03",
+                                "description": "Administrador/Bibliotecário modifica os dados do exemplar (localização).",
                                 "class_name": "Exemplar",
-                                "next_step": "GE_A_E_CS_04",
+                                "next_step": "GE002_E02_S04",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GE_A_E_CS_04",
-                                "description": "Sistema valida o novo estado de conservação.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_CS_05",
-                                "category": "validate"
-                            },
-                            {
-                                "step_code": "GE_A_E_CS_05",
-                                "description": "Sistema atualiza o atributo 'estado de conservação' do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_CS_06",
-                                "category": "update"
-                            },
-                            {
-                                "step_code": "GE_A_E_CS_06",
-                                "description": "Sistema informa sucesso ou falha na atualização.",
-                                "class_name": "Exemplar",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Atualizar Localização do Exemplar",
-                        "event_steps": [
-                            {
-                                "step_code": "GE_A_E_L_01",
-                                "description": "Bibliotecário seleciona um Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_L_02",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GE_A_E_L_02",
-                                "description": "Sistema recupera as informações do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_L_03",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "GE_A_E_L_03",
-                                "description": "Bibliotecário insere a nova localização.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_L_04",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GE_A_E_L_04",
-                                "description": "Sistema valida a nova localização.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_L_05",
-                                "category": "validate"
-                            },
-                            {
-                                "step_code": "GE_A_E_L_05",
-                                "description": "Sistema atualiza o atributo 'localização' do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_L_06",
-                                "category": "update"
-                            },
-                            {
-                                "step_code": "GE_A_E_L_06",
-                                "description": "Sistema informa sucesso ou falha na atualização.",
-                                "class_name": "Exemplar",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Atualizar Situação do Exemplar",
-                        "event_steps": [
-                            {
-                                "step_code": "GE_A_E_S_01",
-                                "description": "Bibliotecário seleciona um Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_S_02",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GE_A_E_S_02",
-                                "description": "Sistema recupera as informações do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_S_03",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "GE_A_E_S_03",
-                                "description": "Bibliotecário seleciona a nova situação (disponível, emprestado, reservado, em manutenção, indisponível).",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_S_04",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GE_A_E_S_04",
-                                "description": "Sistema valida a transição de situação (e.g., não pode mudar para 'emprestado' manualmente sem um empréstimo real).",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_S_05",
-                                "category": "validate"
-                            },
-                            {
-                                "step_code": "GE_A_E_S_05",
-                                "description": "Sistema atualiza o atributo 'situação' do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_A_E_S_06",
-                                "category": "update"
-                            },
-                            {
-                                "step_code": "GE_A_E_S_06",
-                                "description": "Sistema informa sucesso ou falha na atualização.",
-                                "class_name": "Exemplar",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Remover Exemplar",
-                        "event_steps": [
-                            {
-                                "step_code": "GE_R_E_01",
-                                "description": "Bibliotecário seleciona um Exemplar para remoção (e.g., por código de patrimônio).",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_R_E_02",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GE_R_E_02",
-                                "description": "Sistema recupera o Exemplar e o Livro associado.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_R_E_03",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "GE_R_E_03",
-                                "description": "Sistema conta o número de exemplares ativos para o Livro associado.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_R_E_04",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "GE_R_E_04",
-                                "description": "Sistema verifica a regra de negócio BR002 (se a remoção resultará em menos de 5 exemplares para o livro associado, conforme REQ029).",
-                                "class_name": "Livro",
-                                "next_step": "GE_R_E_05",
-                                "category": "validate"
-                            },
-                            {
-                                "step_code": "GE_R_E_05",
-                                "description": "Sistema remove o registro do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "GE_R_E_06",
-                                "category": "delete"
-                            },
-                            {
-                                "step_code": "GE_R_E_06",
-                                "description": "Sistema informa sucesso ou falha na remoção.",
-                                "class_name": "Exemplar",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "Gerenciar Usuários",
-                "usecase_events": [
-                    {
-                        "name": "Cadastrar Usuário",
-                        "event_steps": [
-                            {
-                                "step_code": "GU_C_U_01",
-                                "description": "Bibliotecário insere dados do usuário (nome, endereço, contato, etc.).",
-                                "class_name": "Usuario",
-                                "next_step": "GU_C_U_02",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GU_C_U_02",
-                                "description": "Sistema valida os dados inseridos.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_C_U_03",
-                                "category": "validate"
-                            },
-                            {
-                                "step_code": "GU_C_U_03",
-                                "description": "Sistema cria um novo registro de Usuário.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_C_U_04",
-                                "category": "create"
-                            },
-                            {
-                                "step_code": "GU_C_U_04",
-                                "description": "Sistema informa sucesso ou falha no cadastro do usuário.",
-                                "class_name": "Usuario",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Atualizar Dados do Usuário",
-                        "event_steps": [
-                            {
-                                "step_code": "GU_A_U_01",
-                                "description": "Bibliotecário seleciona um Usuário existente para atualização.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_A_U_02",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GU_A_U_02",
-                                "description": "Sistema recupera as informações atuais do Usuário.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_A_U_03",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "GU_A_U_03",
-                                "description": "Bibliotecário insere as novas informações do Usuário.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_A_U_04",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "GU_A_U_04",
+                                "step_code": "GE002_E02_S04",
                                 "description": "Sistema valida os novos dados.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_A_U_05",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E02_S05",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "GU_A_U_05",
-                                "description": "Sistema atualiza o registro do Usuário.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_A_U_06",
+                                "step_code": "GE002_E02_S05",
+                                "description": "Sistema atualiza o registro do Exemplar com os novos dados.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E02_S06",
                                 "category": "update"
                             },
                             {
-                                "step_code": "GU_A_U_06",
-                                "description": "Sistema informa sucesso ou falha na atualização.",
-                                "class_name": "Usuario",
+                                "step_code": "GE002_E02_S06",
+                                "description": "Sistema confirma a atualização do exemplar.",
+                                "class_name": "Exemplar",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     },
                     {
-                        "name": "Consultar Usuário",
+                        "name": "Alterar Estado de Conservação do Exemplar",
                         "event_steps": [
                             {
-                                "step_code": "GU_CS_U_01",
-                                "description": "Bibliotecário insere critérios de busca para Usuário (nome, ID, etc.).",
-                                "class_name": "Usuario",
-                                "next_step": "GU_CS_U_02",
+                                "step_code": "GE002_E03_S01",
+                                "description": "Administrador/Bibliotecário busca um exemplar pelo código de patrimônio.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E03_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "GU_CS_U_02",
-                                "description": "Sistema busca Usuários correspondentes aos critérios.",
-                                "class_name": "Usuario",
-                                "next_step": "GU_CS_U_03",
+                                "step_code": "GE002_E03_S02",
+                                "description": "Sistema exibe o estado de conservação atual do exemplar.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E03_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "GU_CS_U_03",
-                                "description": "Sistema exibe os detalhes do(s) Usuário(s) encontrado(s).",
-                                "class_name": "Usuario",
+                                "step_code": "GE002_E03_S03",
+                                "description": "Administrador/Bibliotecário seleciona o novo estado de conservação (novo, bom, regular, danificado, inutilizável).",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E03_S04",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "GE002_E03_S04",
+                                "description": "Sistema atualiza o atributo 'estado de conservação' do exemplar.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE002_E03_S05",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "GE002_E03_S05",
+                                "description": "Sistema confirma a atualização do estado de conservação.",
+                                "class_name": "Exemplar",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     }
                 ]
             },
             {
-                "name": "Realizar Empréstimo",
+                "name": "Gerenciar Empréstimos",
                 "usecase_events": [
                     {
-                        "name": "Registrar Empréstimo",
+                        "name": "Realizar Empréstimo de Exemplar",
                         "event_steps": [
                             {
-                                "step_code": "RE_RE_01",
-                                "description": "Bibliotecário seleciona o Usuário que realizará o empréstimo.",
+                                "step_code": "GE003_E01_S01",
+                                "description": "Usuário Cadastrado informa o código do exemplar que deseja emprestar e sua identificação de usuário.",
                                 "class_name": "Usuario",
-                                "next_step": "RE_RE_02",
+                                "next_step": "GE003_E01_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "RE_RE_02",
-                                "description": "Bibliotecário seleciona o Exemplar a ser emprestado.",
+                                "step_code": "GE003_E01_S02",
+                                "description": "Sistema busca o Exemplar pelo código e o Usuário pelo ID.",
                                 "class_name": "Exemplar",
-                                "next_step": "RE_RE_03",
-                                "category": "input"
-                            },
-                            {
-                                "step_code": "RE_RE_03",
-                                "description": "Sistema recupera a situação do Exemplar.",
-                                "class_name": "Exemplar",
-                                "next_step": "RE_RE_04",
+                                "next_step": "GE003_E01_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "RE_RE_04",
-                                "description": "Sistema valida se o Exemplar está 'disponível para empréstimo'.",
-                                "class_name": "Exemplar",
-                                "next_step": "RE_RE_05",
+                                "step_code": "GE003_E01_S03",
+                                "description": "Sistema verifica se o Usuário está cadastrado e ativo.",
+                                "class_name": "Usuario",
+                                "next_step": "GE003_E01_S04",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "RE_RE_05",
-                                "description": "Sistema recupera o Livro associado ao Exemplar e conta o número total de exemplares desse Livro.",
-                                "class_name": "Livro",
-                                "next_step": "RE_RE_06",
+                                "step_code": "GE003_E01_S04",
+                                "description": "Sistema verifica a situação do Exemplar.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE003_E01_S05",
                                 "category": "read"
                             },
                             {
-                                "step_code": "RE_RE_06",
-                                "description": "Sistema verifica a regra de negócio BR003 (se o livro possui 5 exemplares ou menos, conforme REQ031).",
-                                "class_name": "Livro",
-                                "next_step": "RE_RE_07",
+                                "step_code": "GE003_E01_S05",
+                                "description": "Sistema verifica se a situação do Exemplar é 'disponível para empréstimo'.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE003_E01_S06",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "RE_RE_07",
-                                "description": "Sistema cria um novo registro de Empréstimo, associando o Usuário e o Exemplar, registrando a data do empréstimo (atual) e calculando a data prevista para devolução.",
+                                "step_code": "GE003_E01_S06",
+                                "description": "Sistema obtém o Livro associado ao Exemplar e a quantidade total de exemplares desse Livro.",
+                                "class_name": "Livro",
+                                "next_step": "GE003_E01_S07",
+                                "category": "read"
+                            },
+                            {
+                                "step_code": "GE003_E01_S07",
+                                "description": "Sistema verifica se a quantidade total de exemplares do Livro é superior a 5 (BR002).",
+                                "class_name": "Livro",
+                                "next_step": "GE003_E01_S08",
+                                "category": "validate"
+                            },
+                            {
+                                "step_code": "GE003_E01_S08",
+                                "description": "Sistema cria um novo registro de Empréstimo, associando o Usuário e o Exemplar, registrando a data do empréstimo e a data prevista para devolução. A situação do empréstimo é definida como 'ativo'.",
                                 "class_name": "Emprestimo",
-                                "next_step": "RE_RE_08",
+                                "next_step": "GE003_E01_S09",
                                 "category": "create"
                             },
                             {
-                                "step_code": "RE_RE_08",
-                                "description": "Sistema atualiza a situação do Exemplar para 'emprestado' e 'indisponível' (conforme REQ019 e BR001).",
+                                "step_code": "GE003_E01_S09",
+                                "description": "Sistema atualiza a situação do Exemplar para 'emprestado'.",
                                 "class_name": "Exemplar",
-                                "next_step": "RE_RE_09",
+                                "next_step": "GE003_E01_S10",
                                 "category": "update"
                             },
                             {
-                                "step_code": "RE_RE_09",
-                                "description": "Sistema define a situação do Empréstimo como 'ativo' (conforme REQ018).",
-                                "class_name": "Emprestimo",
-                                "next_step": "RE_RE_10",
-                                "category": "update"
-                            },
-                            {
-                                "step_code": "RE_RE_10",
-                                "description": "Sistema registra o empréstimo no histórico (conforme REQ032).",
-                                "class_name": "Emprestimo",
-                                "next_step": "RE_RE_11",
-                                "category": "create"
-                            },
-                            {
-                                "step_code": "RE_RE_11",
-                                "description": "Sistema informa sucesso ou falha, e a data prevista de devolução.",
+                                "step_code": "GE003_E01_S10",
+                                "description": "Sistema confirma o empréstimo e informa a data prevista para devolução.",
                                 "class_name": "Emprestimo",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Usuário Cadastrado",
+                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos."
                         }
-                    }
-                ]
-            },
-            {
-                "name": "Registrar Devolução",
-                "usecase_events": [
+                    },
                     {
                         "name": "Registrar Devolução de Exemplar",
                         "event_steps": [
                             {
-                                "step_code": "RD_RDE_01",
-                                "description": "Bibliotecário seleciona o Exemplar devolvido ou o Empréstimo ativo correspondente.",
+                                "step_code": "GE003_E02_S01",
+                                "description": "Administrador/Bibliotecário informa o código do exemplar que está sendo devolvido.",
                                 "class_name": "Exemplar",
-                                "next_step": "RD_RDE_02",
+                                "next_step": "GE003_E02_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "RD_RDE_02",
+                                "step_code": "GE003_E02_S02",
                                 "description": "Sistema busca o Empréstimo ativo associado ao Exemplar.",
                                 "class_name": "Emprestimo",
-                                "next_step": "RD_RDE_03",
+                                "next_step": "GE003_E02_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "RD_RDE_03",
-                                "description": "Sistema valida se um Empréstimo ativo foi encontrado para o Exemplar.",
+                                "step_code": "GE003_E02_S03",
+                                "description": "Sistema verifica se existe um empréstimo ativo para o exemplar.",
                                 "class_name": "Emprestimo",
-                                "next_step": "RD_RDE_04",
+                                "next_step": "GE003_E02_S04",
                                 "category": "validate"
                             },
                             {
-                                "step_code": "RD_RDE_04",
-                                "description": "Sistema registra a data efetiva de devolução no Empréstimo (data atual, conforme REQ017).",
+                                "step_code": "GE003_E02_S04",
+                                "description": "Administrador/Bibliotecário informa a data efetiva de devolução e, opcionalmente, um novo estado de conservação para o exemplar.",
                                 "class_name": "Emprestimo",
-                                "next_step": "RD_RDE_05",
-                                "category": "update"
-                            },
-                            {
-                                "step_code": "RD_RDE_05",
-                                "description": "Bibliotecário pode optar por reavaliar o estado de conservação do Exemplar (conforme REQ028).",
-                                "class_name": "Exemplar",
-                                "next_step": "RD_RDE_06",
+                                "next_step": "GE003_E02_S05",
                                 "category": "input"
                             },
                             {
-                                "step_code": "RD_RDE_06",
-                                "description": "Se reavaliado, Sistema atualiza o 'estado de conservação' do Exemplar (conforme REQ028).",
-                                "class_name": "Exemplar",
-                                "next_step": "RD_RDE_07",
+                                "step_code": "GE003_E02_S05",
+                                "description": "Sistema atualiza o registro do Empréstimo com a data efetiva de devolução e a situação do empréstimo para 'devolvido'.",
+                                "class_name": "Emprestimo",
+                                "next_step": "GE003_E02_S06",
                                 "category": "update"
                             },
                             {
-                                "step_code": "RD_RDE_07",
-                                "description": "Sistema verifica se o Exemplar está 'reservado' ou 'em manutenção'.",
+                                "step_code": "GE003_E02_S06",
+                                "description": "Sistema atualiza o atributo 'estado de conservação' do Exemplar, se fornecido.",
                                 "class_name": "Exemplar",
-                                "next_step": "RD_RDE_08",
+                                "next_step": "GE003_E02_S07",
+                                "category": "update"
+                            },
+                            {
+                                "step_code": "GE003_E02_S07",
+                                "description": "Sistema verifica a situação atual do Exemplar.",
+                                "class_name": "Exemplar",
+                                "next_step": "GE003_E02_S08",
                                 "category": "read"
                             },
                             {
-                                "step_code": "RD_RDE_08",
-                                "description": "Sistema atualiza a situação do Exemplar para 'disponível para empréstimo' se não estiver reservado ou em manutenção; caso contrário, a situação permanece 'reservado' ou 'em manutenção' (conforme REQ027).",
+                                "step_code": "GE003_E02_S08",
+                                "description": "Se a situação do exemplar não for 'reservado' ou 'em manutenção', o sistema atualiza a situação do Exemplar para 'disponível para empréstimo'.",
                                 "class_name": "Exemplar",
-                                "next_step": "RD_RDE_09",
-                                "category": "update"
+                                "next_step": "GE003_E02_S09",
+                                "category": "conditional update"
                             },
                             {
-                                "step_code": "RD_RDE_09",
-                                "description": "Sistema atualiza a situação do Empréstimo para 'concluído' (conforme REQ018).",
-                                "class_name": "Emprestimo",
-                                "next_step": "RD_RDE_10",
-                                "category": "update"
-                            },
-                            {
-                                "step_code": "RD_RDE_10",
-                                "description": "Sistema registra a devolução no histórico (conforme REQ032).",
-                                "class_name": "Emprestimo",
-                                "next_step": "RD_RDE_11",
-                                "category": "create"
-                            },
-                            {
-                                "step_code": "RD_RDE_11",
-                                "description": "Sistema informa sucesso ou falha.",
+                                "step_code": "GE003_E02_S09",
+                                "description": "Sistema confirma a devolução e as atualizações.",
                                 "class_name": "Emprestimo",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     }
                 ]
             },
             {
-                "name": "Consultar Informações do Acervo",
+                "name": "Consultar Acervo e Históricos",
                 "usecase_events": [
                     {
                         "name": "Consultar Exemplares Emprestados",
                         "event_steps": [
                             {
-                                "step_code": "CIA_CEE_01",
-                                "description": "Sistema busca todos os Exemplares com situação 'emprestado' ou Empréstimos com situação 'ativo' (conforme REQ020).",
-                                "class_name": "Exemplar",
-                                "next_step": "CIA_CEE_02",
+                                "step_code": "CAH004_E01_S01",
+                                "description": "Usuário/Administrador solicita a consulta de exemplares emprestados.",
+                                "class_name": "Emprestimo",
+                                "next_step": "CAH004_E01_S02",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "CAH004_E01_S02",
+                                "description": "Sistema busca todos os Empréstimos com situação 'ativo'.",
+                                "class_name": "Emprestimo",
+                                "next_step": "CAH004_E01_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "CIA_CEE_02",
-                                "description": "Sistema exibe a lista de exemplares emprestados, incluindo informações do livro, exemplar e usuário.",
-                                "class_name": "Exemplar",
+                                "step_code": "CAH004_E01_S03",
+                                "description": "Sistema exibe a lista de exemplares emprestados, com informações do livro, exemplar e usuário.",
+                                "class_name": "Emprestimo",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
+                            "name": "Usuário Cadastrado, Administrador/Bibliotecário",
+                            "description": null
                         }
                     },
                     {
                         "name": "Consultar Usuários com Empréstimos Ativos",
                         "event_steps": [
                             {
-                                "step_code": "CIA_CUEA_01",
-                                "description": "Sistema busca todos os Usuários que possuem Empréstimos com situação 'ativo' (conforme REQ021).",
+                                "step_code": "CAH004_E02_S01",
+                                "description": "Usuário/Administrador solicita a consulta de usuários com empréstimos ativos.",
                                 "class_name": "Usuario",
-                                "next_step": "CIA_CUEA_02",
+                                "next_step": "CAH004_E02_S02",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "CAH004_E02_S02",
+                                "description": "Sistema busca todos os Usuários que possuem Empréstimos com situação 'ativo'.",
+                                "class_name": "Usuario",
+                                "next_step": "CAH004_E02_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "CIA_CUEA_02",
-                                "description": "Sistema exibe a lista de usuários com empréstimos ativos.",
+                                "step_code": "CAH004_E02_S03",
+                                "description": "Sistema exibe a lista de usuários com empréstimos ativos e seus respectivos empréstimos.",
                                 "class_name": "Usuario",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
+                            "name": "Usuário Cadastrado, Administrador/Bibliotecário",
+                            "description": null
                         }
                     },
                     {
                         "name": "Consultar Datas Previstas de Devolução",
                         "event_steps": [
                             {
-                                "step_code": "CIA_CDPD_01",
-                                "description": "Sistema busca todos os Empréstimos com situação 'ativo' e suas 'data prevista para devolução' (conforme REQ022).",
+                                "step_code": "CAH004_E03_S01",
+                                "description": "Usuário/Administrador solicita a consulta de datas previstas de devolução (opcionalmente para um usuário específico).",
                                 "class_name": "Emprestimo",
-                                "next_step": "CIA_CDPD_02",
+                                "next_step": "CAH004_E03_S02",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "CAH004_E03_S02",
+                                "description": "Sistema busca Empréstimos ativos e suas 'data prevista para devolução'.",
+                                "class_name": "Emprestimo",
+                                "next_step": "CAH004_E03_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "CIA_CDPD_02",
+                                "step_code": "CAH004_E03_S03",
                                 "description": "Sistema exibe a lista de empréstimos ativos com suas datas previstas de devolução.",
                                 "class_name": "Emprestimo",
                                 "next_step": null,
@@ -1389,216 +1069,143 @@
                             }
                         ],
                         "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
+                            "name": "Usuário Cadastrado, Administrador/Bibliotecário",
+                            "description": null
                         }
                     },
                     {
-                        "name": "Consultar Exemplares Disponíveis",
+                        "name": "Consultar Exemplares Disponíveis para Empréstimo",
                         "event_steps": [
                             {
-                                "step_code": "CIA_CED_01",
-                                "description": "Sistema busca todos os Exemplares com situação 'disponível para empréstimo' (conforme REQ023).",
+                                "step_code": "CAH004_E04_S01",
+                                "description": "Usuário/Administrador solicita a consulta de exemplares disponíveis (opcionalmente por livro/categoria).",
                                 "class_name": "Exemplar",
-                                "next_step": "CIA_CED_02",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "CIA_CED_02",
-                                "description": "Sistema exibe a lista de exemplares disponíveis.",
-                                "class_name": "Exemplar",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
-                        }
-                    },
-                    {
-                        "name": "Consultar Histórico de Empréstimos de Exemplar",
-                        "event_steps": [
-                            {
-                                "step_code": "CIA_CHEE_01",
-                                "description": "Ator seleciona um Exemplar (e.g., por código de patrimônio).",
-                                "class_name": "Exemplar",
-                                "next_step": "CIA_CHEE_02",
+                                "next_step": "CAH004_E04_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "CIA_CHEE_02",
-                                "description": "Sistema busca todos os Empréstimos associados a esse Exemplar (ativos e históricos, conforme REQ024).",
-                                "class_name": "Emprestimo",
-                                "next_step": "CIA_CHEE_03",
+                                "step_code": "CAH004_E04_S02",
+                                "description": "Sistema busca todos os Exemplares com situação 'disponível para empréstimo'.",
+                                "class_name": "Exemplar",
+                                "next_step": "CAH004_E04_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "CIA_CHEE_03",
-                                "description": "Sistema exibe o histórico de empréstimos do exemplar.",
+                                "step_code": "CAH004_E04_S03",
+                                "description": "Sistema exibe a lista de exemplares disponíveis, com informações do livro e exemplar.",
+                                "class_name": "Exemplar",
+                                "next_step": null,
+                                "category": "output"
+                            }
+                        ],
+                        "actor": {
+                            "name": "Usuário Cadastrado, Administrador/Bibliotecário",
+                            "description": null
+                        }
+                    },
+                    {
+                        "name": "Consultar Histórico de Empréstimos de um Exemplar",
+                        "event_steps": [
+                            {
+                                "step_code": "CAH004_E05_S01",
+                                "description": "Usuário/Administrador informa o código do exemplar.",
+                                "class_name": "Exemplar",
+                                "next_step": "CAH004_E05_S02",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "CAH004_E05_S02",
+                                "description": "Sistema busca todos os Empréstimos (ativos e finalizados) associados ao Exemplar.",
+                                "class_name": "Emprestimo",
+                                "next_step": "CAH004_E05_S03",
+                                "category": "read"
+                            },
+                            {
+                                "step_code": "CAH004_E05_S03",
+                                "description": "Sistema exibe o histórico completo de empréstimos do exemplar.",
                                 "class_name": "Emprestimo",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
+                            "name": "Usuário Cadastrado, Administrador/Bibliotecário",
+                            "description": null
                         }
                     },
                     {
-                        "name": "Consultar Histórico de Empréstimos de Usuário",
+                        "name": "Consultar Histórico de Empréstimos de um Usuário",
                         "event_steps": [
                             {
-                                "step_code": "CIA_CHEU_01",
-                                "description": "Ator seleciona um Usuário (e.g., por ID ou nome).",
+                                "step_code": "CAH004_E06_S01",
+                                "description": "Usuário/Administrador informa a identificação do usuário.",
                                 "class_name": "Usuario",
-                                "next_step": "CIA_CHEU_02",
+                                "next_step": "CAH004_E06_S02",
                                 "category": "input"
                             },
                             {
-                                "step_code": "CIA_CHEU_02",
-                                "description": "Sistema busca todos os Empréstimos associados a esse Usuário (ativos e históricos, conforme REQ025).",
+                                "step_code": "CAH004_E06_S02",
+                                "description": "Sistema busca todos os Empréstimos (ativos e finalizados) associados ao Usuário.",
                                 "class_name": "Emprestimo",
-                                "next_step": "CIA_CHEU_03",
+                                "next_step": "CAH004_E06_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "CIA_CHEU_03",
-                                "description": "Sistema exibe o histórico de empréstimos do usuário.",
+                                "step_code": "CAH004_E06_S03",
+                                "description": "Sistema exibe o histórico completo de empréstimos do usuário.",
                                 "class_name": "Emprestimo",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Usuário da Biblioteca",
-                            "description": "Pode realizar empréstimos de exemplares disponíveis e consultar seu histórico de empréstimos e a disponibilidade de exemplares."
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "Obter Estatísticas do Acervo em Tempo Real",
-                "usecase_events": [
-                    {
-                        "name": "Informar Quantidade Total de Exemplares por Livro",
-                        "event_steps": [
-                            {
-                                "step_code": "OEATR_QTEL_01",
-                                "description": "Sistema agrega a contagem de Exemplares para cada Livro (conforme NFR001).",
-                                "class_name": "Livro",
-                                "next_step": "OEATR_QTEL_02",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "OEATR_QTEL_02",
-                                "description": "Sistema exibe a quantidade total de exemplares para cada livro.",
-                                "class_name": "Livro",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Usuário Cadastrado, Administrador/Bibliotecário",
+                            "description": null
                         }
                     },
                     {
-                        "name": "Informar Quantidade de Exemplares Disponíveis por Livro",
+                        "name": "Consultar Status Detalhado do Acervo em Tempo Real",
                         "event_steps": [
                             {
-                                "step_code": "OEATR_QDEL_01",
-                                "description": "Sistema agrega a contagem de Exemplares com situação 'disponível para empréstimo' para cada Livro (conforme NFR002).",
+                                "step_code": "CAH004_E07_S01",
+                                "description": "Administrador/Bibliotecário solicita o status detalhado do acervo.",
                                 "class_name": "Livro",
-                                "next_step": "OEATR_QDEL_02",
+                                "next_step": "CAH004_E07_S02",
+                                "category": "input"
+                            },
+                            {
+                                "step_code": "CAH004_E07_S02",
+                                "description": "Sistema calcula e obtém: Quantidade total de exemplares cadastrados para cada Livro; Quantidade de exemplares com situação 'disponível para empréstimo' para cada Livro; Quantidade de exemplares com situação 'emprestado' para cada Livro; Quantidade de exemplares com situação 'em manutenção' para cada Livro; Lista de Livros onde a quantidade total de exemplares é igual ou inferior a 5 (bloqueados para empréstimo).",
+                                "class_name": "Exemplar",
+                                "next_step": "CAH004_E07_S03",
                                 "category": "read"
                             },
                             {
-                                "step_code": "OEATR_QDEL_02",
-                                "description": "Sistema exibe a quantidade de exemplares disponíveis para cada livro.",
+                                "step_code": "CAH004_E07_S03",
+                                "description": "Sistema exibe todas as informações calculadas em tempo real.",
                                 "class_name": "Livro",
                                 "next_step": null,
                                 "category": "output"
                             }
                         ],
                         "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Informar Quantidade de Exemplares Emprestados por Livro",
-                        "event_steps": [
-                            {
-                                "step_code": "OEATR_QEEL_01",
-                                "description": "Sistema agrega a contagem de Exemplares com situação 'emprestado' para cada Livro (conforme NFR003).",
-                                "class_name": "Livro",
-                                "next_step": "OEATR_QEEL_02",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "OEATR_QEEL_02",
-                                "description": "Sistema exibe a quantidade de exemplares emprestados para cada livro.",
-                                "class_name": "Livro",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Informar Quantidade de Exemplares em Manutenção por Livro",
-                        "event_steps": [
-                            {
-                                "step_code": "OEATR_QEML_01",
-                                "description": "Sistema agrega a contagem de Exemplares com situação 'em manutenção' para cada Livro (conforme NFR004).",
-                                "class_name": "Livro",
-                                "next_step": "OEATR_QEML_02",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "OEATR_QEML_02",
-                                "description": "Sistema exibe a quantidade de exemplares em manutenção para cada livro.",
-                                "class_name": "Livro",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
-                        }
-                    },
-                    {
-                        "name": "Informar Livros Bloqueados para Empréstimo",
-                        "event_steps": [
-                            {
-                                "step_code": "OEATR_LBLE_01",
-                                "description": "Sistema verifica Livros onde a quantidade total de exemplares é igual ou inferior a 5 (regra BR003, conforme NFR005).",
-                                "class_name": "Livro",
-                                "next_step": "OEATR_LBLE_02",
-                                "category": "read"
-                            },
-                            {
-                                "step_code": "OEATR_LBLE_02",
-                                "description": "Sistema exibe a lista de livros bloqueados para empréstimo.",
-                                "class_name": "Livro",
-                                "next_step": null,
-                                "category": "output"
-                            }
-                        ],
-                        "actor": {
-                            "name": "Bibliotecário/Administrador",
-                            "description": "Responsável por cadastrar e gerenciar livros, exemplares e usuários."
+                            "name": "Administrador/Bibliotecário",
+                            "description": "Responsável por gerenciar o catálogo de livros, exemplares, e outras configurações do sistema."
                         }
                     }
                 ]
             }
         ],
-        "questions": []
+        "questions": [
+            {
+                "question": "O sistema deve permitir a realização de reservas de exemplares, ou a situação 'reservado' é apenas um estado que o exemplar pode assumir por outros meios?"
+            },
+            {
+                "question": "O sistema deve gerenciar multas ou penalidades para devoluções atrasadas?"
+            },
+            {
+                "question": "O sistema deve gerenciar o processo de aquisição de novos livros ou o descarte de exemplares danificados/inutilizáveis?"
+            }
+        ]
     }
 }

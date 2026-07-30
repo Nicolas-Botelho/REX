@@ -37,9 +37,9 @@ def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = Fals
 
   result = full_graph.invoke({'InputText': input_text, 'OldDomainNarrative': ndInput, 'OldRequirements': rqInput, 'OldUsecases': ucInput, 'OldClasses': clsInput})
 
-  print("NO STRUCT TEST START")
-  print(ns_graph.invoke({'InputText': input_text}))
-  print("NO STRUCT TEST END")
+  # print("NO STRUCT TEST START")
+  # print(ns_graph.invoke({'InputText': input_text}))
+  # print("NO STRUCT TEST END")
 
   new_classes: ClassOutput = result.get('Classes')
   new_usecases: UsecaseOutput = result.get('Usecases')
