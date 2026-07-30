@@ -70,7 +70,7 @@ class Step {
 }
 
 class Action {
-  categoty : string
+  category : string
 }
 
 class Decision
@@ -121,7 +121,7 @@ class AssociationClassReference {
 
 class Inheritance
 
-Class "1" -- "0..*" Attribute
+Class "1" -- "0..*" ClassAttribute
 
 Class "1" -- "0..*" AssociationClassReference
 
