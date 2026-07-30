@@ -112,4 +112,4 @@ All the neeeded information to create the Use Cases may or may not be present in
 
   print('Usecase Agent End')
 
-  return {**state, 'Usecases': response}
+  return {**state, 'Usecases': response.content}

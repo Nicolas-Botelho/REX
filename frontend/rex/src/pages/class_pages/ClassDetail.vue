@@ -7,7 +7,7 @@
 
       <ul>
         <li v-for="(item, index) in classData.class_attributes" :key="index">
-          <p v-if="item.attr_type && item.is_multiple">{{ item.name }} : {{ item.attr_type }} <template v-if="item.is_multiple">(many)</template>
+          <p>{{ item.name }} : {{ item.attr_type }} <template v-if="item.is_multiple">(many)</template>
             <p v-for="value in item.valid_values">- {{ value }}</p>
           </p>
         </li>

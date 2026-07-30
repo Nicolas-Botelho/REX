@@ -99,4 +99,4 @@ All the neeeded information to create the Requirements may or may not be present
 
   print('Requirement Agent End')
 
-  return {**state, 'Requirements': response}
+  return {**state, 'Requirements': response.content}

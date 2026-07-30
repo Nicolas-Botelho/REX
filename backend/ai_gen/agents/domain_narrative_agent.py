@@ -87,4 +87,4 @@ All the neeeded information to create the Domain Narrative may or may not be pre
 
   print('Narrative Agent End')
 
-  return {**state, 'DomainNarrative': response}
+  return {**state, 'DomainNarrative': response.content}

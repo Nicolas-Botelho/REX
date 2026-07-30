@@ -107,4 +107,4 @@ All the neeeded information to create the Classes may or may not be present in t
 
   print('Classes Agent End')
 
-  return {**state, 'Classes': response}
+  return {**state, 'Classes': response.content}
