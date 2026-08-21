@@ -26,3 +26,35 @@ export async function importJson(data: any) {
     throw error
   }
 }
+
+export async function getNarrativeMd() {
+  try {
+    return await request('document/narrative/', {'method': 'GET'})
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getRequirementMd() {
+  try {
+    return await request('document/requirements/', {'method': 'GET'})
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getUsecaseMd() {
+  try {
+    return await request('document/usecase/', {'method': 'GET'})
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getClassMd() {
+  try {
+    return await request('document/class/', {'method': 'GET'})
+  } catch (error) {
+    throw error
+  }
+}

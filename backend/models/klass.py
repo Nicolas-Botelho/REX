@@ -26,12 +26,12 @@ class ClassAttribute(BaseModel):
   is_multiple : bool
   valid_values : list[str] = Field(default_factory=list)
 
-class StereotypeEnum(str, Enum):
-  KIND = "kind"
-  SUBKIND = "subkind"
-  ROLE = "role"
+# class StereotypeEnum(str, Enum):
+#   KIND = "kind"
+#   SUBKIND = "subkind"
+#   ROLE = "role"
 
 class Class(BaseModel):
   name : str
-  stereotype : StereotypeEnum
+  stereotype : str
   class_attributes : list[ClassAttribute] = Field(default_factory=list)

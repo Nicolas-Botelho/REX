@@ -9,6 +9,8 @@ from views.usecase_view import usecase_router
 from views.requirement_view import requirement_router
 from views.narrative_view import narrative_router
 from views.ai_view import gen_router
+from views.actor_view import actor_router
+from views.document_view import doc_router
 
 from fastapi import FastAPI, APIRouter, status, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,33 +18,27 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:8000",  # Your Vite/React/Vue frontend
-    "http://127.0.0.1:8000",  # Good to add as well
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
 ]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all HTTP methods (GET, POST, OPTIONS, etc.)
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.post("/manual_update/")
 def mu_view(json_input: dict, response: Response, overwrite: bool = False) -> dict:
   try:
-    new_classes = HumanClassOutput.model_validate(json_input.get('class_models'))
-    new_usecases = UsecaseOutput.model_validate(json_input.get('usecase_models'))
-    new_requirements = RequirementOutput.model_validate(json_input.get('requirement_models'))
-    new_narrative = NarrativeOutput.model_validate(json_input.get('narrative_models'))
-
-    if new_classes or new_usecases or new_requirements or new_narrative:
+    if json_input.get('narrative_models') or json_input.get('requirement_models') or json_input.get('usecase_models') or json_input.get('class_models') or json_input.get('actors'):
       jg = JsonGenerator()
-      jg.write_json(new_classes.classes, new_classes.associations, new_classes.inheritances, new_classes.questions,
-      new_usecases.usecases, new_usecases.questions,
-      new_requirements.requirements, new_requirements.questions,
-      new_narrative.domain_narrative, new_narrative.questions, write_new=not overwrite)
-  except:
+      jg.write_json(json_input, write_new=not overwrite)
+  except Exception as e:
     response.status_code = status.HTTP_400_BAD_REQUEST
 
   return {}
@@ -59,8 +55,15 @@ app.include_router(class_router, tags=["Class"])
 app.include_router(usecase_router, tags=["Usecase"])
 app.include_router(requirement_router, tags=["Requirement"])
 app.include_router(narrative_router, tags=["Narrative"])
+app.include_router(actor_router, tags=["Actor"])
+app.include_router(doc_router, tags=["Documents"])
 
 try:
   app.frontend("/", directory="../frontend/rex/dist")
-except:
-  print("ERROR: No frontend build found")
+except Exception as e:
+  print(f"ERROR: No frontend build found ({e})")
+
+@app.get("/make_coffee/", responses={200: {"status": 200, "data": "OK"}, 418: {"status": 418, "data": "I'm a Teapot"}})
+def make_coffee(response: Response):
+  response.status_code = status.HTTP_418_IM_A_TEAPOT
+  return {"status": 418, "data": "I'm a Teapot"}

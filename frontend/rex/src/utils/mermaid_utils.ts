@@ -1,8 +1,8 @@
 import mermaid from "mermaid"
 
-export async function mermaidSvgCreator(steps: Array<any>) {
-  mermaid.initialize({ startOnLoad: false })
+mermaid.initialize({ startOnLoad: false })
 
+export async function mermaidSvgCreator(steps: Array<any>) {
   let diagram = `
     graph TD
   `
@@ -27,7 +27,7 @@ export async function mermaidSvgCreator(steps: Array<any>) {
   }
 
   const result = await mermaid.render(
-    'my-diagram',
+    `mermaid-${Math.random().toString(36).substring(2, 9)}`,
     diagram
   )
 
