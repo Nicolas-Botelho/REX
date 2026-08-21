@@ -14,39 +14,36 @@ class ClassLoader():
 
   def load_classes(self, models: list) -> list[pyd.Class]:
     classes: list[pyd.Class] = []
-    # rd = json_ser.JsonClassSerializer()
     for clazz in models:
       try:
         classes.append(pyd.Class.model_validate(clazz))
-      except:
-        print(f"INVALID CLASS {clazz}")
+      except Exception as e:
+        print(f"INVALID CLASS {e}: {clazz}")
     return classes
 
   def load_associations(self, models: list) -> list[pyd.Association]:
     associations: list[pyd.Association] = []
-    # rd = json_ser.JsonAssociationSerializer()
     for assoc in models:
       try:
         associations.append(pyd.Association.model_validate(assoc))
-      except:
-        print(f"INVALID ASSOCIATION {assoc}")
+      except Exception as e:
+        print(f"INVALID ASSOCIATION {e}: {assoc}")
     return associations
 
   def load_inheritances(self, models: list) -> list[pyd.Inheritance]:
     inheritances: list[pyd.Inheritance] = []
-    # rd = json_ser.JsonInheritanceSerializer()
     for inher in models:
       try:
         inheritances.append(pyd.Inheritance.model_validate(inher))
-      except:
-        print(f"INVALID INHERITANCE {inher}")
+      except Exception as e:
+        print(f"INVALID INHERITANCE {e}: {inher}")
     return inheritances
   
-  def load_questions(self, models: list) -> list[pyd_q.Question]:
-    questions: list[pyd_q.Question] = []
+  def load_questions(self, models: list) -> list[pyd_q.ClassQuestion]:
+    questions: list[pyd_q.ClassQuestion] = []
     for quest in models:
       try:
-        questions.append(pyd_q.Question.model_validate(quest))
-      except:
-        print(f"INVALID QUESTION {quest}")
+        questions.append(pyd_q.ClassQuestion.model_validate(quest))
+      except Exception as e:
+        print(f"INVALID QUESTION {e}: {quest}")
     return questions

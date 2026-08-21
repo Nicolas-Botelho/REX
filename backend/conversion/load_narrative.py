@@ -8,22 +8,22 @@ class NarrativeLoader():
     narrative_models = json_r.read().get("narrative_models")
 
     if narrative_models == None:
-      return pyd.DomainNarrative(system_context="", users=[], system_functionalities=[]), []
+      return pyd.DomainNarrative(narrative=""), []
 
     return self.load_narrative(narrative_models.get("domain_narrative")), self.load_questions(narrative_models.get("questions"))
 
   def load_narrative(self, model: dict) -> pyd.DomainNarrative | None:
     try:
       return pyd.DomainNarrative.model_validate(model)
-    except:
-      print(f"INVALID NARRATIVE {model}")
+    except Exception as e:
+      print(f"INVALID NARRATIVE {e}: {model}")
       return None
   
-  def load_questions(self, models: list) -> list[pyd_q.Question]:
-    questions: list[pyd_q.Question] = []
+  def load_questions(self, models: list) -> list[pyd_q.NarrativeQuestion]:
+    questions: list[pyd_q.NarrativeQuestion] = []
     for quest in models:
       try:
-        questions.append(pyd_q.Question.model_validate(quest))
-      except:
-        print(f"INVALID QUESTION {quest}")
+        questions.append(pyd_q.NarrativeQuestion.model_validate(quest))
+      except Exception as e:
+        print(f"INVALID QUESTION {e}: {quest}")
     return questions

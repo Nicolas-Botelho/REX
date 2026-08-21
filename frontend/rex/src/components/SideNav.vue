@@ -3,10 +3,12 @@
     <router-link to="/">Home</router-link>
     <router-link to="/generate">Generate Artifacts</router-link>
     <router-link to="/json_data">JSON Data</router-link>
+    <router-link to="/markdown">Markdown</router-link>
     <router-link to="/narrative">Domain Narrative</router-link>
     <router-link to="/requirements">Requirements</router-link>
     <router-link to="/usecases">Use Cases</router-link>
     <router-link to="/classes">Classes</router-link>
+    <router-link to="/actors">Actors</router-link>
   </nav>
 </template>
 

@@ -1,22 +1,51 @@
 from pydantic import BaseModel, Field
 from enum import Enum
 
-class User(BaseModel):
-  name: str
-  description: str
+####################
+# DOMAIN NARRATIVE #
+####################
 
 class DomainNarrative(BaseModel):
-  system_context: str
-  users: list[User] = Field(default_factory=list)
-  system_functionalities: list[str] = Field(default_factory=list)
+  narrative: str
 
-class RequirementEnum(str, Enum):
-  FUNCTIONAL_REQUIREMENT = "functional_requirement"
-  NON_FUNCTIONAL_REQUIREMENT = "non_functional_requirement"
-  BUSINESS_RULE = "business_rule"
+################
+# REQUIREMENTS #
+################
+
+class PriorityEnum(str, Enum):
+  MUST = 'must'
+  SHOULD = 'should'
+  COULD = 'could'
+  WONT = 'wont'
+
+class NFRCategoryEnum(str, Enum):
+  RELIABILITY = 'reliability'
+  USABILITY = 'usability'
+  PERFORMANCE = 'performance'
+  SECURITY = 'security'
+  COMPATIBILITY = 'compatibility'
+  MAINTAINABILITY = 'maintainability'
+  FLEXIBILITY = 'flexibility'
+
+class Actor(BaseModel):
+  name: str
+  description: str
 
 class Requirement(BaseModel):
   code: str
   description: str
-  requirement_type: RequirementEnum
-  depends_on_requirements_codes: list[str] = Field(default_factory=list)
+
+class FunctionalRequirement(Requirement):
+  actor_name: str
+  objective: str
+  depends_on_requirements_codes: list[str]
+  apply_business_rules_codes: list[str]
+  priority: PriorityEnum
+
+class NonFunctionalRequirement(Requirement):
+  category: NFRCategoryEnum
+  applies_on_requirements_codes: list[str]
+  priority: PriorityEnum
+
+class BusinessRule(Requirement):
+  pass

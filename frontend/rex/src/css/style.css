@@ -1,88 +1,115 @@
-h1 {
-  color: #1f2d3a;
-  text-align: center;
-  font-size: 24px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-h2 {
-  color: #1f2d3a;
-  text-align: justify;
-  font-size: 20px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-h3 {
-  color: #1f2d3a;
-  text-align: justify;
-  font-size: 16px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-}
-
-h4 {
-  color: #2c3e50;
-  text-align:justify;
-  font-size: 16px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-style: italic;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 p {
-  color: #2c3e50;
-  text-align: justify;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #1e293b;
+}
+
+h1 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #1e293b;
+}
+
+h2 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #1e293b;
+}
+
+h3 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #1e293b;
+}
+
+h4 {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #1e293b;
+  font-style: italic;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
 }
 
 li {
-  color: #2c3e50;
-  text-align: justify;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #1e293b;
 }
 
-a {
-  color: #2c3e50;
-  font-size: 16px;
-  font-family: Arial, Helvetica, sans-serif;
-  text-decoration: none;
+input, textarea, select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #0f172a;
+  background-color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-a:hover {
-  /* font-weight: bold; */
-  color: #42b983;
-}
-
-button {
-  color: #dfdfdf;
-  background: #2c3e50;
-
-  border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-button:hover {
-  /* Scale up and lift */
-  transform: translateY(-2px) scale(1.02);
-  /* Change background and add shadow */
-  background: #42b983;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 textarea {
-  min-width: 50vw;
-  max-width: 50vw;
-  min-height: 50vh;
-  max-height: 50vh;
+  min-height: 100px;
+  max-height: 250px;
+  resize: vertical;
 }
+
+button {
+  color: #ffffff;
+  background-color: #2c3e50;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+table, th, tr, td {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  background-color: #34495e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.edit-button { background-color: #0284c7; }
+.edit-button:hover { background-color: #0369a1; }
+
+.delete-button { background-color: #dc2626; }
+.delete-button:hover { background-color: #b91c1c; }
+
+.create-button { background-color: #16a34a; }
+.create-button:hover { background-color: #15803d; }
 
 .scroll-box {
   max-width: 95%;
@@ -100,4 +127,10 @@ pre {
   word-break: normal;
   overflow-wrap: break-word;
   max-width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }

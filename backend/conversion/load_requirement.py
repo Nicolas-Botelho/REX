@@ -8,24 +8,42 @@ class RequirementLoader():
     requirement_models = json_r.read().get("requirement_models")
 
     if requirement_models == None:
-      return [], []
+      return [], [], [], []
 
-    return self.load_requirements(requirement_models.get("requirements")), self.load_questions(requirement_models.get("questions"))
+    return self.load_frs(requirement_models.get("functional_requirements")), self.load_nfrs(requirement_models.get("non_functional_requirements")), self.load_brs(requirement_models.get("business_rules")), self.load_questions(requirement_models.get("questions"))
 
-  def load_requirements(self, models: list) -> list[pyd.Requirement]:
-    requirements: list[pyd.Requirement] = []
-    for req in models:
+  def load_frs(self, models: list) -> list[pyd.FunctionalRequirement]:
+    frs: list[pyd.FunctionalRequirement] = []
+    for model in models:
       try:
-        requirements.append(pyd.Requirement.model_validate(req))
-      except:
-        print(f"INVALID REQUIREMENT {req}")
-    return requirements
+        frs.append(pyd.FunctionalRequirement.model_validate(model))
+      except Exception as e:
+        print(f"INVALID REQUIREMENT {e}: {model}")
+    return frs
   
-  def load_questions(self, models: list) -> list[pyd_q.Question]:
-    questions: list[pyd_q.Question] = []
+  def load_nfrs(self, models: list) -> list[pyd.NonFunctionalRequirement]:
+    nfrs: list[pyd.NonFunctionalRequirement] = []
+    for model in models:
+      try:
+        nfrs.append(pyd.NonFunctionalRequirement.model_validate(model))
+      except Exception as e:
+        print(f"INVALID REQUIREMENT {e}: {model}")
+    return nfrs
+
+  def load_brs(self, models: list) -> list[pyd.BusinessRule]:
+    brs: list[pyd.BusinessRule] = []
+    for model in models:
+      try:
+        brs.append(pyd.BusinessRule.model_validate(model))
+      except Exception as e:
+        print(f"INVALID REQUIREMENT {e}: {model}")
+    return brs
+
+  def load_questions(self, models: list) -> list[pyd_q.RequirementQuestion]:
+    questions: list[pyd_q.RequirementQuestion] = []
     for quest in models:
       try:
-        questions.append(pyd_q.Question.model_validate(quest))
-      except:
-        print(f"INVALID QUESTION {quest}")
+        questions.append(pyd_q.RequirementQuestion.model_validate(quest))
+      except Exception as e:
+        print(f"INVALID QUESTION {e}: {quest}")
     return questions
