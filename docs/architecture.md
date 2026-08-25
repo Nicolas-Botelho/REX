@@ -30,23 +30,27 @@ B --- D
 G --- H
 ```
 
-## Model Layer
+## Backend
+
+### Model Layer
 Defines all the models used in the system.
 
 The models are divided in 4 groups: Domain Narrative, Requirements, Use Cases and Classes.
 
 The models are better explained in [Models](./models.md).
 
-## Controller Layer
+### Controller Layer
 Divided in 2 parts:
-- Converter: Transforms given dictionaries in instances of the models; and
+- Converter: Transforms given dictionaries in instances of the models.
 - Generator: Reads from and writes in the JSON file.
 
-## AI Layer
+### AI Layer
 Instanciates models based on a user-given input and on already existent models.
 
-## View Layer
+### View Layer
 Creates the API routes to access the backend.
+
+## Frontend
 
 ## API Connection Layer
 Creates functions to use the backend API.
