@@ -1,3 +1,3 @@
 # REX Model
 
-![complete_model](./complete_model.png)
+![complete_model](./model.png)
