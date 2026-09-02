@@ -2,6 +2,7 @@ from generation.json_generator import JsonGenerator
 from views.class_view import associations_by_class_name, inheritances_by_class_name
 
 from fastapi import APIRouter
+from pprint import pformat
 
 doc_router = APIRouter(prefix="/document")
 
@@ -128,12 +129,28 @@ def print_uc_req(frs: list):
   return req_string
 
 def print_steps(steps: list):
-  step_string = "| Code | Description | Class Name | Category | Next Step |\n| --- | --- | --- | --- | --- |\n"
+  step_string = "| Code | Description | Category | Next Step |\n| --- | --- | --- | --- |\n"
 
   for step in steps:
-    step_string += f"| {step.get("step_code")} | {step.get("description")} | {step.get("class_name") if step.get("class_name") else ""} | {step.get("category").name.lower() if step.get("category") else "decision"} | {print_next_steps(step)}|\n"
+    step_string += f"| {step.get("step_code")} | {step.get("description")} | {"decision" if step.get("next_steps") else print_operation(step.get("category"))} | {print_next_steps(step)}|\n"
   
   return step_string
+
+def print_operation(category):
+  if not category:
+    return ""
+  if category.get("description") and (category.get("operation_type").name == "INPUT" or category.get("operation_type").name == "OUTPUT"):
+    return f"{category.get("operation_type").name.capitalize()}: {category.get("description")}"
+  if category.get("description"):
+    return f"Complex operation ({category.get("operation_type").name.lower()}): {category.get("description")}"
+  if category.get("event_name"):
+    return f"Navigate to {category.get("usecase_name")} - {category.get("event_name")} ({category.get("operation_type").name.lower()})"
+  if category.get("attributes"):
+    attr_dict = category.get("attributes")
+    attr_string = ""
+    for cls, attrs in attr_dict.items():
+      attr_string = f"{", ".join(attrs)} ({cls}); "
+    return f"{category.get("operation_type").name.capitalize()} {attr_string}"
 
 def print_next_steps(step):
   if step.get("next_step"):
@@ -152,8 +169,40 @@ def class_md():
   return {'data': f"""# Classes
 {print_cls(cm.get("classes"))}
 
+# Diagram
+
+```mermaid
+classDiagram
+
+{print_cls_diagram(cm.get("classes"), cm.get("associations"), cm.get("inheritances"))}
+```
+
 # Question
 {print_questions(cm.get("questions"), mode="classes")}"""}
+
+def print_cls_diagram(classes: list, assocs: list, inhers: list):
+  diagram_string = ""
+
+  for cls in classes:
+    diagram_string += f"class {cls.get("name")}{"~"+cls.get("stereotype")+"~" if cls.get("stereotype") != "" and cls.get("stereotype") != None else ""} {{\n{print_attr_diagram(cls.get("class_attributes"))}}}\n\n"
+
+  for assoc in assocs:
+    src = assoc.get("src")
+    tgt = assoc.get("tgt")
+    diagram_string += f"{src.get("class_name")} \"{src.get("class_min") if src.get("class_min") != None else "N"}..{src.get("class_max") if src.get("class_max") != None else "N"}\" -- \"{tgt.get("class_min") if tgt.get("class_min") != None else "N"}..{tgt.get("class_max") if tgt.get("class_max") != None else "N"}\" {tgt.get("class_name")}\n"
+
+  for inher in inhers:
+    diagram_string += f"{inher.get("parent_class_name")} <|-- {inher.get("child_class_name")}"
+  
+  return diagram_string
+
+def print_attr_diagram(attrs: list):
+  attr_string = ""
+
+  for attr in attrs:
+    attr_string += f"{"list~"+attr.get("attr_type").name.lower()+"~" if attr.get("is_multiple") else attr.get("attr_type").name.lower()} {attr.get("name")} {":"+(", ".join(attr.get("valid_values"))) if attr.get("valid_values") != None and len(attr.get("valid_values")) != 0 else ""}\n"
+  
+  return attr_string
 
 def print_cls(classes: list):
   class_string = ""

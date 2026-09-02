@@ -5,9 +5,9 @@
     <div v-if="clsData">
 
       <div>
-        <BaseItemBox v-for="(item, index) in clsData" :key="index" @del="removeClass(Number(index))" @edit="goToClass(Number(index))">
+        <GoToItemBox v-for="(item, index) in clsData" :key="index" @del="removeClass(Number(index))" @go-to="goToClass(Number(index))">
           <p>{{ item.name }}</p>
-        </BaseItemBox>
+        </GoToItemBox>
 
         <button class="create-button" @click="addClass">Add New</button>
       </div>
@@ -54,6 +54,7 @@ import BaseItemBox from '@/components/BaseItemBox.vue'
 import { Class } from '@/models/class_models'
 import { ClassQuestion } from '@/models/question_models'
 import BaseModal from '@/components/BaseModal.vue'
+import GoToItemBox from '@/components/GoToItemBox.vue'
 
 const clsData = ref()
 const qData = ref()

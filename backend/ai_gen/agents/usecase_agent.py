@@ -31,6 +31,12 @@ If you do not recieve the current Use Cases, it means you are doing the first ve
   - S000. E.g.: S001, S002, S003, etc.
 - Each step can be associated with 0 or 1 class. If it is needed to associate a step with multiple classes, it must be separated in multiple steps, one for each class.
 
+## Actions Operations
+- Data Operations: Operations relevant to the system's data and informations. When informing the attributes, list them individually by name and associating to their respective class, even if all of the class' attributes will be used;
+- Complex Operations: Other relevant operations that do not fit the categories inside data operation (e.g.: API Calls);
+- Nav Operations: Operations of executing another events inside the current event. It's categories reflect how these events will appear in the interface (e.g.: as a modal or navigating to the new screen); and
+- None: Used for actions that are not relevent for the system's data/informations directly (e.g.: user input and how a output is presented).
+
 ## About the questions
 All the neeeded information to create the Use Cases may or may not be present in the given text, in the Domain Narrative, in the Requirements, in the Use Cases, or in the Classes. If any information is needed but is not present, add a question about it. Also, if a question ask about a information what is already present in the given text, in the Domain Narrative, in the Requirements, in the Use Cases, or in the Classes, consider that quesiton answered and remove the question. Finally, try to answer as many question as possible with the given informations.
 
