@@ -53,7 +53,7 @@
 
       <h2 v-if="classData.associations">Associations</h2>
 
-      <BaseItemBox v-for="item in classData.associations" :key="item.id" @del="removeAssociation(Number(item.id))" @edit="openAssociationModal(Number(item.id))">
+      <BaseItemBox v-for="(item, index) in classData.associations" :key="item.id" @del="removeAssociation(Number(item.id))" @edit="openAssociationModal(Number(index))">
         <p v-if="item.assoc.src.class_name == classData.name">
           {{ classData.name }} "{{ item.assoc.src.class_min }}..{{ item.assoc.src.class_max ?? "N" }}" -> "{{ item.assoc.tgt.class_min }}..{{ item.assoc.tgt.class_max ?? "N" }}" <a href="#" @click.prevent="goToClass(item.assoc.tgt.class_name)">{{ item.assoc.tgt.class_name }}</a>
         </p>
@@ -91,7 +91,7 @@
 
       <h2 v-if="classData.inheritances">Inheritances</h2>
 
-      <BaseItemBox v-for="item in classData.inheritances" :key="item.id" @del="removeInheritance(Number(item.id))" @edit="openInheritanceModal(Number(item.id))">
+      <BaseItemBox v-for="(item, index) in classData.inheritances" :key="item.id" @del="removeInheritance(Number(item.id))" @edit="openInheritanceModal(Number(index))">
         <p v-if="item.inher.parent_class_name == classData.name">
           {{ classData.name }} <|- <a href="#" @click.prevent="goToClass(item.inher.child_class_name)">{{ item.inher.child_class_name }}</a>
         </p>

@@ -5,9 +5,9 @@
     <div v-if="ucData">
 
       <div>
-        <BaseItemBox v-for="(uc, index) in ucData" :key="index" @del="removeUsecase(Number(index))" @edit="goToUseCase(Number(index))">
+        <GoToItemBox v-for="(uc, index) in ucData" :key="index" @del="removeUsecase(Number(index))" @go-to="goToUseCase(Number(index))">
           <p>{{ uc.name }}</p>
-        </BaseItemBox>
+        </GoToItemBox>
 
         <button class="create-button" @click="addUsecase()">Add New</button>
       </div>
@@ -54,6 +54,7 @@ import { Usecase } from '@/models/usecase_models'
 import router from '@/router'
 import BaseModal from '@/components/BaseModal.vue'
 import { UsecaseQuestion } from '@/models/question_models'
+import GoToItemBox from '@/components/GoToItemBox.vue'
 
 const reload = ref(0)
 const errorMessage = ref('')
