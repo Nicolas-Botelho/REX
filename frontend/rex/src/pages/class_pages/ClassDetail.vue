@@ -1,7 +1,7 @@
 <template>
   <div v-if="classData">
     <h1>{{ classData.name }}</h1>
-    <p v-if="classData.stereotype" style="text-align: center;"><<{{ classData.stereotype }}>></p>
+    <p v-if="classData.stereotype"><<{{ classData.stereotype }}>></p>
 
     <button class="edit-button" @click="openClassModal()">Edit Class</button>
 
