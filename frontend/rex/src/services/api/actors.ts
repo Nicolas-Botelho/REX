@@ -9,6 +9,22 @@ export async function getActors() {
   }
 }
 
+export async function getFRByActor(actor: string) {
+  try {
+    return await request(`actor/fr_by_actor/?name=${encodeURIComponent(actor)}`, {'method': 'GET'})
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getUcByActor(actor: string) {
+  try {
+    return await request(`actor/uc_by_actor/?name=${encodeURIComponent(actor)}`, {'method': 'GET'})
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function postActor(actor: Actor) {
   try {
     return await request('actor/actor/', {'method': 'POST', 'data': actor})    

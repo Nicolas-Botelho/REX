@@ -8,7 +8,7 @@
     <router-link to="/requirements">Requirements</router-link>
     <router-link to="/usecases">Use Cases</router-link>
     <router-link to="/classes">Classes</router-link>
-    <router-link to="/actors">Actors</router-link>
+    <!-- <router-link to="/actors">Actors</router-link> -->
   </nav>
 </template>
 

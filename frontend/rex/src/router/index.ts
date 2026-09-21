@@ -13,7 +13,7 @@ import UseCaseDetail from '@/pages/usecase_pages/UseCaseDetail.vue'
 import DomainNarrative from '@/pages/DomainNarrative.vue'
 import Requirements from '@/pages/Requirements.vue'
 
-import Actors from '@/pages/Actors.vue'
+// import Actors from '@/pages/Actors.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +26,7 @@ const router = createRouter({
     {path: '/classes/:id', component: ClassDetail},
     {path: '/usecases', component: UseCases},
     {path: '/usecases/:id', component: UseCaseDetail},
-    {path: '/actors', component: Actors},
+    // {path: '/actors', component: Actors},
     {path: '/requirements', component: Requirements},
     {path: '/narrative', component: DomainNarrative},
   ],
