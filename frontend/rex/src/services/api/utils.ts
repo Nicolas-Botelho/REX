@@ -2,9 +2,33 @@ import request from './api'
 
 export async function generateAll(text_input: string) {
   try {
-    return await request('ai/run_all/', {method: 'POST', data: {input_text: text_input}})
+    return await request('ai/run_all/', {'method': 'POST', 'data': {input_text: text_input}})
   }
   catch (error) {
+    throw error
+  }
+}
+
+export async function generateFromRQ(text_input: string) {
+  try {
+    return await request('ai/run_all/?start_from=1', {'method': 'POST', 'data': {input_text: text_input}})
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function generateFromUC(text_input: string) {
+  try {
+    return await request('ai/run_all/?start_from=2', {'method': 'POST', 'data': {input_text: text_input}})
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function generateFromCL(text_input: string) {
+  try {
+    return await request('ai/run_all/?start_from=3', {'method': 'POST', 'data': {input_text: text_input}})
+  } catch (error) {
     throw error
   }
 }

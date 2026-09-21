@@ -12,6 +12,10 @@
         <button class="create-button" @click="addUsecase()">Add New</button>
       </div>
 
+      <br/>
+      <button class="edit-button" @click="updateFromCL()">{{ loading ? "Loading..." : "Update next Artifacts"}}</button>
+      <p v-if="successMessage">{{ successMessage }}</p>
+
       <h2>Use Cases Questions</h2>
 
       <div>
@@ -55,9 +59,12 @@ import router from '@/router'
 import BaseModal from '@/components/BaseModal.vue'
 import { UsecaseQuestion } from '@/models/question_models'
 import GoToItemBox from '@/components/GoToItemBox.vue'
+import { generateFromCL } from '@/services/api/utils'
 
 const reload = ref(0)
 const errorMessage = ref('')
+const successMessage = ref()
+const loading = ref(false)
 
 const ucData = ref()
 const qData = ref()
@@ -65,6 +72,16 @@ const qData = ref()
 const isQuestionModalOpen = ref(false)
 
 const question = ref(new UsecaseQuestion(-1, "", []))
+
+const updateFromCL = async () => {
+  try {
+    loading.value = true
+    await generateFromCL("Given the Domain Narrative, the Requirements and the Use Cases, build the next artifacts")
+    successMessage.value = "Artifacts generated sucessfully"
+    loading.value = false
+  } catch (error) {
+  }
+}
 
 const addUsecase = async () => {
   await postUseCase(new Usecase("New Usecase", []))

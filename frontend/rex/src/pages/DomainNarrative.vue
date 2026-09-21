@@ -18,6 +18,10 @@
       </form>
     </BaseModal>
 
+    <br/>
+    <button class="edit-button" @click="updateFromRQ()">{{ loading ? "Loading..." : "Update next Artifacts"}}</button>
+    <p v-if="successMessage">{{ successMessage }}</p>
+
     <h2>Domain Narrative Questions</h2>
     <BaseItemBox v-for="(item, index) in qData" :key="index" @edit="openQuestionModal(Number(index))" @del="removeQuestion(Number(index))">
       <p>{{ item.question }}</p>
@@ -44,6 +48,7 @@ import { deleteNarrative, deleteNarrativeQuestion, getNarrative, getNarrativeQue
 import BaseModal from '@/components/BaseModal.vue'
 import BaseItemBox from '@/components/BaseItemBox.vue'
 import { NarrativeQuestion as Question } from '@/models/question_models'
+import { generateFromRQ } from '@/services/api/utils'
 
 const reload = ref(0)
 
@@ -51,12 +56,24 @@ const dnData = ref()
 const qData = ref()
 
 const errorMessage = ref('')
+const successMessage = ref()
+const loading = ref(false)
 
 const isNarrativeModalOpen = ref(false)
 const isQuestionModalOpen = ref(false)
 
 const narrative = ref('')
 const question = ref(new Question(-1, ""))
+
+const updateFromRQ = async () => {
+  try {
+    loading.value = true
+    await generateFromRQ("Given the Domain Narrative, build the next artifacts")
+    successMessage.value = "Artifacts generated sucessfully"
+    loading.value = false
+  } catch (error) {
+  }
+}
 
 const updateNarrative = async (text: string) => {
   try {

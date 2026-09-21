@@ -164,6 +164,10 @@
       </BaseModal>
     </div>
 
+    <br/>
+    <button class="edit-button" @click="updateFromUC()">{{ loading ? "Loading..." : "Update next Artifacts"}}</button>
+    <p v-if="successMessage">{{ successMessage }}</p>
+
     <div>
       <h2>Requirement Questions</h2>
       <BaseItemBox v-for="(item, index) in qData" :key="index" @edit="openQuestionModal(Number(index))" @del="removeQuestion(Number(index))">
@@ -207,6 +211,7 @@ import { BusinessRule, CategoryEnum, FunctionalRequirement, NonFunctionalRequire
 import { Actor } from '@/models/requirement_models';
 import { deleteActor, getActors, getFRByActor, getUcByActor, postActor, putActor } from '@/services/api/actors';
 import { RequirementQuestion } from '@/models/question_models'
+import { generateFromUC } from '@/services/api/utils'
 
 const reload = ref(0)
 
@@ -232,10 +237,18 @@ const priorities = Object.values(PriorityEnum)
 const categories = Object.values(CategoryEnum)
 
 const errorMessage = ref('')
+const successMessage = ref()
+const loading = ref(false)
 
-// const getFRByActorName = async (actor_name: string) => {
-//   return (await getFRByActor(actor_name)).data.join(", ")
-// }
+const updateFromUC = async () => {
+  try {
+    loading.value = true
+    await generateFromUC("Given the Domain Narrative and the Requirements, build the next artifacts")
+    successMessage.value = "Artifacts generated sucessfully"
+    loading.value = false
+  } catch (error) {
+  }
+}
 
 const addOrUpdateActor = async () => {
   if (actor.value.actor_id >= 0) {

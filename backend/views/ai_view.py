@@ -1,4 +1,4 @@
-from ai_gen.graph.usecase_class_graph import full_graph, ns_graph
+from ai_gen.graph.usecase_class_graph import full_graph, ns_graph, ruc_graph, uc_graph, c_graph
 from models.response_model.class_response import ClassOutput, HumanClassOutput
 from models.response_model.usecase_response import UsecaseOutput
 from models.response_model.requirement_response import RequirementOutput
@@ -17,7 +17,7 @@ from typing import Annotated
 gen_router = APIRouter(prefix="/ai")
 
 @gen_router.post("/run_all/")
-def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = False) -> dict:
+def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = False, start_from: int = 0) -> dict:
   cl = ClassLoader()
   ul = UsecaseLoader()
   rl = RequirementLoader()
@@ -39,7 +39,16 @@ def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = Fals
   loaded_narrative, loaded_narrative_q = nl.load()
   ndInput = NarrativeOutput(domain_narrative=loaded_narrative, questions=loaded_narrative_q)
 
-  result = full_graph.invoke({'InputText': input_text, 'OldDomainNarrative': ndInput, 'OldRequirements': rqInput, 'OldUsecases': ucInput, 'OldClasses': clsInput})
+  result = {}
+  match start_from:
+    case 0:
+      result = full_graph.invoke({'InputText': input_text, 'OldDomainNarrative': ndInput, 'OldRequirements': rqInput, 'OldUsecases': ucInput, 'OldClasses': clsInput})
+    case 1:
+      result = ruc_graph.invoke({'InputText': input_text, 'DomainNarrative': ndInput, 'OldRequirements': rqInput, 'OldUsecases': ucInput, 'OldClasses': clsInput})
+    case 2:
+      result = uc_graph.invoke({'InputText': input_text, 'DomainNarrative': ndInput, 'Requirements': rqInput, 'OldUsecases': ucInput, 'OldClasses': clsInput})
+    case 3:
+      result = c_graph.invoke({'InputText': input_text, 'DomainNarrative': ndInput, 'Requirements': rqInput, 'Usecases': ucInput, 'OldClasses': clsInput})
 
   # print("NO STRUCT TEST START")
   # print(ns_graph.invoke({'InputText': input_text}))

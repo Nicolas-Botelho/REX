@@ -6,7 +6,10 @@ from ai_gen.agents.requirement_agent import call_llm as call_requirement, call_l
 from ai_gen.agents.class_agent import call_llm as call_class, call_llm_no_struct as ccns
 from ai_gen.agents.usecase_agent import call_llm as call_usecase, call_llm_no_struct as cuns
 
-# Full Workflow and Graph
+##############
+# FULL GRAPH #
+##############
+
 full_workflow = StateGraph(State)
 
 full_workflow.add_node("dn_node", call_narrative)
@@ -22,6 +25,10 @@ full_workflow.add_edge("cls_node", END)
 
 full_graph = full_workflow.compile()
 
+###################
+# NO STRUCT GRAPH #
+###################
+
 no_struct_workflow = StateGraph(NoStructState)
 
 no_struct_workflow.add_node("dn_node", cnns)
@@ -36,3 +43,48 @@ no_struct_workflow.add_edge("uc_node", "cls_node")
 no_struct_workflow.add_edge("cls_node", END)
 
 ns_graph = no_struct_workflow.compile()
+
+#################################
+# START FROM REQUIREMENTS GRAPH #
+#################################
+
+ruc_workflow = StateGraph(State)
+
+ruc_workflow.add_node("req_node", call_requirement)
+ruc_workflow.add_node("uc_node", call_usecase)
+ruc_workflow.add_node("cls_node", call_class)
+
+ruc_workflow.add_edge(START, "req_node")
+ruc_workflow.add_edge("req_node", "uc_node")
+ruc_workflow.add_edge("uc_node", "cls_node")
+ruc_workflow.add_edge("cls_node", END)
+
+ruc_graph = ruc_workflow.compile()
+
+#############################
+# START FROM USE CASE GRAPH #
+#############################
+
+uc_workflow = StateGraph(State)
+
+uc_workflow.add_node("uc_node", call_usecase)
+uc_workflow.add_node("cls_node", call_class)
+
+uc_workflow.add_edge(START, "uc_node")
+uc_workflow.add_edge("uc_node", "cls_node")
+uc_workflow.add_edge("cls_node", END)
+
+uc_graph = uc_workflow.compile()
+
+##########################
+# START FROM CLASS GRAPH #
+##########################
+
+c_workflow = StateGraph(State)
+
+c_workflow.add_node("cls_node", call_class)
+
+c_workflow.add_edge(START, "cls_node")
+c_workflow.add_edge("cls_node", END)
+
+c_graph = c_workflow.compile()
