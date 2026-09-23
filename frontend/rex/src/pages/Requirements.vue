@@ -212,6 +212,7 @@ import { Actor } from '@/models/requirement_models';
 import { deleteActor, getActors, getFRByActor, getUcByActor, postActor, putActor } from '@/services/api/actors';
 import { RequirementQuestion } from '@/models/question_models'
 import { generateFromUC } from '@/services/api/utils'
+import { useRoute } from 'vue-router'
 
 const reload = ref(0)
 
@@ -240,10 +241,13 @@ const errorMessage = ref('')
 const successMessage = ref()
 const loading = ref(false)
 
+const route = useRoute()
+const pId = Number(route.params.p_id)
+
 const updateFromUC = async () => {
   try {
     loading.value = true
-    await generateFromUC("Given the Domain Narrative and the Requirements, build the next artifacts")
+    await generateFromUC(pId, "Given the Domain Narrative and the Requirements, build the next artifacts")
     successMessage.value = "Artifacts generated sucessfully"
     loading.value = false
   } catch (error) {
@@ -261,15 +265,15 @@ const addOrUpdateActor = async () => {
 }
 
 const addActor = async () => {
-  await postActor(actor.value.actor)
+  await postActor(pId, actor.value.actor)
 }
 
 const updateActor = async () => {
-  await putActor(actor.value.actor_id, actor.value.actor)
+  await putActor(pId, actor.value.actor_id, actor.value.actor)
 }
 
 const removeActor = async (ac_id: number) => {
-  await deleteActor(ac_id)
+  await deleteActor(pId, ac_id)
   reload.value = 1 - reload.value
 }
 
@@ -295,15 +299,15 @@ const addOrUpdateFR = async () => {
 }
 
 const addFR = async () => {
-  await postFR(fr.value.req)
+  await postFR(pId, fr.value.req)
 }
 
 const updateFR = async () => {
-  await putFR(fr.value.fr_id, fr.value.req)
+  await putFR(pId, fr.value.fr_id, fr.value.req)
 }
 
 const removeFR = async (fr_id: number) => {
-  await deleteFR(fr_id)
+  await deleteFR(pId, fr_id)
   reload.value = 1 - reload.value
 }
 
@@ -329,15 +333,15 @@ const addOrUpdateNFR = async () => {
 }
 
 const updateNFR = async () => {
-  await putNFR(nfr.value.nfr_id, nfr.value.req)
+  await putNFR(pId, nfr.value.nfr_id, nfr.value.req)
 }
 
 const addNFR = async () => {
-  await postNFR(nfr.value.req)
+  await postNFR(pId, nfr.value.req)
 }
 
 const removeNFR = async (nfr_id: number) => {
-  await deleteNFR(nfr_id)
+  await deleteNFR(pId, nfr_id)
   reload.value = 1 - reload.value
 }
 
@@ -363,15 +367,15 @@ const addOrUpdateBR = async () => {
 }
 
 const updateBR = async () => {
-  await putBR(br.value.br_id, br.value.req)
+  await putBR(pId, br.value.br_id, br.value.req)
 }
 
 const addBR = async () => {
-  await postBR(br.value.req)
+  await postBR(pId, br.value.req)
 }
 
 const removeBR = async (br_id: number) => {
-  await deleteBR(br_id)
+  await deleteBR(pId, br_id)
   reload.value = 1 - reload.value
 }
 
@@ -397,15 +401,15 @@ const addOrUpdateQuestion = async () => {
 }
 
 const addQuestion = async () => {
-  await postRequirementQuestion(question.value)
+  await postRequirementQuestion(pId, question.value)
 }
 
 const updateQuestion = async () => {
-  await putRequirementQuestion(question.value.id, question.value)
+  await putRequirementQuestion(pId, question.value.id, question.value)
 }
 
 const removeQuestion = async (q_id: number) => {
-  await deleteRequirementQuestion(q_id)
+  await deleteRequirementQuestion(pId, q_id)
   reload.value = 1 - reload.value
 }
 
@@ -425,14 +429,14 @@ const openQuestionModal = (q_id: number) => {
 
 watch(reload, async () => {
   try {
-    frData.value = (await getFRs()).data
-    nfrData.value = (await getNFRs()).data
-    brData.value = (await getBRs()).data
-    acData.value = (await getActors()).data
-    qData.value = (await getRequirementQuestions()).data
+    frData.value = (await getFRs(pId)).data
+    nfrData.value = (await getNFRs(pId)).data
+    brData.value = (await getBRs(pId)).data
+    acData.value = (await getActors(pId)).data
+    qData.value = (await getRequirementQuestions(pId)).data
 
     acData.value = await Promise.all(acData.value.map(async (ac: any) => ({
-      ...ac, frs: (await getFRByActor(ac.name)).data, ucs: (await getUcByActor(ac.name)).data
+      ...ac, frs: (await getFRByActor(pId, ac.name)).data, ucs: (await getUcByActor(pId, ac.name)).data
     })))
 
   } catch (error) {

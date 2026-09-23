@@ -35,6 +35,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watchEffect } from 'vue';
 import { generateJson, importJson } from '@/services/api/utils';
+import { useRoute } from 'vue-router';
 
 const successExportMessage = ref('')
 const errorExportMessage = ref('')
@@ -46,9 +47,12 @@ const successImportMessage = ref('')
 
 const errorDataMessage = ref('')
 
+const route = useRoute()
+const pId = Number(route.params.p_id)
+
 const downloadJson = async () => {
   try {
-    let data = await generateJson()
+    let data = await generateJson(pId)
     data = data.data
 
     const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 4)], {type: 'application/json'}))
@@ -92,14 +96,14 @@ const handleFileChange = (event: any) => {
   reader.onload = async (e: any) => {
     try {
       const parsedData = JSON.parse(e.target.result)
-      await importJson(parsedData)
+      await importJson(pId, parsedData)
       successImportMessage.value = 'File imported and parsed successfully!'
     } catch (error) {
       errorImportMessage.value = 'Failed to parse JSON. The file might be corrupted or malformed.'
       console.error(error)
     }
     try{
-      currentData.value = await generateJson()
+      currentData.value = await generateJson(pId)
       currentData.value = currentData.value.data
     }
     catch (error) {
@@ -114,7 +118,7 @@ const handleFileChange = (event: any) => {
 
 onMounted(async () => {
   try{
-    currentData.value = await generateJson()
+    currentData.value = await generateJson(pId)
     currentData.value = currentData.value.data
   }
   catch (error) {
@@ -123,7 +127,7 @@ onMounted(async () => {
 })
 
 watchEffect(async () => {
-  currentData.value = await generateJson()
+  currentData.value = await generateJson(pId)
   currentData.value = currentData.value.data
 })
 

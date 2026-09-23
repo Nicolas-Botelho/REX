@@ -3,18 +3,18 @@ from models.requirement import Actor
 
 from fastapi import APIRouter
 
-actor_router = APIRouter(prefix="/actor")
+actor_router = APIRouter(prefix="/project/{project_id}/actor")
 
 @actor_router.get("/actor/")
-def get_actors():
-  jg = JsonGenerator()
+def get_actors(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
   
   return {"data": data.get("actors")}
 
 @actor_router.get("/fr_by_actor/")
-def get_requirements_by_actor(name: str):
-  jg = JsonGenerator()
+def get_requirements_by_actor(project_id: int, name: str):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   frs = data.get("requirement_models").get("functional_requirements")
@@ -22,8 +22,8 @@ def get_requirements_by_actor(name: str):
   return {"data": [fr.get("code") for fr in frs if fr.get("actor_name") == name]}
 
 @actor_router.get("/uc_by_actor/")
-def get_usecases_by_actor(name: str):
-  jg = JsonGenerator()
+def get_usecases_by_actor(project_id: int, name: str):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   ucs = data.get("usecase_models").get("usecases")
@@ -36,16 +36,16 @@ def get_usecases_by_actor(name: str):
   return {"data": result}
 
 @actor_router.post("/actor/")
-def create_actor(actor: Actor):
-  jg = JsonGenerator()
+def create_actor(project_id: int, actor: Actor):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("actors").append(actor.dict())
   jg.write_json(data)
 
 @actor_router.put("/actor/{ac_id}/")
-def update_actor(ac_id: int, actor: Actor):
-  jg = JsonGenerator()
+def update_actor(project_id: int, ac_id: int, actor: Actor):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   old_name = data.get("actors")[ac_id].get("name")
@@ -64,8 +64,8 @@ def update_actor(ac_id: int, actor: Actor):
   jg.write_json(data)
 
 @actor_router.delete("/actor/{ac_id}/")
-def delete_actor(ac_id: int):
-  jg = JsonGenerator()
+def delete_actor(project_id: int, ac_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   can_del = True

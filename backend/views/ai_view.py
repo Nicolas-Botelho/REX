@@ -14,10 +14,10 @@ from generation.json_generator import JsonGenerator
 from fastapi import APIRouter, Body
 from typing import Annotated
 
-gen_router = APIRouter(prefix="/ai")
+gen_router = APIRouter(prefix="/project/{project_id}/ai")
 
 @gen_router.post("/run_all/")
-def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = False, start_from: int = 0) -> dict:
+def ai_view(project_id: int, input_text: Annotated[str, Body(embed=True)], overwrite: bool = False, start_from: int = 0) -> dict:
   cl = ClassLoader()
   ul = UsecaseLoader()
   rl = RequirementLoader()
@@ -60,7 +60,7 @@ def ai_view(input_text: Annotated[str, Body(embed=True)], overwrite: bool = Fals
   new_narrative: NarrativeOutput = result.get('DomainNarrative')
 
   if new_classes or new_usecases or new_requirements or new_narrative:
-    jg = JsonGenerator()
+    jg = JsonGenerator(project_id)
     data = {
       "narrative_models": {
         "domain_narrative": new_narrative.domain_narrative.dict(),

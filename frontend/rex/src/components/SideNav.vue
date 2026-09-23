@@ -1,16 +1,32 @@
 <template>
   <nav class="sidenav">
     <router-link to="/">Home</router-link>
-    <router-link to="/generate">Generate Artifacts</router-link>
-    <router-link to="/json_data">JSON Data</router-link>
-    <router-link to="/markdown">Markdown</router-link>
-    <router-link to="/narrative">Domain Narrative</router-link>
-    <router-link to="/requirements">Requirements</router-link>
-    <router-link to="/usecases">Use Cases</router-link>
-    <router-link to="/classes">Classes</router-link>
-    <!-- <router-link to="/actors">Actors</router-link> -->
+    <template v-if="isProject">
+      <router-link :to="`/project/${pId}`">Project Description</router-link>
+      <router-link :to="`/project/${pId}/generate`">Generate Artifacts</router-link>
+      <router-link :to="`/project/${pId}/json_data`">JSON Data</router-link>
+      <router-link :to="`/project/${pId}/markdown`">Markdown</router-link>
+      <router-link :to="`/project/${pId}/narrative`">Domain Narrative</router-link>
+      <router-link :to="`/project/${pId}/requirements`">Requirements</router-link>
+      <router-link :to="`/project/${pId}/usecases`">Use Cases</router-link>
+      <router-link :to="`/project/${pId}/classes`">Classes</router-link>
+    </template>
   </nav>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+
+const pId = computed(() => {
+  const id = Array.isArray(route.params.p_id) ? route.params.p_id[0] : route.params.p_id
+  return id ? Number(id) : NaN
+})
+
+const isProject = computed(() => !isNaN(pId.value))
+</script>
 
 <style>
 .sidenav {

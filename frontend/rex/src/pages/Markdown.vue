@@ -42,6 +42,7 @@
 import { getClassMd, getNarrativeMd, getRequirementMd, getUsecaseMd } from '@/services/api/utils';
 import MarkdownIt from 'markdown-it';
 import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 const successExportMessage = ref('')
 const errorExportMessage = ref('')
@@ -57,6 +58,9 @@ const dnHtml = ref()
 const rqHtml = ref()
 const ucHtml = ref()
 const clHtml = ref()
+
+const route = useRoute()
+const pId = Number(route.params.p_id)
 
 const md = MarkdownIt()
 
@@ -150,16 +154,16 @@ const clazz = async () => {
 
 watch(reload, async () => {
   try {
-    dnMd.value = (await getNarrativeMd()).data
+    dnMd.value = (await getNarrativeMd(pId)).data
     dnHtml.value = md.render(dnMd.value)
 
-    rqMd.value = (await getRequirementMd()).data
+    rqMd.value = (await getRequirementMd(pId)).data
     rqHtml.value = md.render(rqMd.value)
 
-    ucMd.value = (await getUsecaseMd()).data
+    ucMd.value = (await getUsecaseMd(pId)).data
     ucHtml.value = md.render(ucMd.value)
 
-    clMd.value = (await getClassMd()).data
+    clMd.value = (await getClassMd(pId)).data
     clHtml.value = md.render(clMd.value)
   } catch (error) {
     errorExportMessage.value = 'Failed to fetch'

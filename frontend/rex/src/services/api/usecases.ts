@@ -6,43 +6,43 @@ import type { UsecaseQuestion } from '@/models/question_models'
 // Use Cases //
 ///////////////
 
-export async function getUseCases() {
+export async function getUseCases(project_id: number) {
   try {
-    return await request('usecases/usecase/', {'method': 'GET'})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/usecase/`, {'method': 'GET'})
   }
   catch (error) {
     throw error
   }
 }
 
-export async function getUseCase(uc_id: number) {
+export async function getUseCase(project_id: number, uc_id: number) {
   try {
-    return await request(`usecases/usecase/${encodeURIComponent(uc_id)}/`, {'method': 'GET'})  
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/usecase/${encodeURIComponent(uc_id)}/`, {'method': 'GET'})
   }
   catch (error) {
     throw error
   }
 }
 
-export async function postUseCase(usecase: Usecase) {
+export async function postUseCase(project_id: number, usecase: Usecase) {
   try {
-    return await request('usecases/usecase/', {'method': 'POST', 'data': usecase})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/usecase/`, {'method': 'POST', 'data': usecase})
   } catch (error) {
     throw error
   }
 }
 
-export async function putUseCase(uc_id: number, usecase: Usecase) {
+export async function putUseCase(project_id: number, uc_id: number, usecase: Usecase) {
   try {
-    return request(`usecases/usecase/${encodeURIComponent(uc_id)}/`, {'method': 'PUT', 'data': usecase})
+    return request(`project/${encodeURIComponent(project_id)}/usecases/usecase/${encodeURIComponent(uc_id)}/`, {'method': 'PUT', 'data': usecase})
   } catch (error) {
     throw error
   }
 }
 
-export async function deleteUseCase(uc_id: number) {
+export async function deleteUseCase(project_id: number, uc_id: number) {
   try {
-    return await request(`usecases/usecase/${encodeURIComponent(uc_id)}/`, {'method': 'DELETE'})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/usecase/${encodeURIComponent(uc_id)}/`, {'method': 'DELETE'})
   } catch (error) {
     throw error
   }
@@ -52,33 +52,33 @@ export async function deleteUseCase(uc_id: number) {
 // Question //
 //////////////
 
-export async function getUsecaseQuestions() {
+export async function getUsecaseQuestions(project_id: number) {
   try {
-    return await request('usecases/questions', {'method': 'GET'})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/questions`, {'method': 'GET'})
   } catch (error) {
     throw error
   }
 }
 
-export async function postUsecaseQuestion(question: UsecaseQuestion) {
+export async function postUsecaseQuestion(project_id: number, question: UsecaseQuestion) {
   try {
-    return await request('usecases/questions', {'method': 'POST', 'data': {'question': question.question, 'usecase_names': question.usecase_names}})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/questions`, {'method': 'POST', 'data': {'question': question.question, 'usecase_names': question.usecase_names}})
   } catch (error) {
     throw error
   }
 }
 
-export async function putUsecaseQuestion(q_id: number, question: UsecaseQuestion) {
+export async function putUsecaseQuestion(project_id: number, q_id: number, question: UsecaseQuestion) {
   try {
-    return await request(`usecases/questions/${encodeURIComponent(q_id)}`, {'method': 'PUT', 'data': {'question': question.question, 'usecase_names': question.usecase_names}})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/questions/${encodeURIComponent(q_id)}`, {'method': 'PUT', 'data': {'question': question.question, 'usecase_names': question.usecase_names}})
   } catch (error) {
     throw error
   }
 }
 
-export async function deleteUsecaseQuestion(q_id: number) {
+export async function deleteUsecaseQuestion(project_id: number, q_id: number) {
   try {
-    return await request(`usecases/questions/${encodeURIComponent(q_id)}`, {'method': 'DELETE'})
+    return await request(`project/${encodeURIComponent(project_id)}/usecases/questions/${encodeURIComponent(q_id)}`, {'method': 'DELETE'})
   } catch (error) {
     throw error
   }

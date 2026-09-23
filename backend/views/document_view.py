@@ -4,11 +4,11 @@ from views.class_view import associations_by_class_name, inheritances_by_class_n
 from fastapi import APIRouter
 from pprint import pformat
 
-doc_router = APIRouter(prefix="/document")
+doc_router = APIRouter(prefix="/project/{project_id}/document")
 
 @doc_router.get("/narrative/")
-def narrative_md():
-  jg = JsonGenerator()
+def narrative_md(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   nm: dict = data.get("narrative_models")
@@ -20,8 +20,8 @@ def narrative_md():
 {print_questions(nm.get("questions"), mode="narrative")}"""}
 
 @doc_router.get("/requirements/")
-def requirements_md():
-  jg = JsonGenerator()
+def requirements_md(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   rm: dict = data.get("requirement_models")
@@ -42,7 +42,7 @@ def print_frs(frs: list):
   fr_string = ""
 
   for fr in frs:
-    fr_string += f"## {fr.get("code")}\n\nObjective: {fr.get("objective")}\n\nDescription: {fr.get("description")}\n\n{fr.get("actor_name")}\n\nPriority: {fr.get("priority").name.lower()} do\n\n### **Depends on**\n\n{print_fr_req(fr.get("depends_on_requirements_codes"), fr.get("apply_business_rules_codes"))}\n\n"
+    fr_string += f"## {fr.get("code")}\n\nObjective: {fr.get("objective")}\n\nDescription: {fr.get("description")}\n\nPerformer: {fr.get("actor_name")}\n\nPriority: {fr.get("priority").name.lower()} do\n\n### **Depends on**\n\n{print_fr_req(fr.get("depends_on_requirements_codes"), fr.get("apply_business_rules_codes"))}\n\n"
   
   return fr_string
 
@@ -84,8 +84,8 @@ def print_brs(brs: list):
   return br_string
 
 @doc_router.get("/usecase/")
-def usecase_md():
-  jg = JsonGenerator()
+def usecase_md(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   um = data.get("usecase_models")
@@ -160,14 +160,14 @@ def print_next_steps(step):
   return ""
 
 @doc_router.get("/class/")
-def class_md():
-  jg = JsonGenerator()
+def class_md(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   cm = data.get("class_models")
 
   return {'data': f"""# Classes
-{print_cls(cm.get("classes"))}
+{print_cls(project_id, cm.get("classes"))}
 
 # Diagram
 
@@ -204,11 +204,11 @@ def print_attr_diagram(attrs: list):
   
   return attr_string
 
-def print_cls(classes: list):
+def print_cls(project_id: int, classes: list):
   class_string = ""
 
   for cls in classes:
-    class_string += f"## {cls.get("name")} {"<"+cls.get("stereotype")+">" if cls.get("stereotype") else ""}\n\n### Attributes\n\n{print_attributes(cls.get("class_attributes"))}\n\n### Associations\n\n{print_associations(associations_by_class_name(cls.get("name")))}\n\n### Inheritances\n\n{print_inheritances(inheritances_by_class_name(cls.get("name")))}"
+    class_string += f"## {cls.get("name")} {"<"+cls.get("stereotype")+">" if cls.get("stereotype") else ""}\n\n### Attributes\n\n{print_attributes(cls.get("class_attributes"))}\n\n### Associations\n\n{print_associations(associations_by_class_name(project_id, cls.get("name")))}\n\n### Inheritances\n\n{print_inheritances(inheritances_by_class_name(project_id, cls.get("name")))}"
   
   return class_string
 

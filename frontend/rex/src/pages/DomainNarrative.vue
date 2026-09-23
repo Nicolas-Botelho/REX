@@ -49,6 +49,7 @@ import BaseModal from '@/components/BaseModal.vue'
 import BaseItemBox from '@/components/BaseItemBox.vue'
 import { NarrativeQuestion as Question } from '@/models/question_models'
 import { generateFromRQ } from '@/services/api/utils'
+import { useRoute } from 'vue-router'
 
 const reload = ref(0)
 
@@ -65,10 +66,13 @@ const isQuestionModalOpen = ref(false)
 const narrative = ref('')
 const question = ref(new Question(-1, ""))
 
+const route = useRoute()
+const pId = Number(route.params.p_id)
+
 const updateFromRQ = async () => {
   try {
     loading.value = true
-    await generateFromRQ("Given the Domain Narrative, build the next artifacts")
+    await generateFromRQ(pId, "Given the Domain Narrative, build the next artifacts")
     successMessage.value = "Artifacts generated sucessfully"
     loading.value = false
   } catch (error) {
@@ -77,7 +81,7 @@ const updateFromRQ = async () => {
 
 const updateNarrative = async (text: string) => {
   try {
-    await putNarrative(text)
+    await putNarrative(pId, text)
     isNarrativeModalOpen.value = false
     await fetchNarrative()
   } catch (error) {
@@ -88,7 +92,7 @@ const updateNarrative = async (text: string) => {
 
 const clearNarrative = async () => {
   try {
-    await deleteNarrative()
+    await deleteNarrative(pId)
     await fetchNarrative()
   } catch (error) {
     errorMessage.value = `ERROR: Unable to delete. ${error}`
@@ -112,15 +116,15 @@ const addOrUpdateQuestion = async () => {
 }
 
 const addQuestion = async () => {
-  await postNarrativeQuestion(question.value.question)
+  await postNarrativeQuestion(pId, question.value.question)
 }
 
 const updateQuestion = async () => {
-  await putNarrativeQuestion(question.value.id, question.value.question)
+  await putNarrativeQuestion(pId, question.value.id, question.value.question)
 }
 
 const removeQuestion = async (q_id: number) => {
-  await deleteNarrativeQuestion(q_id)
+  await deleteNarrativeQuestion(pId, q_id)
   reload.value = 1 - reload.value
 }
 
@@ -138,7 +142,7 @@ const openQuestionModal = (q_id: number) => {
 
 const fetchNarrative = async () => {
   try {
-    dnData.value = (await getNarrative()).data
+    dnData.value = (await getNarrative(pId)).data
   }
   catch (error) {
     throw error
@@ -147,8 +151,8 @@ const fetchNarrative = async () => {
 
 watch(reload, async () => {
   try {
-    dnData.value = (await getNarrative()).data
-    qData.value = (await getNarrativeQuestions()).data
+    dnData.value = (await getNarrative(pId)).data
+    qData.value = (await getNarrativeQuestions(pId)).data
   }
   catch (error) {
     errorMessage.value = 'Failed to fetch'

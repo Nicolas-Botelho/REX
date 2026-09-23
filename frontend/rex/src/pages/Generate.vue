@@ -19,18 +19,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { generateAll } from '@/services/api/utils'
+import { useRoute } from 'vue-router'
 
 const system_description = ref('')
 const successMessage = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 
+const route = useRoute()
+const pId = Number(route.params.p_id)
+
 const handleClick = async () => {
   loading.value = true
   successMessage.value = ''
 
   try {
-    const result = await generateAll(system_description.value)
+    await generateAll(pId, system_description.value)
     successMessage.value = 'Artifacts generated sucessfully'
   }
   catch (error) {

@@ -1,7 +1,4 @@
 import json
-import copy
-import os
-import datetime
 
 from conversion.load_class import ClassLoader
 from conversion.load_usecase import UsecaseLoader
@@ -12,14 +9,18 @@ import models.klass as pyd_cls
 import models.usecase as pyd_ucs
 import models.requirement as pyd_req
 import models.question as pyd_q
+from generation.json_reader import JsonReader
 
 class JsonGenerator():
+  def __init__(self, project: int):
+    self.project = project
+
   def return_data(self):
-    cl = ClassLoader()
-    ul = UsecaseLoader()
-    rl = RequirementLoader()
-    nl = NarrativeLoader()
-    al = ActorLoader()
+    cl = ClassLoader(self.project)
+    ul = UsecaseLoader(self.project)
+    rl = RequirementLoader(self.project)
+    nl = NarrativeLoader(self.project)
+    al = ActorLoader(self.project)
 
     narrative_data, narrative_q = nl.load()
     fr_data, nfr_data, br_data, requirements_q = rl.load()
@@ -54,14 +55,15 @@ class JsonGenerator():
 
     return data
 
-  def save_data(self, data: dict, write_new=True):
-    if write_new and os.path.exists("../out/out.json"):
-      os.rename("../out/out.json", f"../out/out-old-since-{datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")}.json")
+  def save_data(self, data: dict):
+    projects = JsonReader.read_projects()
+    if len(projects) > self.project:
+      project_filepath = projects[self.project].get("filepath")
 
-    with open("../out/out.json", "w", encoding="utf-8") as f:
-      json.dump(data, f, indent=4, ensure_ascii=False)
+      with open(project_filepath, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
 
-  def write_json(self, data: dict, write_new=False):
+  def write_json(self, data: dict):
     try:
       valid_data = {
         "narrative_models": {
@@ -88,6 +90,6 @@ class JsonGenerator():
         "actors": [pyd_req.Actor.model_validate(actor).dict() for actor in data.get("actors")]
       }
 
-      self.save_data(valid_data, write_new=write_new)
+      self.save_data(valid_data)
     except Exception as e:
       print(f"INVALID DATA {e}: {data}")

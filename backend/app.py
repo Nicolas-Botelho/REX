@@ -11,17 +11,28 @@ from views.narrative_view import narrative_router
 from views.ai_view import gen_router
 from views.actor_view import actor_router
 from views.document_view import doc_router
+from views.project_view import project_router
 
 from fastapi import FastAPI, APIRouter, status, Response
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+import os
 
 app = FastAPI()
+
+load_dotenv()
+
+if not os.environ.get("BACKEND_URL"):
+  os.environ["BACKEND_URL"] = "http://localhost"
+if not os.environ.get("BACKEND_PORT"):
+  os.environ["BACKEND_PORT"] = "8000"
+if not os.environ.get("PROJECT_DIR"):
+  os.environ["PROJECT_DIR"] = "../out/"
 
 origins = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173"
+    # "http://localhost:5173",
 ]
 
 app.add_middleware(
@@ -32,24 +43,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/manual_update/")
-def mu_view(json_input: dict, response: Response, overwrite: bool = False) -> dict:
+@app.post("/project/{project_id}/manual_update/")
+def mu_view(project_id: int, json_input: dict, response: Response, overwrite: bool = False) -> dict:
   try:
     if json_input.get('narrative_models') or json_input.get('requirement_models') or json_input.get('usecase_models') or json_input.get('class_models') or json_input.get('actors'):
-      jg = JsonGenerator()
+      jg = JsonGenerator(project_id)
       jg.write_json(json_input, write_new=not overwrite)
   except Exception as e:
     response.status_code = status.HTTP_400_BAD_REQUEST
 
   return {}
 
-@app.get("/json/")
-def get_json() -> dict:
-  jg = JsonGenerator()
+@app.get("/project/{project_id}/json/")
+def get_json(project_id: int) -> dict:
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
   
   return {"data": data}
 
+app.include_router(project_router, tags=["Project"])
 app.include_router(gen_router, tags=["AI"])
 app.include_router(class_router, tags=["Class"])
 app.include_router(usecase_router, tags=["Usecase"])

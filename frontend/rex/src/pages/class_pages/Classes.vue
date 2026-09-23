@@ -55,6 +55,7 @@ import { Class } from '@/models/class_models'
 import { ClassQuestion } from '@/models/question_models'
 import BaseModal from '@/components/BaseModal.vue'
 import GoToItemBox from '@/components/GoToItemBox.vue'
+import { useRoute } from 'vue-router'
 
 const clsData = ref()
 const qData = ref()
@@ -62,17 +63,20 @@ const qData = ref()
 const errorMessage = ref('')
 const reload = ref(0)
 
+const route = useRoute()
+const pId = Number(route.params.p_id)
+
 const isQuestionModalOpen = ref(false)
 
 const question = ref(new ClassQuestion(-1, "", []))
 
 const addClass = async () => {
-  await postClass(new Class("New Class", "", []))
+  await postClass(pId, new Class("New Class", "", []))
   reload.value = 1 - reload.value
 }
 
 const removeClass = async (cls_id: number) => {
-  await deleteClass(cls_id)
+  await deleteClass(pId, cls_id)
   reload.value = 1 - reload.value
 }
 
@@ -91,15 +95,15 @@ const addOrUpdateQuestion = async () => {
 }
 
 const addQuestion = async () => {
-  await postClassQuestion(question.value)
+  await postClassQuestion(pId, question.value)
 }
 
 const updateQuestion = async () => {
-  await putClassQuestion(question.value.id, question.value)
+  await putClassQuestion(pId, question.value.id, question.value)
 }
 
 const removeQuestion = async (clq_id: number) => {
-  await deleteClassQuestion(clq_id)
+  await deleteClassQuestion(pId, clq_id)
   reload.value = 1 - reload.value
 }
 
@@ -118,8 +122,8 @@ const openQuestionModal = (clq_id: number) => {
 
 watch(reload, async () => {
   try {
-    clsData.value = (await getClasses()).data
-    qData.value = (await getClassQuestions()).data
+    clsData.value = (await getClasses(pId)).data
+    qData.value = (await getClassQuestions(pId)).data
   } catch (error) {
     errorMessage.value = 'Failed to fetch'
   }

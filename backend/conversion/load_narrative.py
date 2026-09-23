@@ -3,8 +3,16 @@ import models.question as pyd_q
 from generation.json_reader import JsonReader
 
 class NarrativeLoader():
+  def __init__(self, project: int):
+    self.project = project
+
   def load(self):
-    json_r = JsonReader()
+    try:
+      filepath = JsonReader.read_projects()[self.project].get("filepath")
+    except Exception as e:
+      filepath = ""
+
+    json_r = JsonReader(filepath)
     narrative_models = json_r.read().get("narrative_models")
 
     if narrative_models == None:

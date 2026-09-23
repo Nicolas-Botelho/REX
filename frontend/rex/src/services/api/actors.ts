@@ -1,49 +1,49 @@
 import request from './api'
 import { Actor } from '@/models/requirement_models'
 
-export async function getActors() {
+export async function getActors(project_id: number) {
   try {
-    return await request('actor/actor/', {'method': 'GET'})    
+    return await request(`project/${encodeURIComponent(project_id)}/actor/actor/`, {'method': 'GET'})
   } catch (error) {
     throw error
   }
 }
 
-export async function getFRByActor(actor: string) {
+export async function getFRByActor(project_id: number, actor: string) {
   try {
-    return await request(`actor/fr_by_actor/?name=${encodeURIComponent(actor)}`, {'method': 'GET'})
+    return await request(`project/${encodeURIComponent(project_id)}/actor/fr_by_actor/?name=${encodeURIComponent(actor)}`, {'method': 'GET'})
   } catch (error) {
     throw error
   }
 }
 
-export async function getUcByActor(actor: string) {
+export async function getUcByActor(project_id: number, actor: string) {
   try {
-    return await request(`actor/uc_by_actor/?name=${encodeURIComponent(actor)}`, {'method': 'GET'})
+    return await request(`project/${encodeURIComponent(project_id)}/actor/uc_by_actor/?name=${encodeURIComponent(actor)}`, {'method': 'GET'})
   } catch (error) {
     throw error
   }
 }
 
-export async function postActor(actor: Actor) {
+export async function postActor(project_id: number, actor: Actor) {
   try {
-    return await request('actor/actor/', {'method': 'POST', 'data': actor})    
+    return await request(`project/${encodeURIComponent(project_id)}/actor/actor/`, {'method': 'POST', 'data': actor})
   } catch (error) {
     throw error
   }
 }
 
-export async function putActor(ac_id: number, actor: Actor) {
+export async function putActor(project_id: number, ac_id: number, actor: Actor) {
   try {
-    return await request(`actor/actor/${encodeURIComponent(ac_id)}/`, {'method': 'PUT', 'data': actor})    
+    return await request(`project/${encodeURIComponent(project_id)}/actor/actor/${encodeURIComponent(ac_id)}/`, {'method': 'PUT', 'data': actor})
   } catch (error) {
     throw error
   }
 }
 
-export async function deleteActor(ac_id: number) {
+export async function deleteActor(project_id: number, ac_id: number) {
   try {
-    return await request(`actor/actor/${encodeURIComponent(ac_id)}/`, {'method': 'DELETE'})    
+    return await request(`project/${encodeURIComponent(project_id)}/actor/actor/${encodeURIComponent(ac_id)}/`, {'method': 'DELETE'})
   } catch (error) {
     throw error
   }

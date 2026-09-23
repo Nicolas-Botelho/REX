@@ -138,6 +138,7 @@ const router = useRouter()
 const classData = ref()
 
 let cls_id = Number(route.params.id)
+const pId = Number(route.params.p_id)
 
 const reload = ref(0)
 const errorMessage = ref('')
@@ -160,7 +161,7 @@ const classes = ref()
 ///////////
 
 const updateClass = async () => {
-  await putClass(cls_id, clazz.value)
+  await putClass(pId, cls_id, clazz.value)
   isClassModalOpen.value = false
   reload.value = 1 - reload.value
 }
@@ -192,7 +193,7 @@ const addAttribute = async () => {
 
   new_class.class_attributes.push(attr.value.attr)
 
-  await putClass(cls_id, new_class)
+  await putClass(pId, cls_id, new_class)
 }
 
 const updateAttribute = async () => {
@@ -200,7 +201,7 @@ const updateAttribute = async () => {
 
   new_class.class_attributes[attr.value.attr_id] = attr.value.attr
 
-  await putClass(cls_id, new_class)
+  await putClass(pId, cls_id, new_class)
 }
 
 const removeAttribute = async (at_id: number) => {
@@ -213,7 +214,7 @@ const removeAttribute = async (at_id: number) => {
     }
   }
 
-  await putClass(cls_id, new_class)
+  await putClass(pId, cls_id, new_class)
   reload.value = 1 - reload.value
 }
 
@@ -243,15 +244,15 @@ const addOrUpdateAssociation = async () => {
 }
 
 const addAssociation = async () => {
-  await postAssociation(assoc.value.assoc)
+  await postAssociation(pId, assoc.value.assoc)
 }
 
 const updateAssociation = async () => {
-  await putAssociation(assoc.value.assoc_id, assoc.value.assoc)
+  await putAssociation(pId, assoc.value.assoc_id, assoc.value.assoc)
 }
 
 const removeAssociation = async (as_id: number) => {
-  await deleteAssociation(as_id)
+  await deleteAssociation(pId, as_id)
   reload.value = 1 - reload.value
 }
 
@@ -281,15 +282,15 @@ const addOrUpdateInheritance = async () => {
 }
 
 const addInheritance = async () => {
-  await postInheritance(inher.value.inher)
+  await postInheritance(pId, inher.value.inher)
 }
 
 const updateInheritance = async () => {
-  await putInheritance(inher.value.inher_id, inher.value.inher)
+  await putInheritance(pId, inher.value.inher_id, inher.value.inher)
 }
 
 const removeInheritance = async (ih_id: number) => {
-  await deleteInheritance(ih_id)
+  await deleteInheritance(pId, ih_id)
   reload.value = 1 - reload.value
 }
 
@@ -305,20 +306,20 @@ const openInheritanceModal = (ih_id: number) => {
 }
 
 async function goToClass(className: string) {
-  const data = await getClassByName(className)
+  const data = await getClassByName(pId, className)
   cls_id = data.data[0].index
-  router.push(`/classes/${cls_id}`)
+  router.push(`${cls_id}`)
   reload.value = 1 - reload.value
 }
 
 watch(reload, async () => {
   try {
-    classData.value = (await getClass(cls_id)).data
+    classData.value = (await getClass(pId, cls_id)).data
     
-    classes.value = (await getClasses()).data
+    classes.value = (await getClasses(pId)).data
 
-    const assocRaw = await getClassAssociations(classData.value.name)
-    const inherRaw = await getClassInheritances(classData.value.name)
+    const assocRaw = await getClassAssociations(pId, classData.value.name)
+    const inherRaw = await getClassInheritances(pId, classData.value.name)
 
     let assoc_index = 0
     classData.value.associations = []

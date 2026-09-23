@@ -12,23 +12,22 @@ import UseCaseDetail from '@/pages/usecase_pages/UseCaseDetail.vue'
 
 import DomainNarrative from '@/pages/DomainNarrative.vue'
 import Requirements from '@/pages/Requirements.vue'
-
-// import Actors from '@/pages/Actors.vue'
+import Project from '@/pages/Project.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {path: '/', component: Home},
-    {path: '/generate', component: Generate},
-    {path: '/json_data', component: Export},
-    {path: '/markdown', component: Markdown},
-    {path: '/classes', component: Classes},
-    {path: '/classes/:id', component: ClassDetail},
-    {path: '/usecases', component: UseCases},
-    {path: '/usecases/:id', component: UseCaseDetail},
-    // {path: '/actors', component: Actors},
-    {path: '/requirements', component: Requirements},
-    {path: '/narrative', component: DomainNarrative},
+    {path: '/project/:p_id', component: Project},
+    {path: '/project/:p_id/generate', component: Generate},
+    {path: '/project/:p_id/json_data', component: Export},
+    {path: '/project/:p_id/markdown', component: Markdown},
+    {path: '/project/:p_id/classes', component: Classes},
+    {path: '/project/:p_id/classes/:id', component: ClassDetail},
+    {path: '/project/:p_id/usecases', component: UseCases},
+    {path: '/project/:p_id/usecases/:id', component: UseCaseDetail},
+    {path: '/project/:p_id/requirements', component: Requirements},
+    {path: '/project/:p_id/narrative', component: DomainNarrative},
   ],
 })
 

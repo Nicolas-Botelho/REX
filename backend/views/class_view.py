@@ -4,22 +4,22 @@ from models.question import ClassQuestion
 
 from fastapi import APIRouter, Response, status
 
-class_router = APIRouter(prefix="/classes")
+class_router = APIRouter(prefix="/project/{project_id}/classes")
 
 #########
 # Class #
 #########
 
 @class_router.get("/class/")
-def get_classes() -> dict:
-  jg = JsonGenerator()
+def get_classes(project_id: int) -> dict:
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
   
   return {"data": data.get("class_models").get("classes")}
 
 @class_router.get("/class/{id}/")
-def get_class(id: int, response: Response) -> dict:
-  jg = JsonGenerator()
+def get_class(project_id: int, id: int, response: Response) -> dict:
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   classes = data.get("class_models").get("classes")
@@ -28,11 +28,11 @@ def get_class(id: int, response: Response) -> dict:
     return {"data": classes[id]}
   else:
     response.status_code = status.HTTP_404_NOT_FOUND
-    return
+    return {"data": None}
 
 @class_router.get("/class_by_name/")
-def get_class_by_name(class_name: str) -> dict:
-  jg = JsonGenerator()
+def get_class_by_name(project_id: int, class_name: str) -> dict:
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   classes = data.get("class_models").get("classes")
@@ -46,16 +46,16 @@ def get_class_by_name(class_name: str) -> dict:
   return {"data": filtered}
 
 @class_router.post("/class/")
-def create_class(klass: Class):
-  jg = JsonGenerator()
+def create_class(project_id: int, klass: Class):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("classes").append(klass.dict())
   jg.write_json(data)
 
 @class_router.put("/class/{cls_id}/")
-def update_class(cls_id: int, klass: Class):
-  jg = JsonGenerator()
+def update_class(project_id: int, cls_id: int, klass: Class):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   old_name = data.get("class_models").get("classes")[cls_id].get("name")
@@ -91,8 +91,8 @@ def update_class(cls_id: int, klass: Class):
   jg.write_json(data)
 
 @class_router.delete("/class/{cls_id}/")
-def delete_class(cls_id: int):
-  jg = JsonGenerator()
+def delete_class(project_id: int, cls_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   cls = data.get("class_models").get("classes").pop(cls_id)
@@ -123,15 +123,15 @@ def delete_class(cls_id: int):
 ###############
 
 @class_router.get("/association/")
-def get_associations():
-  jg = JsonGenerator()
+def get_associations(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
   
   return {"data": data.get("class_models").get("associations")}
 
 @class_router.get("/association/{id}/")
-def get_association(id: int):
-  jg = JsonGenerator()
+def get_association(project_id: int, id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
   
   associations = data.get("class_models").get("associations")
@@ -143,11 +143,11 @@ def get_association(id: int):
     return
 
 @class_router.get("/class_associations/")
-def get_class_associations(class_name: str):  
-  return {"data": associations_by_class_name(class_name)}
+def get_class_associations(project_id: int, class_name: str):  
+  return {"data": associations_by_class_name(project_id, class_name)}
 
-def associations_by_class_name(class_name: str):
-  jg = JsonGenerator()
+def associations_by_class_name(project_id: int, class_name: str):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   associations = data.get("class_models").get("associations")
@@ -159,24 +159,24 @@ def associations_by_class_name(class_name: str):
   return class_associations
 
 @class_router.post("/association/")
-def create_association(assoc: Association):
-  jg = JsonGenerator()
+def create_association(project_id: int, assoc: Association):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("associations").append(assoc.dict())
   jg.write_json(data)
 
 @class_router.put("/association/{asc_id}/")
-def update_association(asc_id: int, assoc: Association):
-  jg = JsonGenerator()
+def update_association(project_id: int, asc_id: int, assoc: Association):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("associations")[asc_id] = assoc.dict()
   jg.write_json(data)
 
 @class_router.delete("/association/{asc_id}/")
-def delete_association(asc_id: int):
-  jg = JsonGenerator()
+def delete_association(project_id: int, asc_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("associations").pop(asc_id)
@@ -187,15 +187,15 @@ def delete_association(asc_id: int):
 ###############
 
 @class_router.get("/inheritance/")
-def get_inheritances():
-  jg = JsonGenerator()
+def get_inheritances(project_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
   
   return {"data": data.get("class_models").get("inheritances")}
 
 @class_router.get("/inheritance/{id}/")
-def get_inheritance(id: int):
-  jg = JsonGenerator()
+def get_inheritance(project_id: int, id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   inheritances = data.get("class_models").get("inheritances")
@@ -207,11 +207,11 @@ def get_inheritance(id: int):
     return
 
 @class_router.get("/class_inheritances/")
-def get_class_inheritances(class_name: str):
-  return {"data": inheritances_by_class_name(class_name)}
+def get_class_inheritances(project_id: int, class_name: str):
+  return {"data": inheritances_by_class_name(project_id, class_name)}
 
-def inheritances_by_class_name(class_name: str) -> list[dict]:
-  jg = JsonGenerator()
+def inheritances_by_class_name(project_id: int, class_name: str) -> list[dict]:
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   inheritances = data.get("class_models").get("inheritances")
@@ -223,24 +223,24 @@ def inheritances_by_class_name(class_name: str) -> list[dict]:
   return class_inheritances
 
 @class_router.post("/inheritance/")
-def create_inheritance(inher: Inheritance):
-  jg = JsonGenerator()
+def create_inheritance(project_id: int, inher: Inheritance):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("inheritances").append(inher.dict())
   jg.write_json(data)
 
 @class_router.put("/inheritance/{inh_id}/")
-def update_inheritance(inh_id: int, inher: Inheritance):
-  jg = JsonGenerator()
+def update_inheritance(project_id: int, inh_id: int, inher: Inheritance):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("inheritances")[inh_id] = inher.dict()
   jg.write_json(data)
 
 @class_router.delete("/inheritance/{inh_id}/")
-def delete_inheritance(inh_id: int):
-  jg = JsonGenerator()
+def delete_inheritance(project_id: int, inh_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("inheritances").pop(inh_id)
@@ -251,31 +251,31 @@ def delete_inheritance(inh_id: int):
 ############
 
 @class_router.get("/questions/")
-def get_class_questions() -> dict:
-  jg = JsonGenerator()
+def get_class_questions(project_id: int) -> dict:
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   return {"data": data.get("class_models").get("questions")}
 
 @class_router.post("/questions/")
-def create_class_question(question: ClassQuestion):
-  jg = JsonGenerator()
+def create_class_question(project_id: int, question: ClassQuestion):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("questions").append(question.dict())
   jg.write_json(data)
 
 @class_router.put("/questions/{q_id}/")
-def update_class_question(q_id: int, question: ClassQuestion):
-  jg = JsonGenerator()
+def update_class_question(project_id: int, q_id: int, question: ClassQuestion):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("questions")[q_id] = question.dict()
   jg.write_json(data)
 
 @class_router.delete("/questions/{q_id}/")
-def delete_class_question(q_id: int):
-  jg = JsonGenerator()
+def delete_class_question(project_id: int, q_id: int):
+  jg = JsonGenerator(project_id)
   data = jg.return_data()
 
   data.get("class_models").get("questions").pop(q_id)

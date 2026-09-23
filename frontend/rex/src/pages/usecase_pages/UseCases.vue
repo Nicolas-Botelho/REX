@@ -60,11 +60,15 @@ import BaseModal from '@/components/BaseModal.vue'
 import { UsecaseQuestion } from '@/models/question_models'
 import GoToItemBox from '@/components/GoToItemBox.vue'
 import { generateFromCL } from '@/services/api/utils'
+import { useRoute } from 'vue-router'
 
 const reload = ref(0)
 const errorMessage = ref('')
 const successMessage = ref()
 const loading = ref(false)
+
+const route = useRoute()
+const pId = Number(route.params.p_id)
 
 const ucData = ref()
 const qData = ref()
@@ -76,7 +80,7 @@ const question = ref(new UsecaseQuestion(-1, "", []))
 const updateFromCL = async () => {
   try {
     loading.value = true
-    await generateFromCL("Given the Domain Narrative, the Requirements and the Use Cases, build the next artifacts")
+    await generateFromCL(pId, "Given the Domain Narrative, the Requirements and the Use Cases, build the next artifacts")
     successMessage.value = "Artifacts generated sucessfully"
     loading.value = false
   } catch (error) {
@@ -84,12 +88,12 @@ const updateFromCL = async () => {
 }
 
 const addUsecase = async () => {
-  await postUseCase(new Usecase("New Usecase", []))
+  await postUseCase(pId, new Usecase("New Usecase", []))
   reload.value = 1 - reload.value
 }
 
 const removeUsecase = async (uc_id: number) => {
-  await deleteUseCase(uc_id)
+  await deleteUseCase(pId, uc_id)
   reload.value = 1 - reload.value
 }
 
@@ -108,15 +112,15 @@ const addOrUpdateQuestion = async () => {
 }
 
 const addQuestion = async () => {
-  await postUsecaseQuestion(question.value)
+  await postUsecaseQuestion(pId, question.value)
 }
 
 const updateQuestion = async () => {
-  await putUsecaseQuestion(question.value.id, question.value)
+  await putUsecaseQuestion(pId, question.value.id, question.value)
 }
 
 const removeQuestion = async (ucq_id: number) => {
-  await deleteUsecaseQuestion(ucq_id)
+  await deleteUsecaseQuestion(pId, ucq_id)
   reload.value = 1 - reload.value
 }
 
@@ -135,8 +139,8 @@ const openQuestionModal = (ucq_id: number) => {
 
 watch(reload, async () => {
   try {
-    ucData.value = (await getUseCases()).data
-    qData.value = (await getUsecaseQuestions()).data
+    ucData.value = (await getUseCases(pId)).data
+    qData.value = (await getUsecaseQuestions(pId)).data
   } catch (error) {
     errorMessage.value = 'Failed to fetch'
   }

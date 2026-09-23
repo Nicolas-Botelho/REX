@@ -2,8 +2,16 @@ import models.requirement as pyd
 from generation.json_reader import JsonReader
 
 class ActorLoader():
+  def __init__(self, project: int):
+    self.project = project
+
   def load(self):
-    json_r = JsonReader()
+    try:
+      filepath = JsonReader.read_projects()[self.project].get("filepath")
+    except Exception as e:
+      filepath = ""
+
+    json_r = JsonReader(filepath)
     actor_models = json_r.read().get("actors")
 
     if actor_models == None:

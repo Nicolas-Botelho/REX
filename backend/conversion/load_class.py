@@ -3,8 +3,16 @@ import models.question as pyd_q
 from generation.json_reader import JsonReader
 
 class ClassLoader():
+  def __init__(self, project: int):
+    self.project = project
+
   def load(self):
-    json_r = JsonReader()
+    try:
+      filepath = JsonReader.read_projects()[self.project].get("filepath")
+    except Exception as e:
+      filepath = ""
+    
+    json_r = JsonReader(filepath)
     class_models = json_r.read().get("class_models")
 
     if class_models == None:

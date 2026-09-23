@@ -46,7 +46,7 @@
 
           <template v-if="step.next_steps">(decision)</template>
           
-          <template v-else-if="step.category && step.category.attributes">({{ step.category.operation_type }})<br/><template v-for="cls in Object.keys(step.category.attributes)">{{ step.category.attributes[cls].join(", ") }} ({{ cls }}); </template></template>
+          <template v-else-if="step.category && step.category.attributes">({{ step.category.operation_type }})<br/><template v-for="cls in Object.keys(step.category.attributes)">{{ step.category.attributes[cls].join(", ") }} (<a href="#" @click.prevent="goToClass(cls)">{{ cls }}</a>); </template></template>
 
           <template v-else-if="step.category && step.category.operation_type === IOOutputEnum.INPUT || step.category.operation_type === IOOutputEnum.OUTPUT">({{ step.category.operation_type }}): {{ step.category.description }}</template>
           
@@ -61,7 +61,6 @@
         <form class="modal-form" @submit.prevent>
           <div class="form-group">
             <select v-model="new_action.step.category" size="4">
-              <!-- <option :value="null"></option> -->
               <option :value="new_data_op">Data Operation</option>
               <option :value="new_comp_op">Complex Operation</option>
               <option :value="new_inou_op">Input/Output Operation</option>
@@ -285,7 +284,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
-import { computed, ref, toRaw, watch } from 'vue'
+import { ref, toRaw, watch } from 'vue'
 import { getUseCase, getUseCases, putUseCase } from '@/services/api/usecases'
 import { getClassAssociations, getClassByName, getClasses } from '@/services/api/classes'
 import { mermaidSvgCreator } from '@/utils/mermaid_utils'
@@ -302,12 +301,12 @@ const ucData = ref()
 const acData = ref()
 const clData = ref()
 const usecases = ref()
-const classAssoc = ref()
 const events_w_render = ref()
 
 const errorMessage = ref('')
 
 const uc_id = Number(route.params.id)
+const pId = Number(route.params.p_id)
 
 const new_uc = ref(new Usecase('', []))
 const new_event = ref(new Event("", [], [], []))
@@ -359,7 +358,7 @@ function getAttributesAndAssociationsByClassName(name: string) {
 }
 
 const updateUsecase = async () => {
-  await putUseCase(uc_id, new_uc.value)
+  await putUseCase(pId, uc_id, new_uc.value)
   reload.value = 1 - reload.value
 
   isUsecaseModalOpen.value = false
@@ -375,7 +374,7 @@ const updateEvent = async (ev_id: number) => {
   const usecase = new Usecase(ucData.value.name, ucData.value.usecase_events)
   usecase.usecase_events[ev_id] = new_event.value
 
-  await putUseCase(uc_id, usecase)
+  await putUseCase(pId, uc_id, usecase)
   isEventModalOpen.value = false
   reload.value = 1 - reload.value
 }
@@ -384,7 +383,7 @@ const addEvent = async () => {
   const usecase = new Usecase(ucData.value.name, ucData.value.usecase_events)
   usecase.usecase_events.push(new Event("New Event", [], [], []))
 
-  await putUseCase(uc_id, usecase)
+  await putUseCase(pId, uc_id, usecase)
   reload.value = 1 - reload.value
 }
 
@@ -398,7 +397,7 @@ const removeEvent = async (ev_id: number) => {
     }
   }
 
-  await putUseCase(uc_id, usecase)
+  await putUseCase(pId, uc_id, usecase)
   reload.value = 1 - reload.value
 }
 
@@ -451,7 +450,7 @@ const updateStep = async (ev_id: number, st_id: number) => {
       step = new_decision.value.step
     }
     usecase.usecase_events[ev_id].event_steps[st_id] = step
-    await putUseCase(uc_id, usecase)
+    await putUseCase(pId, uc_id, usecase)
   }
   isActionModalOpen.value = false
   isDecisionModalOpen.value = false
@@ -466,7 +465,7 @@ const addStep = async (ev_id: number, action: boolean) => {
   } else {
     usecase.usecase_events[ev_id]?.event_steps.push(new_decision.value.step)
   }
-  await putUseCase(uc_id, usecase)
+  await putUseCase(pId, uc_id, usecase)
 
   isStepModalOpen.value = false
   reload.value = 1 - reload.value
@@ -484,7 +483,7 @@ const removeStep = async (ev_id: number, st_id: number) => {
       }
     }
   }
-  await putUseCase(uc_id, usecase)
+  await putUseCase(pId, uc_id, usecase)
   reload.value = 1 - reload.value
 }
 
@@ -526,21 +525,20 @@ const openStepModal = async (ev_id: number, st_id: number) => {
   }
 }
 
-// async function goToClass(className: string) {
-//   const data = await getClassByName(className)
-//   router.push(`/classes/${data.data[0].index}`)
-// }
+async function goToClass(className: string) {
+  const data = await getClassByName(pId, className)
+  router.push(`/project/${pId}/classes/${data.data[0].index}`)
+}
 
 watch(reload, async () => {
   try {
-    ucData.value = (await getUseCase(Number(uc_id))).data
-    acData.value = (await getActors()).data
-    clData.value = await Promise.all((await getClasses()).data.map(async (elem: Class) => {
-      return {...elem, 'class_associations': (await getClassAssociations(elem.name)).data}
+    ucData.value = (await getUseCase(pId, Number(uc_id))).data
+    acData.value = (await getActors(pId)).data
+    clData.value = await Promise.all((await getClasses(pId)).data.map(async (elem: Class) => {
+      return {...elem, 'class_associations': (await getClassAssociations(pId, elem.name)).data}
     }))
 
-    console.log(clData.value)
-    usecases.value = (await getUseCases()).data
+    usecases.value = (await getUseCases(pId)).data
 
     events_w_render.value = await Promise.all(
       ucData.value.usecase_events.map(async (event: any) => ({
