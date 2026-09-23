@@ -28,7 +28,7 @@ def get_project(project_id: int):
 def create_project(project: ProjectView):
   jp = JsonProject()
   data = jp.return_projects()
-  load_dotenv()
+  # load_dotenv()
   
   PROJECT_DIR = os.environ.get("PROJECT_DIR")
 

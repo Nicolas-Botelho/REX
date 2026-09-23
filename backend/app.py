@@ -23,15 +23,17 @@ app = FastAPI()
 load_dotenv()
 
 if not os.environ.get("BACKEND_URL"):
-  os.environ["BACKEND_URL"] = "http://localhost"
+  os.environ["BACKEND_URL"] = "http://127.0.0.1"
 if not os.environ.get("BACKEND_PORT"):
   os.environ["BACKEND_PORT"] = "8000"
 if not os.environ.get("PROJECT_DIR"):
   os.environ["PROJECT_DIR"] = "../out/"
 
+BACKEND_URL = os.environ.get("BACKEND_URL")
+BACKEND_PORT = os.environ.get("BACKEND_PORT")
+
 origins = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
+    f"{BACKEND_URL}:{BACKEND_PORT}",
     # "http://localhost:5173",
 ]
 

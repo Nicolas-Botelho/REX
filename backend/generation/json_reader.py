@@ -14,7 +14,6 @@ class JsonReader():
       return {}
   
   def read_projects():
-    load_dotenv()
     
     PROJECT_DIR = os.environ.get("PROJECT_DIR")
 
