@@ -208,7 +208,7 @@ def print_cls(project_id: int, classes: list):
   class_string = ""
 
   for cls in classes:
-    class_string += f"## {cls.get("name")} {"<"+cls.get("stereotype")+">" if cls.get("stereotype") else ""}\n\n### Attributes\n\n{print_attributes(cls.get("class_attributes"))}\n\n### Associations\n\n{print_associations(associations_by_class_name(project_id, cls.get("name")))}\n\n### Inheritances\n\n{print_inheritances(inheritances_by_class_name(project_id, cls.get("name")))}"
+    class_string += f"## {cls.get("name")} {"<"+cls.get("stereotype")+">" if cls.get("stereotype") else ""}\n\n{cls.get("description")}\n\n### Attributes\n\n{print_attributes(cls.get("class_attributes"))}\n\n### Associations\n\n{print_associations(associations_by_class_name(project_id, cls.get("name")))}\n\n### Inheritances\n\n{print_inheritances(inheritances_by_class_name(project_id, cls.get("name")))}"
   
   return class_string
 
@@ -216,7 +216,7 @@ def print_attributes(attrs: list):
   attr_string = ""
 
   for attr in attrs:
-    attr_string += f"* {attr.get("name")}: {attr.get("attr_type").name.lower()} {"(many)" if attr.get("is_multiple") else ""} {"(valid values: " + ', '.join(attr.get("valid_values")) + ")" if attr.get("valid_values") else ""}\n"
+    attr_string += f"* {attr.get("name")}: {attr.get("attr_type").name.lower()} {"(many)" if attr.get("is_multiple") else ""} (description: {attr.get("description")}) {"(valid values: " + ', '.join(attr.get("valid_values")) + ")" if attr.get("valid_values") else ""}\n"
   
   return attr_string
 

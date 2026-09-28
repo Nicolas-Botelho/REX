@@ -1,13 +1,15 @@
 # Classes
 ## Livro <Entity>
 
+Representa um título de livro no acervo da biblioteca.
+
 ### Attributes
 
-* id: integer  
-* titulo: string  
-* autor: string  
-* isbn: string  
-* anoPublicacao: integer  
+* id: integer  (description: Identificador único do livro.) 
+* titulo: string  (description: O título do livro.) 
+* autor: string  (description: O autor do livro.) 
+* isbn: string  (description: O International Standard Book Number do livro.) 
+* anoPublicacao: integer  (description: O ano de publicação do livro.) 
 
 
 ### Associations
@@ -19,10 +21,12 @@
 
 ## Exemplar <Entity>
 
+Representa uma cópia física específica de um livro.
+
 ### Attributes
 
-* id: integer  
-* status: string  (valid values: disponivel, emprestado, danificado, perdido)
+* id: integer  (description: Identificador único do exemplar.) 
+* status: string  (description: O status atual do exemplar (disponível, emprestado, danificado, perdido).) (valid values: disponivel, emprestado, danificado, perdido)
 
 
 ### Associations
@@ -35,13 +39,15 @@
 
 ## Usuario <Entity>
 
+Representa um usuário cadastrado na biblioteca que pode realizar empréstimos.
+
 ### Attributes
 
-* id: integer  
-* nome: string  
-* endereco: string  
-* telefone: string  
-* email: string  
+* id: integer  (description: Identificador único do usuário.) 
+* nome: string  (description: O nome completo do usuário.) 
+* endereco: string  (description: O endereço residencial do usuário.) 
+* telefone: string  (description: O número de telefone do usuário.) 
+* email: string  (description: O endereço de e-mail do usuário.) 
 
 
 ### Associations
@@ -54,10 +60,12 @@
 
 ## Bibliotecario <Entity>
 
+Representa um funcionário da biblioteca com permissões administrativas.
+
 ### Attributes
 
-* id: integer  
-* nome: string  
+* id: integer  (description: Identificador único do bibliotecário.) 
+* nome: string  (description: O nome completo do bibliotecário.) 
 
 
 ### Associations
@@ -68,13 +76,15 @@
 
 ## Emprestimo <Entity>
 
+Representa um registro de empréstimo de um exemplar para um usuário.
+
 ### Attributes
 
-* id: integer  
-* dataEmprestimo: string  
-* dataDevolucaoPrevista: string  
-* dataDevolucaoReal: string  
-* status: string  (valid values: ativo, devolvido, atrasado, multado)
+* id: integer  (description: Identificador único do empréstimo.) 
+* dataEmprestimo: string  (description: A data em que o exemplar foi emprestado.) 
+* dataDevolucaoPrevista: string  (description: A data prevista para a devolução do exemplar.) 
+* dataDevolucaoReal: string  (description: A data real em que o exemplar foi devolvido.) 
+* status: string  (description: O status atual do empréstimo (ativo, devolvido, atrasado, multado).) (valid values: ativo, devolvido, atrasado, multado)
 
 
 ### Associations
@@ -88,12 +98,14 @@
 
 ## Multa <Entity>
 
+Representa uma multa aplicada a um usuário devido a atraso na devolução.
+
 ### Attributes
 
-* id: integer  
-* valor: float  
-* dataAplicacao: string  
-* status: string  (valid values: pendente, paga)
+* id: integer  (description: Identificador único da multa.) 
+* valor: float  (description: O valor monetário da multa.) 
+* dataAplicacao: string  (description: A data em que a multa foi aplicada.) 
+* status: string  (description: O status atual da multa (pendente, paga).) (valid values: pendente, paga)
 
 
 ### Associations

@@ -5,7 +5,7 @@ Objective: Permitir ao usuário consultar o catálogo completo de livros da bibl
 
 Description: O Usuário deve ser capaz de visualizar todo o acervo de livros disponível na biblioteca.
 
-Usuário
+Performer: Usuário
 
 Priority: must do
 
@@ -19,7 +19,7 @@ Objective: Informar ao usuário quais livros podem ser emprestados no momento.
 
 Description: O Usuário deve ser capaz de verificar quais livros estão disponíveis para empréstimos.
 
-Usuário
+Performer: Usuário
 
 Priority: must do
 
@@ -34,7 +34,7 @@ Objective: Formalizar a retirada de um livro por um usuário, controlando o proc
 
 Description: O Bibliotecário deve ser capaz de registrar um empréstimo de livro para um usuário.
 
-Bibliotecário
+Performer: Bibliotecário
 
 Priority: must do
 
@@ -51,7 +51,7 @@ Objective: Fornecer ao bibliotecário detalhes específicos sobre cada livro e s
 
 Description: O Bibliotecário deve ser capaz de consultar livros e seus exemplares individualmente.
 
-Bibliotecário
+Performer: Bibliotecário
 
 Priority: must do
 
@@ -66,7 +66,7 @@ Objective: Permitir ao bibliotecário acessar informações detalhadas sobre cad
 
 Description: O Bibliotecário deve ser capaz de consultar usuários individualmente.
 
-Bibliotecário
+Performer: Bibliotecário
 
 Priority: must do
 
@@ -81,7 +81,7 @@ Objective: Oferecer ao bibliotecário uma visão completa das transações de em
 
 Description: O Bibliotecário deve ser capaz de consultar o histórico de empréstimos de um usuário, sejam eles ativos ou passados.
 
-Bibliotecário
+Performer: Bibliotecário
 
 Priority: must do
 
@@ -97,7 +97,7 @@ Objective: Garantir a aplicação das políticas de multa da biblioteca de forma
 
 Description: O sistema deve aplicar multas automaticamente aos usuários que não devolverem os livros dentro do prazo estipulado.
 
-Sistema
+Performer: Sistema
 
 Priority: must do
 
@@ -113,7 +113,7 @@ Objective: Manter um registro atualizado e organizado de todos os livros dispon�
 
 Description: O sistema deve gerenciar o catálogo completo de livros, incluindo adição, remoção e atualização de informações de títulos e exemplares.
 
-Sistema
+Performer: Sistema
 
 Priority: must do
 
@@ -128,7 +128,7 @@ Objective: Manter um registro atualizado e preciso de todos os usuários da bibl
 
 Description: O sistema deve gerenciar os registros dos usuários, incluindo cadastro, atualização e remoção de dados.
 
-Sistema
+Performer: Sistema
 
 Priority: must do
 
@@ -142,7 +142,7 @@ Objective: Manter um controle eficiente sobre o status de todos os livros empres
 
 Description: O sistema deve gerenciar todos os empréstimos realizados, desde o registro até a devolução.
 
-Sistema
+Performer: Sistema
 
 Priority: must do
 

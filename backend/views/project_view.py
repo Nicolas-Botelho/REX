@@ -4,6 +4,7 @@ from models.project import Project, ProjectView
 from fastapi import APIRouter
 
 import os
+import uuid
 from dotenv import load_dotenv
 
 project_router = APIRouter(prefix="/project")
@@ -28,12 +29,22 @@ def get_project(project_id: int):
 def create_project(project: ProjectView):
   jp = JsonProject()
   data = jp.return_projects()
-  # load_dotenv()
   
   PROJECT_DIR = os.environ.get("PROJECT_DIR")
 
   project_dict = project.dict()
-  project_dict["filepath"] = PROJECT_DIR+f"{project.name}.json"
+
+  def create_project_with_unique_name():
+    while True:
+      unique_name = uuid.uuid4().hex
+      filepath = os.path.join(PROJECT_DIR, f"{unique_name}.json")
+      try:
+        open(filepath, "x").close()
+        return filepath
+      except FileExistsError:
+        continue
+
+  project_dict["filepath"] = create_project_with_unique_name()
 
   data.get("projects").append(project_dict)
   jp.write_project(data)
@@ -53,5 +64,10 @@ def delete_project(project_id: int):
   jp = JsonProject()
   data = jp.return_projects()
 
-  data.get("projects").pop(project_id)
+  project = data.get("projects").pop(project_id)
+  filepath = project.get("filepath")
+
+  if os.path.exists(filepath):
+    os.remove(filepath)
+
   jp.write_project(data)

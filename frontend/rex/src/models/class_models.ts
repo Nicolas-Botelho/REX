@@ -1,10 +1,12 @@
 export class Class {
   name: string
+  description: string
   stereotype: string
   class_attributes: Array<ClassAttribute>
 
-  constructor (name: string, stereotype: string, class_attributes: Array<ClassAttribute>) {
+  constructor (name: string, description: string, stereotype: string, class_attributes: Array<ClassAttribute>) {
     this.name = name
+    this.description = description
     this.stereotype = stereotype
     this.class_attributes = class_attributes
   }
@@ -19,12 +21,14 @@ export enum TypeEnum {
 
 export class ClassAttribute {
   name: string
+  description: string
   attr_type: TypeEnum
   is_multiple: boolean
   valid_values: Array<string>
 
-  constructor (name: string, attr_type: TypeEnum, is_multiple: boolean, valid_values: Array<string>) {
+  constructor (name: string, description: string, attr_type: TypeEnum, is_multiple: boolean, valid_values: Array<string>) {
     this.name = name
+    this.description = description
     this.attr_type = attr_type
     this.is_multiple = is_multiple
     this.valid_values = valid_values

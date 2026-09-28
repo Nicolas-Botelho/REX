@@ -71,7 +71,7 @@ const isQuestionModalOpen = ref(false)
 const question = ref(new ClassQuestion(-1, "", []))
 
 const addClass = async () => {
-  await postClass(pId, new Class("New Class", "", []))
+  await postClass(pId, new Class("New Class", "", "", []))
   reload.value = 1 - reload.value
 }
 

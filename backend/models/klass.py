@@ -22,16 +22,13 @@ class TypeEnum(str, Enum):
 
 class ClassAttribute(BaseModel):
   name : str
+  description : str
   attr_type : TypeEnum
   is_multiple : bool
   valid_values : list[str] = Field(default_factory=list)
 
-# class StereotypeEnum(str, Enum):
-#   KIND = "kind"
-#   SUBKIND = "subkind"
-#   ROLE = "role"
-
 class Class(BaseModel):
   name : str
+  description : str
   stereotype : str
   class_attributes : list[ClassAttribute] = Field(default_factory=list)

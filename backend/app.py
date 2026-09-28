@@ -46,11 +46,11 @@ app.add_middleware(
 )
 
 @app.post("/project/{project_id}/manual_update/")
-def mu_view(project_id: int, json_input: dict, response: Response, overwrite: bool = False) -> dict:
+def mu_view(project_id: int, json_input: dict, response: Response) -> dict:
   try:
     if json_input.get('narrative_models') or json_input.get('requirement_models') or json_input.get('usecase_models') or json_input.get('class_models') or json_input.get('actors'):
       jg = JsonGenerator(project_id)
-      jg.write_json(json_input, write_new=not overwrite)
+      jg.write_json(json_input)
   except Exception as e:
     response.status_code = status.HTTP_400_BAD_REQUEST
 

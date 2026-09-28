@@ -16,7 +16,6 @@ class JsonProject():
     return data
 
   def save_project(self, data: dict):
-    # load_dotenv()
     
     PROJECT_DIR = os.environ.get("PROJECT_DIR")
 

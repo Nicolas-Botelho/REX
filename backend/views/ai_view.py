@@ -18,11 +18,11 @@ gen_router = APIRouter(prefix="/project/{project_id}/ai")
 
 @gen_router.post("/run_all/")
 def ai_view(project_id: int, input_text: Annotated[str, Body(embed=True)], overwrite: bool = False, start_from: int = 0) -> dict:
-  cl = ClassLoader()
-  ul = UsecaseLoader()
-  rl = RequirementLoader()
-  nl = NarrativeLoader()
-  al = ActorLoader()
+  cl = ClassLoader(project_id)
+  ul = UsecaseLoader(project_id)
+  rl = RequirementLoader(project_id)
+  nl = NarrativeLoader(project_id)
+  al = ActorLoader(project_id)
 
   loaded_classes, loaded_assocs, loaded_inhers, loaded_class_q = cl.load()
   transformed_assocs = TransformAssociation.transform(loaded_assocs)
@@ -75,7 +75,6 @@ def ai_view(project_id: int, input_text: Annotated[str, Body(embed=True)], overw
       "class_models": {
         "classes": [clazz.dict() for clazz in new_classes.classes],
         "associations": [assoc.dict() for assoc in TransformAssociation.reverse(new_classes.associations)],
-        "relations": [assoc.dict() for assoc in TransformAssociation.reverse(new_classes.associations)],
         "inheritances": [inher.dict() for inher in new_classes.inheritances],
         "questions": [cq.dict() for cq in new_classes.questions]
       },
@@ -85,6 +84,6 @@ def ai_view(project_id: int, input_text: Annotated[str, Body(embed=True)], overw
       },
       "actors": [actor.dict() for actor in new_requirements.actors]
     }
-    jg.write_json(data, write_new=not overwrite)
+    jg.write_json(data)
     
   return {}

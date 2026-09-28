@@ -3,6 +3,8 @@
     <h1>{{ classData.name }}</h1>
     <p v-if="classData.stereotype"><<{{ classData.stereotype }}>></p>
 
+    <p v-if="classData.description">Class Description: {{ classData.description }}</p>
+
     <button class="edit-button" @click="openClassModal()">Edit Class</button>
 
     <BaseModal title="Class" :is-open="isClassModalOpen" @close="isClassModalOpen=false" @confirm="updateClass()">
@@ -15,13 +17,17 @@
           <label>Class Stereotype</label>
           <input v-model="clazz.stereotype">
         </div>
+        <div class="form-group">
+          <label>Class Description</label>
+          <textarea v-model="clazz.description">{{ clazz.description }}</textarea>
+        </div>
       </form>
     </BaseModal>
 
       <h2 v-if="classData.class_attributes">Attributes</h2>
 
       <BaseItemBox v-for="(item, index) in classData.class_attributes" :key="index" @del="removeAttribute(Number(index))" @edit="openAttributeModal(Number(index))">
-        <p>{{ item.name }} : {{ item.attr_type }} <template v-if="item.is_multiple">(many)</template>
+        <p>{{ item.name }} : {{ item.attr_type }} <template v-if="item.is_multiple">(many)</template> : {{ item.description }}
             <p v-for="value in item.valid_values">- {{ value }}</p>
           </p>
       </BaseItemBox>
@@ -39,6 +45,10 @@
             <select v-model="attr.attr.attr_type" size="4">
               <option v-for="(item, index) in types" :key="index" :value="item">{{ item }}</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label>Attribute Description</label>
+            <textarea v-model="attr.attr.description">{{ attr.attr.description }}</textarea>
           </div>
           <div class="form-group">
             <label>Is Multiple?</label>
@@ -148,8 +158,8 @@ const isAttributeModalOpen = ref(false)
 const isAssociationModalOpen = ref(false)
 const isInheritanceModalOpen = ref(false)
 
-const clazz = ref(new Class('', '', []))
-const attr = ref({'attr_id': -1, 'attr': new ClassAttribute('', TypeEnum.STRING, false, [])})
+const clazz = ref(new Class('', '', '', []))
+const attr = ref({'attr_id': -1, 'attr': new ClassAttribute('', '', TypeEnum.STRING, false, [])})
 const assoc = ref({'assoc_id': -1, 'assoc': new Association(new AssociationClassReference("", 0, null), new AssociationClassReference('', 0, null))})
 const inher = ref({'inher_id': -1, 'inher': new Inheritance('', '')})
 
@@ -169,6 +179,7 @@ const updateClass = async () => {
 const openClassModal = () => {
   clazz.value.name = classData.value.name
   clazz.value.stereotype = classData.value.stereotype
+  clazz.value.description = classData.value.description
   clazz.value.class_attributes = structuredClone(toRaw(classData.value.class_attributes))
 
   isClassModalOpen.value = true
@@ -189,7 +200,7 @@ const addOrUpdateAttribute = async () => {
 }
 
 const addAttribute = async () => {
-  const new_class = new Class(classData.value.name, classData.value.stereotype, structuredClone(toRaw(classData.value.class_attributes)))
+  const new_class = new Class(classData.value.name, classData.value.description, classData.value.stereotype, structuredClone(toRaw(classData.value.class_attributes)))
 
   new_class.class_attributes.push(attr.value.attr)
 
@@ -197,7 +208,7 @@ const addAttribute = async () => {
 }
 
 const updateAttribute = async () => {
-  const new_class = new Class(classData.value.name, classData.value.stereotype, structuredClone(toRaw(classData.value.class_attributes)))
+  const new_class = new Class(classData.value.name, classData.value.description, classData.value.stereotype, structuredClone(toRaw(classData.value.class_attributes)))
 
   new_class.class_attributes[attr.value.attr_id] = attr.value.attr
 
@@ -205,7 +216,7 @@ const updateAttribute = async () => {
 }
 
 const removeAttribute = async (at_id: number) => {
-  const new_class = new Class(classData.value.name, classData.value.stereotype, structuredClone(toRaw(classData.value.class_attributes)))
+  const new_class = new Class(classData.value.name, classData.value.description, classData.value.stereotype, structuredClone(toRaw(classData.value.class_attributes)))
 
   if (new_class.class_attributes[at_id]) {
     const index = new_class.class_attributes.indexOf(new_class.class_attributes[at_id], 0)
@@ -224,7 +235,7 @@ const openAttributeModal = (at_id: number) => {
     attr.value.attr = structuredClone(toRaw(classData.value.class_attributes[at_id]))
   } else {
     attr.value.attr_id = -1
-    attr.value.attr = new ClassAttribute('', TypeEnum.STRING, false, [])
+    attr.value.attr = new ClassAttribute('', '', TypeEnum.STRING, false, [])
   }
   isAttributeModalOpen.value = true
 }

@@ -142,34 +142,40 @@
         "classes": [
             {
                 "name": "Livro",
+                "description": "Representa um título de livro no acervo da biblioteca.",
                 "stereotype": "Entity",
                 "class_attributes": [
                     {
                         "name": "id",
+                        "description": "Identificador único do livro.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "titulo",
+                        "description": "O título do livro.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "autor",
+                        "description": "O autor do livro.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "isbn",
+                        "description": "O International Standard Book Number do livro.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "anoPublicacao",
+                        "description": "O ano de publicação do livro.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
@@ -178,16 +184,19 @@
             },
             {
                 "name": "Exemplar",
+                "description": "Representa uma cópia física específica de um livro.",
                 "stereotype": "Entity",
                 "class_attributes": [
                     {
                         "name": "id",
+                        "description": "Identificador único do exemplar.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "status",
+                        "description": "O status atual do exemplar (disponível, emprestado, danificado, perdido).",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": [
@@ -201,34 +210,40 @@
             },
             {
                 "name": "Usuario",
+                "description": "Representa um usuário cadastrado na biblioteca que pode realizar empréstimos.",
                 "stereotype": "Entity",
                 "class_attributes": [
                     {
                         "name": "id",
+                        "description": "Identificador único do usuário.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "nome",
+                        "description": "O nome completo do usuário.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "endereco",
+                        "description": "O endereço residencial do usuário.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "telefone",
+                        "description": "O número de telefone do usuário.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "email",
+                        "description": "O endereço de e-mail do usuário.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -237,16 +252,19 @@
             },
             {
                 "name": "Bibliotecario",
+                "description": "Representa um funcionário da biblioteca com permissões administrativas.",
                 "stereotype": "Entity",
                 "class_attributes": [
                     {
                         "name": "id",
+                        "description": "Identificador único do bibliotecário.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "nome",
+                        "description": "O nome completo do bibliotecário.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
@@ -255,34 +273,40 @@
             },
             {
                 "name": "Emprestimo",
+                "description": "Representa um registro de empréstimo de um exemplar para um usuário.",
                 "stereotype": "Entity",
                 "class_attributes": [
                     {
                         "name": "id",
+                        "description": "Identificador único do empréstimo.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "dataEmprestimo",
+                        "description": "A data em que o exemplar foi emprestado.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "dataDevolucaoPrevista",
+                        "description": "A data prevista para a devolução do exemplar.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "dataDevolucaoReal",
+                        "description": "A data real em que o exemplar foi devolvido.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "status",
+                        "description": "O status atual do empréstimo (ativo, devolvido, atrasado, multado).",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": [
@@ -296,28 +320,33 @@
             },
             {
                 "name": "Multa",
+                "description": "Representa uma multa aplicada a um usuário devido a atraso na devolução.",
                 "stereotype": "Entity",
                 "class_attributes": [
                     {
                         "name": "id",
+                        "description": "Identificador único da multa.",
                         "attr_type": "integer",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "valor",
+                        "description": "O valor monetário da multa.",
                         "attr_type": "float",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "dataAplicacao",
+                        "description": "A data em que a multa foi aplicada.",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": []
                     },
                     {
                         "name": "status",
+                        "description": "O status atual da multa (pendente, paga).",
                         "attr_type": "string",
                         "is_multiple": false,
                         "valid_values": [
@@ -329,68 +358,6 @@
             }
         ],
         "associations": [
-            {
-                "src": {
-                    "class_name": "Livro",
-                    "class_min": 0,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "Exemplar",
-                    "class_min": 1,
-                    "class_max": 1
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Usuario",
-                    "class_min": 0,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "Emprestimo",
-                    "class_min": 1,
-                    "class_max": 1
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Exemplar",
-                    "class_min": 0,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "Emprestimo",
-                    "class_min": 1,
-                    "class_max": 1
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Emprestimo",
-                    "class_min": 0,
-                    "class_max": 1
-                },
-                "tgt": {
-                    "class_name": "Multa",
-                    "class_min": 1,
-                    "class_max": 1
-                }
-            },
-            {
-                "src": {
-                    "class_name": "Usuario",
-                    "class_min": 0,
-                    "class_max": null
-                },
-                "tgt": {
-                    "class_name": "Multa",
-                    "class_min": 1,
-                    "class_max": 1
-                }
-            }
-        ],
-        "relations": [
             {
                 "src": {
                     "class_name": "Livro",

@@ -79,8 +79,6 @@ def update_class(project_id: int, cls_id: int, klass: Class):
       if assoc.get("tgt").get("class_name") == old_name:
         assoc.get("tgt")["class_name"] = klass.name
     
-    data.get("class_models")["relations"] = assocs
-    
     for inher in inhers:
       if inher.get("parent_class_name") == old_name:
         inher["parent_class_name"] = klass.name
@@ -111,8 +109,6 @@ def delete_class(project_id: int, cls_id: int):
           step["class_name"] = None
   
   data.get("class_models")["associations"] = [assoc for assoc in assocs if assoc.get("src").get("class_name") != cls_name or assoc.get("tgt").get("class_name") != cls_name]
-    
-  data.get("class_models")["relations"] = assocs
 
   data.get("class_models")["inheritances"] = [inher for inher in inhers if inher.get("parent_class_name") != cls_name or inher.get("child_class_name") != cls_name]
   

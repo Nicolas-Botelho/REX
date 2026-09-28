@@ -9,7 +9,10 @@ class JsonReader():
   def read(self) -> dict:
     if os.path.exists(self.path):
       with open(self.path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        try:
+          return json.load(f)
+        except json.decoder.JSONDecodeError:
+          return {}
     else:
       return {}
   

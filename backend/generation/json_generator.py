@@ -42,7 +42,6 @@ class JsonGenerator():
       "class_models": {
         "classes": [clazz.dict() for clazz in classes_data],
         "associations": [assoc.dict() for assoc in associations_data],
-        "relations": [assoc.dict() for assoc in associations_data],
         "inheritances": [inher.dict() for inher in inheritances_data],
         "questions": [cq.dict() for cq in classes_q]
       },
@@ -79,7 +78,6 @@ class JsonGenerator():
         "class_models": {
           "classes": [pyd_cls.Class.model_validate(clazz).dict() for clazz in data.get("class_models").get("classes")],
           "associations": [pyd_cls.Association.model_validate(assoc).dict() for assoc in data.get("class_models").get("associations")],
-          "relations": [pyd_cls.Association.model_validate(assoc).dict() for assoc in data.get("class_models").get("associations")],
           "inheritances": [pyd_cls.Inheritance.model_validate(inher).dict() for inher in data.get("class_models").get("inheritances")],
           "questions": [pyd_q.ClassQuestion.model_validate(cq).dict() for cq in data.get("class_models").get("questions")]
         },
